@@ -11,19 +11,19 @@ package com.esprit.entities;
 public class Candidat extends User {
     private Diplome education;
 
-    public Candidat(Diplome education, int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description) {
-        super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description);
+    public Candidat(Diplome education, int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+        super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
     }
 
-    public Candidat(Diplome education, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description) {
-        super(nom, prenom, adresse, numero_téléphone, motdepasse, description);
+    public Candidat(Diplome education, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+        super(nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
     }
 
-    public Candidat(int aInt, String string, String string0, String string1, int aInt0) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+
+    
 
     public Diplome getEducation() {
         return education;

@@ -16,17 +16,9 @@ public class  User {
     private int numero_téléphone;
     private String motdepasse;
     private String description;
+    private Role role;
 
-    public User(String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresse = adresse;
-        this.numero_téléphone = numero_téléphone;
-        this.motdepasse = motdepasse;
-        this.description = description;
-    }
-
-    public User(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description) {
+    public User(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -34,13 +26,20 @@ public class  User {
         this.numero_téléphone = numero_téléphone;
         this.motdepasse = motdepasse;
         this.description = description;
+        this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", numero_t\u00e9l\u00e9phone=" + numero_téléphone + ", motdepasse=" + motdepasse + ", description=" + description + '}';
+    public User(String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.numero_téléphone = numero_téléphone;
+        this.motdepasse = motdepasse;
+        this.description = description;
+        this.role = role;
     }
 
+    
     public int getId() {
         return id;
     }
@@ -96,6 +95,16 @@ public class  User {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    
     
     
     

@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.esprit.services;
+package com.esprit.entities;
 
 /**
  *
  * @author Anis
  */
-public class ServiceEntreprise {
+public enum Role {
+    Candidat,Entreprise, Admin;
     
 }
