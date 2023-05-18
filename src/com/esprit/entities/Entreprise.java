@@ -22,6 +22,8 @@ public class Entreprise extends User {
         this.NomEntreprise = NomEntreprise;
     }
 
+    
+
     public String getNomEntreprise() {
         return NomEntreprise;
     }
@@ -29,6 +31,15 @@ public class Entreprise extends User {
     public void setNomEntreprise(String NomEntreprise) {
         this.NomEntreprise = NomEntreprise;
     }
+
+    @Override
+    public String toString() {
+        return "Entreprise{" + super.toString() + "NomEntreprise=" + NomEntreprise + '}';
+    }
+
+    
+
+    
 
     
     

@@ -4,6 +4,8 @@
  */
 package com.esprit.entities;
 
+import java.util.Objects;
+
 /**
  *
  * @author Anis
@@ -102,6 +104,33 @@ public class  User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.role);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        return this.role == other.role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", numero_t\u00e9l\u00e9phone=" + numero_téléphone + ", motdepasse=" + motdepasse + ", description=" + description + ", role=" + role + '}';
     }
 
     

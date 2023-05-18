@@ -11,12 +11,12 @@ package com.esprit.entities;
 public class Candidat extends User {
     private Diplome education;
 
-    public Candidat(Diplome education, int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+    public Candidat(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Diplome education, Role role) {
         super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
     }
 
-    public Candidat(Diplome education, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+    public Candidat( String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description,Diplome education, Role role) {
         super(nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
     }
@@ -32,6 +32,18 @@ public class Candidat extends User {
     public void setEducation(Diplome education) {
         this.education = education;
     }
+
+    @Override
+    public String toString() {
+        return "Candidat{" + super.toString() + "education=" + education + '}';
+    }
+    
+
+    
+
+    
+
+    
 
    
    
