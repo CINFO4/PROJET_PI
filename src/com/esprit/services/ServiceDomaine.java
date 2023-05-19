@@ -4,7 +4,7 @@
  */
 package com.esprit.services;
 
-import com.esprit.entities.SousCategorie;
+import com.esprit.entities.Domaine;
 import com.esprit.utils.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,37 +12,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ASUS
  */
-public class ServiceSousCategorie implements IServices<SousCategorie>{
-    Connection cnx = DataSource.getInstance().getCnx();
+public class ServiceDomaine implements IServices<Domaine>{
     
-    
+    private Connection cnx  = DataSource.getInstance().getCnx();
     @Override
-    public void ajouter(SousCategorie sc) {
-        String req = "INSERT INTO souscategorie (nom_sous_cat) VALUES (?)";
+    public void ajouter(Domaine d) {
         try {
+            String req ="INSERT INTO domaine (nom_domaine) VALUES(?)";
             
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, sc.getNom_sous_cat());
+            pst.setString(1,d.getNom_domaine());
             pst.executeUpdate();
-            System.out.println("ajout avec succes !");
+            System.out.println("ajouter avec Succes !");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     @Override
-    public void modifier(SousCategorie sc) {
-         String req = "UPDATE souscategorie SET nom_sous_cat = ? WHERE id_sous_cat  = ?";
+    public void modifier(Domaine d) {
         try {
-            
+            String req ="UPDATE domaine SET nom_domaine = ? WHERE id_domaine = ?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, sc.getNom_sous_cat());
-            pst.setInt(2, sc.getId_sous_cat());
+            pst.setString(1, d.getNom_domaine());
+            pst.setInt(2, d.getId_domaine());
             pst.executeUpdate();
             System.out.println("modifier avec succes !");
         } catch (SQLException ex) {
@@ -51,33 +51,35 @@ public class ServiceSousCategorie implements IServices<SousCategorie>{
     }
 
     @Override
-    public void supprimer(SousCategorie sc) {
-        String req ="DELETE FROM souscategorie WHERE id_sous_cat = ?";
-        try{
+    public void supprimer(Domaine p) {
+        try {
+            String req = "DELETE FROM domaine WHERE id_domaine = ?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1,sc.getId_sous_cat());
+            pst.setInt(1, p.getId_domaine());
             pst.executeUpdate();
-            System.out.println("supprimer avec succes !");
-        }catch(SQLException ex){
+            System.out.println("supprimer avec succes ! ");
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     @Override
-    public List<SousCategorie> afficher() {
-        List<SousCategorie> list = new ArrayList<>();
-        String req = "SELECT * FROM souscategorie";
+    public List<Domaine> afficher() {
+        List<Domaine> list = new ArrayList<>();
+        String req = "SELECT * FROM domaine ";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet res = pst.executeQuery();
+            
             while(res.next()){
-                list.add(new SousCategorie(res.getInt(1), res.getString(2)));
+                list.add(new Domaine(res.getInt("id_domaine"), res.getString("nom_domaine")));
             }
-        
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return list ;
+        return list;
+        
+        
     }
     
 }

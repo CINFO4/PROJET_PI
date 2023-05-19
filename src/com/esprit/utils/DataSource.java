@@ -20,7 +20,7 @@ public class DataSource {
     
     private static DataSource instance ;
 
-    private final String URL ="jdbc:mysql://localhost:3306/devpi";
+    private final String URL ="jdbc:mysql://localhost:3306/esprit";
     private final String USERNAME ="root";
     private final String PASSWORD ="";
 
