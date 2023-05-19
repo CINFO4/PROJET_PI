@@ -4,22 +4,37 @@
  */
 package com.esprit.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Anis
  */
 public class Candidat extends User {
     private Diplome education;
+    private List<Competence> ListeCompetences; 
 
     public Candidat(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Diplome education, Role role) {
         super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
+        this.ListeCompetences = new ArrayList<>();
     }
 
     public Candidat( String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description,Diplome education, Role role) {
         super(nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
         this.education = education;
+        this.ListeCompetences = new ArrayList<>();
     }
+
+    public List<Competence> getListeCompetences() {
+        return ListeCompetences;
+    }
+
+    public void setListeCompetences(List<Competence> ListeCompetences) {
+        this.ListeCompetences = ListeCompetences;
+    }
+    
 
     
 

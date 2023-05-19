@@ -7,6 +7,7 @@ package com.esprit.services;
 import com.esprit.utils.DataSource;
 import java.sql.Connection;
 import com.esprit.entities.*;
+import com.mysql.cj.conf.PropertyKey;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,18 +25,33 @@ public class ServiceUser {
     public void ajouter(User p) {
         if (p instanceof Candidat) {
             try{
-                
+             int id_user =0;   
             String req = "insert into user (nom,prenom,adresse,numero_téléphone,motdepasse,description,education,role) values (?,?,?,?,?,?,?,?);";
+            String req1 = "insert into profil (id_user,id_competence) values (?,?);";
+            String req2= "select last_insert_id() from user;";
             PreparedStatement pst = cnx.prepareStatement(req);
+            PreparedStatement pst1 = cnx.prepareStatement(req1);
+            PreparedStatement pst2 = cnx.prepareStatement(req2);
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getAdresse());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
-            pst.setString(7, ((Candidat) p).getEducation().toString());
+            pst.setString(7, ((Candidat) p).getEducation().name());
             pst.setString(8, p.getRole().name());
             pst.executeUpdate();
+            ResultSet rs = pst2.executeQuery();
+            while (rs.next()){
+                id_user = rs.getInt("last_insert_id()");
+            }
+            for(Competence competence : ((Candidat) p).getListeCompetences()){
+                pst1.setInt(1,id_user );
+                pst1.setInt(2, competence.getId_competence());
+                pst1.executeUpdate();
+            }
+            
+            
             System.out.println("Candidat ajouté");
         }
         catch(SQLException e){
