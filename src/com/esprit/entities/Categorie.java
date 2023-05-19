@@ -15,7 +15,7 @@ public class Categorie {
     public Categorie(String nom_cat) {
         this.nom_cat = nom_cat;
     }
-
+//        fezfe
     public Categorie(int id_cat, String nom_cat) {
         this.id_cat = id_cat;
         this.nom_cat = nom_cat;
