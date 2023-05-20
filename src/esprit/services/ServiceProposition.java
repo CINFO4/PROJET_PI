@@ -22,10 +22,11 @@ public class ServiceProposition {
     
     public void ajouter(proposition p) {
         try {
-            String req = "INSERT INTO proposition(id_proposition, description, etat) VALUES (?,?,?);";
+            String req = "INSERT INTO proposition(description, etat, id_question) VALUES (?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, p.getdescription());
-            pst.setString(1, p.getetat());
+            pst.setString(1, p.getDescription());
+            pst.setString(2, p.getEtat());
+            pst.setInt(3, p.getId_question());
             pst.executeUpdate();
             System.out.println("Proposition ajoutée !");
         } catch (SQLException ex) {
@@ -35,11 +36,12 @@ public class ServiceProposition {
     
     public void modifier(proposition p) {
         try {
-            String req = "UPDATE proposition SET description=?, etat=? WHERE id_proposition=?";
+            String req = "UPDATE proposition SET description=?, etat=? id_question=? WHERE id_proposition=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(3, p.getid_proposition());
-            pst.setString(1, p.getdescription());
-            pst.setString(2, p.getetat());
+            pst.setInt(4, p.getId_proposition());
+            pst.setString(1, p.getDescription());
+            pst.setString(2, p.getEtat());
+            pst.setInt(3, p.getId_question());
             pst.executeUpdate();
             System.out.println("Proposition modifiée !");
         } catch (SQLException ex) {
@@ -51,7 +53,7 @@ public class ServiceProposition {
         try {
             String req = "DELETE from proposition WHERE id_proposition=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1, p.getid_proposition());
+            pst.setInt(1, p.getId_proposition());
             pst.executeUpdate();
             System.out.println("Proposition supprimée !");
         } catch (SQLException ex) {
@@ -67,7 +69,7 @@ public class ServiceProposition {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
-                list.add(new proposition(rs.getInt("id_proposition"), rs.getString("description"), rs.getString("etat")));
+                list.add(new proposition(rs.getInt("id_proposition"), rs.getString("description"), rs.getString("etat"), rs.getInt("id_question")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
