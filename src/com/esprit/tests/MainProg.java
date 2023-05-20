@@ -17,21 +17,18 @@ public class MainProg {
     
     public static void main(String[] args) {
         
-      ServiceGererDocument sd = new ServiceGererDocument();
-      // sd.ajouter(new Document(2,"Document 6"));
-       //sd.modifier(new Document(2,"Document99"));
-   //  sd.supprimer(new Document(1,""));
-     
-        System.out.println(sd.afficher());
+        ServiceGererDocument sd = new ServiceGererDocument();
+        //sd.ajouter(new Document(2, "Document 6", "aaa", "bbb", "ccc", 1));
+     //   sd.modifier(new Document(2, "Document99", "vv", "qq", "dd", 1));
+        //sd.supprimer(new Document(1, "", "", "", "", 0));
+       // System.out.println(sd.afficher());
 
         
         ServiceCompetence sc = new ServiceCompetence();
-//        sc.ajouter(new Competence(1, "Competence 1", "Description 1", "Niveau 1"));
-//        System.out.println(sc.afficher());
+        //sc.ajouter(new Competence(1, "Competence 1", "Description 1"));
+        System.out.println(sc.afficher());
 
-        DataSource d=DataSource.getInstance();
-        DataSource d1=DataSource.getInstance();
+        DataSource d = DataSource.getInstance();
+        DataSource d1 = DataSource.getInstance();
     }
 }
-
-

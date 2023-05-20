@@ -19,9 +19,13 @@ public class ServiceGererDocument {
 
     public void ajouter(Document document) {
         try {
-            String req = "INSERT INTO document( nom_document) VALUES (?);";
+            String req = "INSERT INTO document(titre_document, description_document, type, lien, id_user) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement pst = cnx.prepareStatement(req);
-             pst.setString(1, document.getNom_document());
+            pst.setString(1, document.getTitre_document());
+            pst.setString(2, document.getDescription_document());
+            pst.setString(3, document.getType());
+            pst.setString(4, document.getLien());
+            pst.setInt(5, document.getId_user());
             pst.executeUpdate();
             System.out.println("Document ajouté !");
         } catch (SQLException ex) {
@@ -31,10 +35,14 @@ public class ServiceGererDocument {
 
     public void modifier(Document document) {
         try {
-            String req = "UPDATE document SET nom_document=? WHERE id_document=?";
+            String req = "UPDATE document SET titre_document=?, description_document=?, type=?, lien=?, id_user=? WHERE id_document=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, document.getNom_document());
-            pst.setInt(2, document.getId_document());
+            pst.setString(1, document.getTitre_document());
+            pst.setString(2, document.getDescription_document());
+            pst.setString(3, document.getType());
+            pst.setString(4, document.getLien());
+            pst.setInt(5, document.getId_user());
+            pst.setInt(6, document.getId_document());
             pst.executeUpdate();
             System.out.println("Document modifié !");
         } catch (SQLException ex) {
@@ -62,7 +70,14 @@ public class ServiceGererDocument {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                list.add(new Document(rs.getInt("id_document"), rs.getString("nom_document")));
+                list.add(new Document(
+                        rs.getInt("id_document"),
+                        rs.getString("titre_document"),
+                        rs.getString("description_document"),
+                        rs.getString("type"),
+                        rs.getString("lien"),
+                        rs.getInt("id_user")
+                ));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -71,4 +86,3 @@ public class ServiceGererDocument {
         return list;
     }
 }
-
