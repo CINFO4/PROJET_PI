@@ -17,9 +17,9 @@ public class MainProg {
     public static void main(String[] args) {
         
         ServiceOffre sf = new ServiceOffre();
-//        sf.ajouter(new Offre("administrateur base de donne ", "les technologie : mysql,mongoDB ",4));
-//        sf.modifier(new Offre(11, "Developpeur back-end", "les technologie : node js ,express js ",2,Date.valueOf("2003-05-10")));
-//        sf.supprimer(new Offre(12, "", "",1,null));
+//        sf.ajouter(new Offre("administrateur base de donne ", "les technologie : mysql,mongoDB ",2,Date.valueOf("2023-05-30")));
+//        sf.modifier(new Offre(16, "Developpeur back-end", "les technologie : node js ,express js ",2,Date.valueOf("2022-05-22"),Date.valueOf("2022-06-22")));
+//        sf.supprimer(new Offre(17, "", "",1,null,null));
 //        System.out.println(sf.afficher());
 
     
@@ -34,8 +34,8 @@ public class MainProg {
 //        sc.ajouter(new Candidature(1, 5, 4));
 //        sc.modifier(new Candidature(1, 5, 2,Date.valueOf("2000-8-8"),"Accepter"));
 //        sc.supprimer(new Candidature(1, 5, 4, null, ""));
-        System.out.println(sc.afficher());
-
+//        System.out.println(sc.afficher());
+            
 
        
        

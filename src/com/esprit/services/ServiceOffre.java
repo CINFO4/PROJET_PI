@@ -24,14 +24,14 @@ public class ServiceOffre implements IServices<Offre>{
 
     @Override
     public void ajouter(Offre f) {
-         String req ="INSERT INTO offre(titre,description,id_domaine,date_offre) VALUES (?,?,?,?)";
+         String req ="INSERT INTO offre(titre,description,id_domaine,date_expiration) VALUES (?,?,?,?)";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             
             pst.setString(1, f.getTitre());
             pst.setString(2, f.getDescription());
             pst.setInt(3,f.getId_domaine());
-            pst.setDate(4, f.getDate_offre());
+            pst.setDate(4, f.getDate_Expiration());
             pst.executeUpdate();
             System.out.println("ajouter avec Succes !");
         } catch (SQLException ex) {
@@ -41,7 +41,7 @@ public class ServiceOffre implements IServices<Offre>{
 
     @Override
     public void modifier(Offre f) {
-        String req ="UPDATE offre SET titre = ? , description = ? , id_domaine = ? , date_offre = ? WHERE id_offre = ? ";
+        String req ="UPDATE offre SET titre = ? , description = ? , id_domaine = ? , date_offre = ? , date_expiration = ? WHERE id_offre = ? ";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             
@@ -49,7 +49,8 @@ public class ServiceOffre implements IServices<Offre>{
             pst.setString(2, f.getDescription());
             pst.setInt(3, f.getId_domaine());
             pst.setDate(4, f.getDate_offre());
-            pst.setInt(5, f.getId_offre());
+            pst.setDate(5, f.getDate_Expiration());
+            pst.setInt(6, f.getId_offre());
             
             pst.executeUpdate();
             System.out.println("modifier avec Succes !");
@@ -80,7 +81,7 @@ public class ServiceOffre implements IServices<Offre>{
             ResultSet res = pst.executeQuery();
             
             while(res.next()){
-                list.add(new Offre(res.getInt("id_offre"),res.getString("titre"), res.getString("description"),res.getInt("id_domaine"),res.getDate("date_offre")));
+                list.add(new Offre(res.getInt("id_offre"),res.getString("titre"), res.getString("description"),res.getInt("id_domaine"),res.getDate("date_offre"),res.getDate("date_expiration")));
             }
 
         } catch (SQLException ex) {

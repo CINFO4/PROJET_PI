@@ -17,21 +17,22 @@ public class Offre {
     private String description;
     private int id_domaine;
 //    Date date_offres = Date.valueOf("2024-02-03");
-    Date date_offre ;// Date.valueOf(LocalDate.now());
-
-    public Offre(String titre, String description, int id_domaine) {
+    Date date_offre ;
+    Date date_Expiration;
+    public Offre(String titre, String description, int id_domaine,Date date_Expiration) {
         this.titre = titre;
         this.description = description;
         this.id_domaine = id_domaine;
-        this.date_offre = Date.valueOf(LocalDate.now());
+        this.date_Expiration = date_Expiration;
     }
 
-    public Offre(int id_offre, String titre, String description, int id_domaine, Date date_offre) {
+    public Offre(int id_offre, String titre, String description, int id_domaine, Date date_offre,Date date_Expiration) {
         this.id_offre = id_offre;
         this.titre = titre;
         this.description = description;
         this.id_domaine = id_domaine;
         this.date_offre = date_offre;
+        this.date_Expiration = date_Expiration;
     }
 
     public int getId_offre() {
@@ -74,10 +75,19 @@ public class Offre {
         this.date_offre = date_offre;
     }
 
+    public Date getDate_Expiration() {
+        return date_Expiration;
+    }
+
+    public void setDate_Expiration(Date date_Expiration) {
+        this.date_Expiration = date_Expiration;
+    }
+
     @Override
     public String toString() {
-        return "Offre{" + "id_offre=" + id_offre + ", titre=" + titre + ", description=" + description + ", id_domaine=" + id_domaine + ", date_offre=" + date_offre + "} \n ";
+        return "Offre{" + "id_offre=" + id_offre + ", titre=" + titre + ", description=" + description + ", id_domaine=" + id_domaine + ", date_offre=" + date_offre + ", date_Expiration=" + date_Expiration + '}';
     }
+    
     
     
 
