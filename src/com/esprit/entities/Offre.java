@@ -19,6 +19,7 @@ public class Offre {
 //    Date date_offres = Date.valueOf("2024-02-03");
     Date date_offre ;
     Date date_Expiration;
+    
     public Offre(String titre, String description, int id_domaine,Date date_Expiration) {
         this.titre = titre;
         this.description = description;

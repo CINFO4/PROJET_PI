@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.AjoutCandidatureController">
+   <children>
+      <Label layoutX="199.0" layoutY="57.0" text="Ajouter candidature " />
+      <Label alignment="TOP_CENTER" layoutX="83.0" layoutY="130.0" text="ID User :" textAlignment="RIGHT" />
+      <Label layoutX="84.0" layoutY="191.0" text="ID Offre:" />
+      <Label layoutX="85.0" layoutY="247.0" prefWidth="97.0" style="-fx-background-size: 88px;" text="ID Candidature :" />
+      <TextField fx:id="tfId_user" layoutX="154.0" layoutY="126.0" />
+      <TextField fx:id="tfId_offre" layoutX="148.0" layoutY="187.0" />
+      <TextField fx:id="tfId_candidature" layoutX="199.0" layoutY="243.0" />
+      <Button layoutX="212.0" layoutY="305.0" mnemonicParsing="false" onAction="#ajouterCandidature" prefHeight="47.0" prefWidth="127.0" text="Ajouter " />
+   </children>
+</AnchorPane>

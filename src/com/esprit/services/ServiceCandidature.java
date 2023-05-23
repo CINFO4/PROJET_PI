@@ -5,6 +5,7 @@
 package com.esprit.services;
 
 import com.esprit.entities.Candidature;
+import com.esprit.entities.EtatCandidature;
 import com.esprit.utils.DataSource;
 import java.sql.Connection;
 import java.sql.Date;
@@ -27,13 +28,12 @@ public class ServiceCandidature implements IServices<Candidature>{
     public void ajouter(Candidature c) {
         try {
             String req = "INSERT INTO candidature"
-                    + " (id_user,id_offre,id_candidature,date_candidature)"
-                    + " VALUES (?,?,?,?)";
+                    + " (id_user,id_offre,id_candidature)"
+                    + " VALUES (?,?,?)";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1,c.getId_user());
             pst.setInt(2,c.getId_offre());
             pst.setInt(3, c.getId_candidature());
-            pst.setDate(4, c.getDate_condidature());
          
             
             pst.executeUpdate();
@@ -50,7 +50,7 @@ public class ServiceCandidature implements IServices<Candidature>{
                     + "WHERE id_user= ? and id_offre = ? and id_candidature =?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setDate(1, c.getDate_condidature());
-            pst.setString(2, c.getEtat());
+            pst.setString(2, c.getEtat().toString());
             pst.setInt(3, c.getId_user());
             pst.setInt(4, c.getId_offre());
             pst.setInt(5, c.getId_candidature());
@@ -88,7 +88,7 @@ public class ServiceCandidature implements IServices<Candidature>{
             ResultSet res = pst.executeQuery();
             
             while (res.next()) {
-                list.add(new Candidature(res.getInt("id_user"),res.getInt("id_offre") , res.getInt("id_candidature"),res.getDate("date_candidature"), res.getString("etat")));
+                list.add(new Candidature(res.getInt("id_user"),res.getInt("id_offre") , res.getInt("id_candidature"),res.getDate("date_candidature"), EtatCandidature.valueOf(res.getString("etat"))));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

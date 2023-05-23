@@ -31,11 +31,12 @@ public class MainProg {
 
        
         ServiceCandidature sc = new ServiceCandidature();
-//        sc.ajouter(new Candidature(1, 5, 4));
-//        sc.modifier(new Candidature(1, 5, 2,Date.valueOf("2000-8-8"),"Accepter"));
+//        sc.ajouter(new Candidature(1, 15, 6));
+//        sc.modifier(new Candidature(1, 15, 4,Date.valueOf("2000-8-8"),EtatCandidature.Refuser));
 //        sc.supprimer(new Candidature(1, 5, 4, null, ""));
 //        System.out.println(sc.afficher());
-            
+          
+        
 
        
        

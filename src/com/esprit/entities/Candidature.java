@@ -16,17 +16,16 @@ public class Candidature {
     private int id_offre;
     private int id_candidature;
     private Date date_condidature;
-    private String etat;
+    private EtatCandidature etat;
 
     public Candidature(int id_user, int id_offre, int id_candidature) {
         this.id_user = id_user;
         this.id_offre = id_offre;
         this.id_candidature = id_candidature;
-        this.date_condidature = Date.valueOf(LocalDate.now());
-        this.etat = "en cour";
+        this.etat = EtatCandidature.En_Cour;
     }
 
-    public Candidature(int id_user, int id_offre, int id_candidature, Date date_condidature, String etat) {
+    public Candidature(int id_user, int id_offre, int id_candidature, Date date_condidature, EtatCandidature etat) {
         this.id_user = id_user;
         this.id_offre = id_offre;
         this.id_candidature = id_candidature;
@@ -68,18 +67,22 @@ public class Candidature {
         this.date_condidature = date_condidature;
     }
 
-    public String getEtat() {
+    public EtatCandidature getEtat() {
         return etat;
     }
 
-    public void setEtat(String etat) {
+    public void setEtat(EtatCandidature etat) {
         this.etat = etat;
     }
 
     @Override
     public String toString() {
-        return "Candidature{" + "id_user=" + id_user + ", id_offre=" + id_offre + ", id_candidature=" + id_candidature + ", date_condidature=" + date_condidature + ", etat=" + etat + "} \n";
+        return "Candidature{" + "id_user=" + id_user + ", id_offre=" + id_offre + ", id_candidature=" + id_candidature + ", date_condidature=" + date_condidature + ", etat=" + etat.toString() + '}';
     }
+
+   
+
+   
 
   
 

@@ -24,7 +24,8 @@ public class MainGUI extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutDomaine.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutOffre.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutOffre.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutCandidature.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
