@@ -9,20 +9,23 @@ package com.esprit.entities;
  * @author Rafik
  */
 public class Commentaire {
-    
+    //ajouter id user
     private int id_commentaire;
     private String contenu;
     private int id_forum;
+    private int id_user;
 
-    public Commentaire(String contenu, int id_forum) {
+    public Commentaire(String contenu, int id_forum, int id_user) {
         this.contenu = contenu;
         this.id_forum = id_forum;
+        this.id_user = id_user;
     }
 
-    public Commentaire(int id_commentaire, String contenu, int id_forum) {
+    public Commentaire(int id_commentaire, String contenu, int id_forum, int id_user) {
         this.id_commentaire = id_commentaire;
         this.contenu = contenu;
         this.id_forum = id_forum;
+        this.id_user = id_user;
     }
 
     public int getId_commentaire() {
@@ -49,11 +52,16 @@ public class Commentaire {
         this.id_forum = id_forum;
     }
 
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
     @Override
     public String toString() {
-        return "Commentaire{" + "id_commentaire=" + id_commentaire + ", contenu=" + contenu + ", id_forum=" + id_forum + '}';
-    }
-    
-    
-    
+        return "Commentaire{" + "id_commentaire=" + id_commentaire + ", contenu=" + contenu + ", id_forum=" + id_forum + ", id_user=" + id_user + '}';
+    }  
 }

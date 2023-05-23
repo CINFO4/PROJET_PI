@@ -23,11 +23,13 @@ public class ServiceForum implements IService<Forum>{
     
     public void ajouter(Forum F) {
         try {
-            String req = "INSERT INTO forum(id_forum, nom_forum, id_user) VALUES (?,?,?);";
+            String req = "INSERT INTO forum(id_forum, sujet, contenu, id_user, id_domaine) VALUES (?,?,?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, F.getId_forum());            
-            pst.setString(2, F.getNom_forum());
-            pst.setInt(3, F.getId_user());
+            pst.setString(2, F.getSujet());
+            pst.setString(3, F.getContenu());
+            pst.setInt(4, F.getId_user());
+            pst.setInt(5, F.getId_domaine());
             pst.executeUpdate();
             System.out.println("Forum ajoutée !");
         } catch (SQLException ex) {
@@ -37,10 +39,11 @@ public class ServiceForum implements IService<Forum>{
     
     public void modifier(Forum F) {
         try {
-            String req = "UPDATE forum SET nom_forum=? WHERE id_forum=?";
+            String req = "UPDATE forum SET sujet=?, contenu=? WHERE id_forum=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, F.getNom_forum());
-            pst.setInt(2, F.getId_forum());
+            pst.setString(1, F.getSujet());
+            pst.setString(2, F.getContenu());
+            pst.setInt(3, F.getId_forum());
             pst.executeUpdate();
             System.out.println("Forum modifiée !");
         } catch (SQLException ex) {
@@ -68,7 +71,7 @@ public class ServiceForum implements IService<Forum>{
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
-                list.add(new Forum(rs.getInt("id_forum"), rs.getString("nom_forum"), rs.getInt("id_user")));
+                list.add(new Forum(rs.getInt("id_forum"), rs.getString("sujet"),rs.getString("contenu"), rs.getInt("id_user"),rs.getInt("id_domaine")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

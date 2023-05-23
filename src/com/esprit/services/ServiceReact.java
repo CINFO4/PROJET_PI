@@ -22,10 +22,10 @@ public class ServiceReact implements IService<React>{
     
     public void ajouter(React R) {
         try {
-            String req = "INSERT INTO react(id_react, type, id_commentaire, id_user) VALUES (?,?,?,?);";
+            String req = "INSERT INTO react(id_react, liked, id_commentaire, id_user) VALUES (?,?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, R.getId_react());            
-            pst.setString(2, R.getType());
+            pst.setBoolean(2, R.isLiked());
             pst.setInt(3, R.getId_Commentaire());
             pst.setInt(4, R.getId_user());           
             pst.executeUpdate();
@@ -37,9 +37,9 @@ public class ServiceReact implements IService<React>{
     
         public void modifier(React R) {
         try {
-            String req = "UPDATE react SET type=? WHERE id_react=?";
+            String req = "UPDATE react SET liked=? WHERE id_react=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, R.getType());
+            pst.setBoolean(1, R.isLiked());
             pst.setInt(2, R.getId_react());
             pst.executeUpdate();
             System.out.println("React modifiée !");
@@ -68,7 +68,7 @@ public class ServiceReact implements IService<React>{
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
-                list.add(new React(rs.getInt("id_react"), rs.getString("type"), rs.getInt("id_commentaire"),rs.getInt("id_user")));
+                list.add(new React(rs.getInt("id_react"), rs.getBoolean("liked"), rs.getInt("id_commentaire"),rs.getInt("id_user")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -22,11 +22,12 @@ public class ServiceCommentaire implements IService<Commentaire>{
     
     public void ajouter(Commentaire C) {
         try {
-            String req = "INSERT INTO commentaire(id_commentaire, contenu, id_forum) VALUES (?,?,?);";
+            String req = "INSERT INTO commentaire(id_commentaire, contenu, id_forum, id_user) VALUES (?,?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, C.getId_commentaire());            
             pst.setString(2, C.getContenu());
             pst.setInt(3, C.getId_forum());
+            pst.setInt(4, C.getId_user());
             pst.executeUpdate();
             System.out.println("Commentaire ajoutée !");
         } catch (SQLException ex) {
@@ -67,7 +68,7 @@ public class ServiceCommentaire implements IService<Commentaire>{
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
-                list.add(new Commentaire(rs.getInt("id_commentaire"), rs.getString("contenu"), rs.getInt("id_forum")));
+                list.add(new Commentaire(rs.getInt("id_commentaire"), rs.getString("contenu"), rs.getInt("id_forum"), rs.getInt("id_user")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

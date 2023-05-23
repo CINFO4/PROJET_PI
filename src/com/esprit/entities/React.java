@@ -9,21 +9,21 @@ package com.esprit.entities;
  * @author Rafik
  */
 public class React {
-    
+    // type devient like ou enum pour tous les reactions
     private int id_react;
-    private String type;
+    private boolean liked;
     private int id_Commentaire;
     private int id_user;
 
-    public React(String type, int id_Commentaire, int id_user) {
-        this.type = type;
+    public React(boolean liked, int id_Commentaire, int id_user) {
+        this.liked = liked;
         this.id_Commentaire = id_Commentaire;
         this.id_user = id_user;
     }
 
-    public React(int id_react, String type, int id_Commentaire, int id_user) {
+    public React(int id_react, boolean liked, int id_Commentaire, int id_user) {
         this.id_react = id_react;
-        this.type = type;
+        this.liked = liked;
         this.id_Commentaire = id_Commentaire;
         this.id_user = id_user;
     }
@@ -36,12 +36,12 @@ public class React {
         this.id_react = id_react;
     }
 
-    public String getType() {
-        return type;
+    public boolean isLiked() {
+        return liked;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
     public int getId_Commentaire() {
@@ -62,7 +62,7 @@ public class React {
 
     @Override
     public String toString() {
-        return "React{" + "id_react=" + id_react + ", type=" + type + ", id_Commentaire=" + id_Commentaire + ", id_user=" + id_user + '}';
+        return "React{" + "id_react=" + id_react + ", liked=" + liked + ", id_Commentaire=" + id_Commentaire + ", id_user=" + id_user + '}';
     }
     
     

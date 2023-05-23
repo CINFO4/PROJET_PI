@@ -9,20 +9,26 @@ package com.esprit.entities;
  * @author Rafik
  */
 public class Forum {
-    
+    //modifier nom forum au sujet forum, et ajouter contenu et domaine (clé etrangere)
     private int id_forum;
-    private String nom_forum;
+    private String sujet;
+    private String contenu;
     private int id_user;
+    private int id_domaine;
 
-    public Forum(String nom_forum, int id_user) {
-        this.nom_forum = nom_forum;
+    public Forum(String sujet, String contenu, int id_user, int id_domaine) {
+        this.sujet = sujet;
+        this.contenu = contenu;
         this.id_user = id_user;
+        this.id_domaine = id_domaine;
     }
 
-    public Forum(int id_forum, String nom_forum, int id_user) {
+    public Forum(int id_forum, String sujet, String contenu, int id_user, int id_domaine) {
         this.id_forum = id_forum;
-        this.nom_forum = nom_forum;
+        this.sujet = sujet;
+        this.contenu = contenu;
         this.id_user = id_user;
+        this.id_domaine = id_domaine;
     }
 
     public int getId_forum() {
@@ -33,12 +39,20 @@ public class Forum {
         this.id_forum = id_forum;
     }
 
-    public String getNom_forum() {
-        return nom_forum;
+    public String getSujet() {
+        return sujet;
     }
 
-    public void setNom_forum(String nom_forum) {
-        this.nom_forum = nom_forum;
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
+    }
+
+    public String getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
     public int getId_user() {
@@ -49,10 +63,19 @@ public class Forum {
         this.id_user = id_user;
     }
 
+    public int getId_domaine() {
+        return id_domaine;
+    }
+
+    public void setId_domaine(int id_domaine) {
+        this.id_domaine = id_domaine;
+    }
+
     @Override
     public String toString() {
-        return "Forum{" + "id_forum=" + id_forum + ", nom_forum=" + nom_forum + ", id_user=" + id_user + '}';
+        return "Forum{" + "id_forum=" + id_forum + ", sujet=" + sujet + ", contenu=" + contenu + ", id_user=" + id_user + ", id_domaine=" + id_domaine + '}';
     }
+
     
     
 }
