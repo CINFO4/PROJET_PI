@@ -1,0 +1,70 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+/* ajouterdocument.css */
+
+/* Styling for the VBox container */
+.vbox-container {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+}
+
+/* Styling for the Label */
+.label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333; /* Dark gray */
+}
+
+/* Styling for the TextField */
+.text-field {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-background-color: #f2f2f2; /* Light gray */
+    -fx-border-color: #dddddd; /* Gray */
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Styling for the TextArea */
+.text-area {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 120px;
+    -fx-font-size: 14px;
+    -fx-background-color: #f2f2f2; /* Light gray */
+    -fx-border-color: #dddddd; /* Gray */
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Styling for the Button */
+.button {
+    -fx-pref-width: 120px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #45A749); /* Green gradient */
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 0px;
+    -fx-background-insets: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+/* Styling for the AnchorPane */
+.anchor-pane {
+    -fx-background-color: #ffffff; /* White */
+}
+
+/* Styling for error messages */
+.error-message {
+    -fx-text-fill: #ff0000; /* Red */
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+}
+
+
+
+}

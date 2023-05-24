@@ -8,10 +8,11 @@ import com.esprit.entities.Competence;
 import com.esprit.entities.Document;
 import com.esprit.services.ServiceGererDocument;
 import com.esprit.services.ServiceCompetence;
+import com.esprit.services.ServiceProfile;
 import com.esprit.utils.DataSource;
 
 /**
- * MainProg class for testing entities and services.
+ 
  */
 public class MainProg {
     
@@ -27,6 +28,10 @@ public class MainProg {
         ServiceCompetence sc = new ServiceCompetence();
         //sc.ajouter(new Competence(1, "Competence 1", "Description 1"));
         System.out.println(sc.afficher());
+        
+        ServiceProfile sp = new ServiceProfile();
+        //sp.ajouter(new Profile(1, 1, "Niveau 1"));
+        //System.out.println(sp.afficher());
 
         DataSource d = DataSource.getInstance();
         DataSource d1 = DataSource.getInstance();

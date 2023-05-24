@@ -12,9 +12,10 @@ public class Document {
     private int id_document;
     private String titre_document;
     private String description_document;
-    private String type;
+    private String type;//domaine
     private String lien;
     private int id_user;
+    //etat
 
     public Document() {
     }
@@ -26,6 +27,10 @@ public class Document {
         this.type = type;
         this.lien = lien;
         this.id_user = id_user;
+    }
+
+    public Document(String title, String description, String type, String link, String userId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId_document() {
@@ -86,5 +91,9 @@ public class Document {
                 ", lien='" + lien + '\'' +
                 ", id_user=" + id_user +
                 '}';
+    }
+
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
