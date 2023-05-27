@@ -4,6 +4,7 @@
  */
 package com.esprit.tests;
 
+import com.esprit.services.ServiceOffre;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,12 +21,13 @@ import javafx.stage.Stage;
  * @author ASUS
  */
 public class MainGUI extends Application {
-    
     @Override
     public void start(Stage primaryStage) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutDomaine.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutDomaine.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutOffre.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutCandidature.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AjoutCandidature.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudOffre.fxml"));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudDomaine.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         

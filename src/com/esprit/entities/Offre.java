@@ -4,8 +4,10 @@
  */
 package com.esprit.entities;
 
+import com.mysql.cj.conf.StringProperty;
 import java.sql.Date;
 import java.time.LocalDate;
+import javafx.beans.property.IntegerProperty;
 
 /**
  *
@@ -16,22 +18,31 @@ public class Offre {
     private String titre;
     private String description;
     private int id_domaine;
+    private int id_entreprise;
 //    Date date_offres = Date.valueOf("2024-02-03");
     Date date_offre ;
     Date date_Expiration;
     
-    public Offre(String titre, String description, int id_domaine,Date date_Expiration) {
+//    public Offre(String titre, String description, int id_domaine,Date date_Expiration) {
+//        this.titre = titre;
+//        this.description = description;
+//        this.id_domaine = id_domaine;
+//        this.date_Expiration = date_Expiration;
+//    }
+    public Offre(String titre, String description, int id_domaine,int id_entreprise,Date date_Expiration) {
         this.titre = titre;
         this.description = description;
         this.id_domaine = id_domaine;
+        this.id_entreprise=id_entreprise;
         this.date_Expiration = date_Expiration;
     }
 
-    public Offre(int id_offre, String titre, String description, int id_domaine, Date date_offre,Date date_Expiration) {
+    public Offre(int id_offre, String titre, String description, int id_domaine,int id_entreprise, Date date_offre,Date date_Expiration) {
         this.id_offre = id_offre;
         this.titre = titre;
         this.description = description;
         this.id_domaine = id_domaine;
+        this.id_entreprise=id_entreprise;
         this.date_offre = date_offre;
         this.date_Expiration = date_Expiration;
     }
@@ -84,12 +95,24 @@ public class Offre {
         this.date_Expiration = date_Expiration;
     }
 
+    public int getId_entreprise() {
+        return id_entreprise;
+    }
+
+    public void setId_entreprise(int id_entreprise) {
+        this.id_entreprise = id_entreprise;
+    }
+
     @Override
     public String toString() {
-        return "Offre{" + "id_offre=" + id_offre + ", titre=" + titre + ", description=" + description + ", id_domaine=" + id_domaine + ", date_offre=" + date_offre + ", date_Expiration=" + date_Expiration + '}';
+        return "Offre{" + "id_offre=" + id_offre + ", titre=" + titre + ", description=" + description + ", id_domaine=" + id_domaine + ", id_entreprise=" + id_entreprise + ", date_offre=" + date_offre + ", date_Expiration=" + date_Expiration + '}';
     }
+
+   
     
     
+    
+   
     
 
     

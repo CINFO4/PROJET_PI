@@ -81,5 +81,55 @@ public class ServiceDomaine implements IServices<Domaine>{
         
         
     }
+    /**********************************************************/
+
+    public List<String> getDomainesName() {
+        List<String> list = new ArrayList<>();
+        String req = "SELECT nom_domaine FROM domaine ";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet res = pst.executeQuery();
+            
+            while(res.next()){
+                list.add(res.getString("nom_domaine"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+        
+        
+    }
+    public int getIdDomaineByName(String name){
+        String req = "SELECT id_domaine FROM domaine WHERE nom_domaine = ? ";
+        int id = 0;
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1,name);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                id = res.getInt("id_domaine");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return id ;
+    };
+    
+    public String getNameDomaineById(int id){
+        String req = "SELECT nom_domaine FROM domaine WHERE  id_domaine= ? ";
+        String  name = null ;
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1,id);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                name = res.getString("nom_domaine");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return name ;
+    };
     
 }

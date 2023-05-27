@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.OffreDetailsController">
+   <children>
+      <Pane layoutX="13.0" layoutY="99.0" prefHeight="376.0" prefWidth="840.0" style="-fx-background-color: FFDAB9;">
+         <children>
+            <FontAwesomeIconView glyphName="BUILDING" layoutX="20.0" layoutY="88.0" size="80" text="" wrappingWidth="84.2857141494751" />
+            <Label fx:id="LNomEntreprise" layoutX="104.0" layoutY="25.0" text="ID Entreptise ">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="19.0" layoutY="112.0" text="Description de l'offre:" textFill="#2721e4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="LNomDomaine" layoutX="104.0" layoutY="67.0" text="Domaine :">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="519.0" layoutY="27.0" text="Publier le : " textFill="#2721e4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="519.0" layoutY="69.0" text="Date Expiration :" textFill="#2721e4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="LDateExp" layoutX="660.0" layoutY="71.0" text="Date Expiration :" textFill="#2721e4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="LDatePub" layoutX="660.0" layoutY="27.0" text="Publier le : " textFill="#2721e4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="LDesc" layoutX="27.0" layoutY="156.0" prefHeight="175.0" prefWidth="793.0" style="-fx-background-color: F5F5F5;" text="Label" />
+         </children>
+      </Pane>
+      <Label fx:id="LTitle" layoutX="356.0" layoutY="25.0" text="Label">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

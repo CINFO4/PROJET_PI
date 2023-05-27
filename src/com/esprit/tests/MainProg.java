@@ -21,6 +21,7 @@ public class MainProg {
 //        sf.modifier(new Offre(16, "Developpeur back-end", "les technologie : node js ,express js ",2,Date.valueOf("2022-05-22"),Date.valueOf("2022-06-22")));
 //        sf.supprimer(new Offre(17, "", "",1,null,null));
 //        System.out.println(sf.afficher());
+//        System.out.println(sf.afficherOffres());
 
     
         ServiceDomaine sd = new ServiceDomaine();
