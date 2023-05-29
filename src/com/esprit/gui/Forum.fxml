@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -9,27 +11,37 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.ForumController">
+<AnchorPane fx:id="rootPane" prefHeight="1250.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.ForumController">
     <children>
-        <VBox layoutX="30.0" layoutY="30.0" spacing="10.0">
-            <Label text="Forums" styleClass="header-label" />
-            <ListView fx:id="forumListView" prefHeight="250.0" prefWidth="250.0" />
-            <HBox spacing="10.0">
-                <Button fx:id="createButton" text="Créer" onAction="#createForum" />
-                <Button fx:id="deleteButton" text="Supprimer" onAction="#deleteForum" />
+        <VBox layoutX="50.0" layoutY="50.0" spacing="20.0">
+            <Label styleClass="header-label" text="Forums" />
+            <ListView fx:id="forumListView" prefHeight="900.0" prefWidth="600.0" />
+            <HBox spacing="20.0">
+                <Button fx:id="createButton" onAction="#createForum" text="Créer" />
+                <Button fx:id="deleteButton" onAction="#deleteForum" text="Supprimer" />
             </HBox>
         </VBox>
-        <VBox layoutX="300.0" layoutY="30.0" spacing="10.0">
-            <Label text="Détails du Forum" styleClass="header-label" />
+        <VBox layoutX="700.0" layoutY="50.0" spacing="20.0">
+            <Label styleClass="header-label" text="Détails du Forum" />
             <Label text="Sujet :" />
-            <TextField fx:id="sujetTextField" prefWidth="200.0" />
+            <TextField fx:id="sujetTextField" prefWidth="400.0" />
             <Label text="Contenu :" />
-            <TextArea fx:id="contenuTextArea" prefWidth="200.0" prefHeight="150.0" />
+            <TextArea fx:id="contenuTextArea" prefHeight="300.0" prefWidth="400.0" />
             <Label text="Domaine :" />
-            <ChoiceBox fx:id="domaineChoiceBox" prefWidth="200.0" />
-            <Button fx:id="saveButton" text="Enregistrer" onAction="#modifyForum" />
+            <ChoiceBox fx:id="domaineChoiceBox" prefWidth="400.0" />
+            <Button fx:id="saveButton" onAction="#modifyForum" text="Enregistrer" />
+        </VBox>
+        <VBox fx:id="forumInfoBox" layoutX="1200.0" layoutY="50.0" spacing="20.0">
+            <Label fx:id="forumSujetLabel" styleClass="header-label" text="forum" />
+            <Label fx:id="forumContenuLabel" />         
+            <HBox spacing="10.0">
+                <TextArea fx:id="commentTextArea" HBox.hgrow="ALWAYS" />
+                <Button fx:id="addCommentButton" onAction="#addComment" text="Ajouter" />
+            </HBox>
+            <VBox fx:id="commentContainer" spacing="10" />
         </VBox>
     </children>
     <stylesheets>
+        <URL value="@ForumCrud.css" />
     </stylesheets>
 </AnchorPane>

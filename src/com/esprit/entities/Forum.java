@@ -9,7 +9,6 @@ package com.esprit.entities;
  * @author Acer
  */
 public class Forum {
-    //modifier nom forum au sujet forum, et ajouter contenu et domaine (clé etrangere)
     private int id_forum;
     private String sujet;
     private String contenu;

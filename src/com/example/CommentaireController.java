@@ -2,26 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.esprit.gui;
+package com.example;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.text.TextFlow;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 /**
  * FXML Controller class
  *
  * @author Acer
  */
-public class DetailsforumController implements Initializable {
+public class CommentaireController implements Initializable {
 
     @FXML
-    private Label txtSujet;
+    private TextArea commentTextArea;
     @FXML
-    private Label txtContenu;
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
 
     /**
      * Initializes the controller class.
@@ -31,11 +33,4 @@ public class DetailsforumController implements Initializable {
         // TODO
     }    
     
-    public void setLbSujet(String sujet) {
-        txtSujet.setText(sujet);
-    }
-    
-    public void setLbContenu(String contenu) {
-        txtContenu.setText(contenu);
-    }
 }

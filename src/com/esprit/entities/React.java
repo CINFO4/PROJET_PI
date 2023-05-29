@@ -9,7 +9,6 @@ package com.esprit.entities;
  * @author Acer
  */
 public class React {
-    // type devient like ou enum pour tous les reactions
     private int id_react;
     private boolean liked;
     private int id_Commentaire;

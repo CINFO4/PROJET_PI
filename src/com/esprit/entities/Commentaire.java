@@ -9,7 +9,6 @@ package com.esprit.entities;
  * @author Acer
  */
 public class Commentaire {
-    //ajouter id user
     private int id_commentaire;
     private String contenu;
     private int id_forum;

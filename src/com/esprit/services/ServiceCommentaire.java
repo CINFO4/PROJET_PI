@@ -17,9 +17,10 @@ import java.util.List;
  *
  * @author Acer
  */
-public class ServiceCommentaire implements IService<Commentaire>{
+public class ServiceCommentaire implements IService<Commentaire> {
+
     private Connection cnx = DataSource.getInstance().getCnx();
-    
+
     public void ajouter(Commentaire C) {
         try {
             String req = "INSERT INTO commentaire(contenu, id_forum, id_user) VALUES (?,?,?);";
@@ -33,7 +34,7 @@ public class ServiceCommentaire implements IService<Commentaire>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void modifier(Commentaire C) {
         try {
             String req = "UPDATE commentaire SET contenu=? WHERE id_commentaire=?";
@@ -46,7 +47,7 @@ public class ServiceCommentaire implements IService<Commentaire>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void supprimer(Commentaire C) {
         try {
             String req = "DELETE from commentaire WHERE id_commentaire=?";
@@ -58,22 +59,39 @@ public class ServiceCommentaire implements IService<Commentaire>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public List<Commentaire> afficher() {
         List<Commentaire> list = new ArrayList<>();
-        
+
         String req = "SELECT * FROM commentaire";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 list.add(new Commentaire(rs.getInt("id_commentaire"), rs.getString("contenu"), rs.getInt("id_forum"), rs.getInt("id_user")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        
+
         return list;
-    }  
+    }
+
+    public List<Commentaire> getCommentsForForum(int id_forum) {
+        List<Commentaire> list = new ArrayList<>();
+
+        String req = "SELECT * FROM commentaire where id_forum=?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, id_forum);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                list.add(new Commentaire(rs.getInt("id_commentaire"), rs.getString("contenu"), rs.getInt("id_forum"), rs.getInt("id_user")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return list;
+    }
 }
