@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class ServiceForum implements IService<Forum>{
     

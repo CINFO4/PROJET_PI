@@ -6,7 +6,7 @@ package com.esprit.entities;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class React {
     // type devient like ou enum pour tous les reactions

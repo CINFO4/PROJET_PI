@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class ServiceReact implements IService<React>{
     private Connection cnx = DataSource.getInstance().getCnx();

@@ -6,7 +6,7 @@ package com.esprit.entities;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class Forum {
     //modifier nom forum au sujet forum, et ajouter contenu et domaine (clé etrangere)

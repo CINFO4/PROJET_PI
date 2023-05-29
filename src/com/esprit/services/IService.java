@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public interface IService<T> {
     

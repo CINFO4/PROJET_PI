@@ -6,7 +6,7 @@ package com.esprit.entities;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class Commentaire {
     //ajouter id user

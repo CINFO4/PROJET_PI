@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Rafik
+ * @author Acer
  */
 public class ServiceCommentaire implements IService<Commentaire>{
     private Connection cnx = DataSource.getInstance().getCnx();
