@@ -18,10 +18,9 @@ public class Candidature {
     private Date date_condidature;
     private EtatCandidature etat;
 
-    public Candidature(int id_user, int id_offre, int id_candidature) {
+    public Candidature(int id_user, int id_offre) {
         this.id_user = id_user;
         this.id_offre = id_offre;
-        this.id_candidature = id_candidature;
         this.etat = EtatCandidature.En_Cour;
     }
 

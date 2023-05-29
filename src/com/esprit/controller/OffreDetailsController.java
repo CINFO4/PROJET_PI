@@ -4,11 +4,17 @@
  */
 package com.esprit.controller;
 
+import com.esprit.entities.Candidature;
+import com.esprit.services.ServiceCandidature;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -26,16 +32,25 @@ public class OffreDetailsController implements Initializable {
     @FXML
     private Label LDatePub;
     @FXML
-    private Label LDesc;
+    private TextArea LDesc;
     @FXML
     private Label LTitle;
-
+    
+    private int idoffre;
+    Stage stage;
+    @FXML
+    private Label dejaPostuler;
+    
+    int idu = 1;
+ServiceCandidature sc = new ServiceCandidature();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (sc.checkCandidature(idu, idoffre)) {
+            dejaPostuler.setText("deja Postuler");
+        }
     }    
 
     public void setLNomEntreprise(String LNomEntreprise) {
@@ -60,6 +75,36 @@ public class OffreDetailsController implements Initializable {
 
     public void setLTitle(String LTitle) {
         this.LTitle.setText(LTitle);
+    }
+
+    public int getIdoffre() {
+        return idoffre;
+    }
+
+    public void setIdoffre(int idoffre) {
+        this.idoffre = idoffre;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @FXML
+    private void postuler(ActionEvent event) {
+        
+        
+        if (sc.checkCandidature(1, idoffre)) {
+            JOptionPane.showMessageDialog(null, "Vous Aver Deja Postuler Dans Cet Offre!");
+            return ;
+        }
+        int result = JOptionPane.showConfirmDialog(null, "vouler vous postuler?","Confirmation",JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION){
+                sc.ajouter(new Candidature(1, idoffre));
+                JOptionPane.showMessageDialog(null, "Postuler avec Succes !");
+                stage.close();
+            }else{
+            return;
+            }
     }
     
     

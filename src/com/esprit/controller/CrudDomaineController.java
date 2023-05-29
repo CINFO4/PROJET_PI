@@ -14,9 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 
@@ -43,9 +46,11 @@ public class CrudDomaineController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Refreshtable();
-        tableDomaine.setEditable(true);
         
+        tableDomaine.setEditable(true);
+        domaineCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        domaineCol.setOnEditCommit(this::OnEditDomaineName);
+        Refreshtable();
     }    
 
     
@@ -68,36 +73,6 @@ public class CrudDomaineController implements Initializable {
    
     }
 
-    @FXML
-    private void modifierDomaine(ActionEvent event) {
-        int index =tableDomaine.getSelectionModel().getSelectedIndex();
-       if( index < 0){
-           JOptionPane.showMessageDialog(null, "selectionner un domaine  !");
-           return;
-       }
-       int result = JOptionPane.showConfirmDialog(null, "vouler vous modifer ce domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
-       
-       if (result == JOptionPane.YES_OPTION){
-            int id =tableDomaine.getItems().get(index).getId_domaine();
-            sd.modifier(new Domaine(id,TFnomDomaine.getText()));  
-            TFnomDomaine.clear();
-            JOptionPane.showMessageDialog(null, "Domaine modifier !");
-            Refreshtable();
-        }else{
-            return ;
-        }
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-    }
     
 
     @FXML
@@ -118,26 +93,30 @@ public class CrudDomaineController implements Initializable {
                 return ;
             }
         }
-        
-        
-        
-        
-        
-        
+
     }
     
     public void Refreshtable(){
-        
         ObservableList<Domaine> listDomaine = FXCollections.observableArrayList(sd.afficher());
         tableDomaine.setItems(listDomaine);
         domaineCol.setCellValueFactory(new PropertyValueFactory<>("nom_domaine"));
-
     }
 
+
     @FXML
-    private void OnRowClicked(MouseEvent event) {
+    private void OnEditDomaineName(CellEditEvent event) {
         Domaine d = tableDomaine.getSelectionModel().getSelectedItem();
-        TFnomDomaine.setText(d.getNom_domaine());
+        int result = JOptionPane.showConfirmDialog(null, "vouler vous modifier un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION){
+                d.setNom_domaine(event.getNewValue().toString());
+                sd.modifier(d);
+            }else{
+                d.setNom_domaine(event.getOldValue().toString());
+                Refreshtable();
+            }
+        
+        
+        
     }
     
 }

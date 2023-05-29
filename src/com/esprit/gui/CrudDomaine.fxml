@@ -11,9 +11,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudDomaineController">
    <children>
-      <TableView fx:id="tableDomaine" editable="true" layoutX="359.0" layoutY="81.0" onMouseClicked="#OnRowClicked" prefHeight="272.0" prefWidth="210.0">
+      <TableView fx:id="tableDomaine" editable="true" layoutX="359.0" layoutY="81.0" prefHeight="272.0" prefWidth="210.0">
         <columns>
-          <TableColumn fx:id="domaineCol" prefWidth="209.0" text="Domaines" />
+          <TableColumn fx:id="domaineCol" onEditCommit="#OnEditDomaineName" prefWidth="209.0" text="Domaines" />
         </columns>
       </TableView>
       <Pane layoutX="43.0" layoutY="81.0" prefHeight="176.0" prefWidth="247.0" style="-fx-background-color: #DCDCDC;">
@@ -27,11 +27,6 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="281.0" mnemonicParsing="false" onAction="#ajouterDomaine" text="ajouter">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Button>
-      <Button layoutX="118.0" layoutY="281.0" mnemonicParsing="false" onAction="#modifierDomaine" text="modifier">
          <font>
             <Font size="17.0" />
          </font>

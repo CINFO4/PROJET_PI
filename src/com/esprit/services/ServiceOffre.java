@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -213,6 +213,7 @@ public class ServiceOffre implements IServices<Offre>{
         return list ;
 
     }
+    
   /*****************  *****************************/
     
     public List<OffreView> afficherOffres() {
@@ -235,7 +236,24 @@ public class ServiceOffre implements IServices<Offre>{
     
     
     
-    
+    public Offre chercherOffreByID(int id ) {
+        Offre off = null ;
+        String req ="SELECT * FROM offre WHERE id_offre = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, id);
+            ResultSet res = pst.executeQuery();
+            
+            while(res.next()){
+                off = new Offre(res.getInt("id_offre"),res.getString("titre"), res.getString("description"),res.getInt("id_domaine"),res.getInt("id_entreprise"),res.getDate("date_offre"),res.getDate("date_expiration"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return off ;
+
+    }
     
     
     

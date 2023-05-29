@@ -39,14 +39,15 @@ public class UpdateOffreController implements Initializable {
     private TextArea txtDescription;
     @FXML
     private DatePicker datePickerPub;
-    private TextField txtId;
     @FXML
-    private ChoiceBox<String> ChoiseBoxDomaine;
-    private Stage stage;
+    private ComboBox<String> ChoiseBoxDomaine;
+   
+    int idOffre;
+    int IDEntreprise;
     ServiceDomaine sd = new ServiceDomaine();
+    private Stage stage;
     private CrudOffreController offreController;
-    @FXML
-    private ComboBox<String> ddddddd;
+    
 
     /**
      * Initializes the controller class.
@@ -62,13 +63,24 @@ public class UpdateOffreController implements Initializable {
 
     @FXML
     private void updateOffre(ActionEvent event) {
-
+        
         if (ChoiseBoxDomaine.getValue() == null) {
             JOptionPane.showMessageDialog(null, "selectionner un Domaine ! ");
         } else {
-            ServiceOffre sf = new ServiceOffre();
-            sf.modifier(new Offre(Integer.parseInt(txtId.getText()), txtTitre.getText(), txtDescription.getText(), sd.getIdDomaineByName(ChoiseBoxDomaine.getValue()), Date.valueOf(datePickerPub.getValue()), Date.valueOf(datePickerExp.getValue())));
-            JOptionPane.showMessageDialog(null, "offre modifier ! ");
+            
+            
+            
+            int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION){
+                ServiceOffre sf = new ServiceOffre();
+                sf.modifier(new Offre(idOffre, txtTitre.getText(), txtDescription.getText(), sd.getIdDomaineByName(ChoiseBoxDomaine.getValue()),IDEntreprise, Date.valueOf(datePickerPub.getValue()), Date.valueOf(datePickerExp.getValue())));
+                JOptionPane.showMessageDialog(null, "offre modifier ! "); 
+                stage.close();
+            }else{
+                
+                return ;
+            }
+            
         }
         offreController.table();
         
@@ -81,9 +93,6 @@ public class UpdateOffreController implements Initializable {
 
     public void setChoiseBoxDomaine() {
         this.ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
-    }
-    public void setComboBoxDomaine() {
-        this.ddddddd.getItems().addAll(sd.getDomainesName());
     }
     
 
@@ -99,13 +108,26 @@ public class UpdateOffreController implements Initializable {
         this.datePickerPub.setValue(date.toLocalDate());
     }
 
-    public void setTxtId(String txtId) {
-        this.txtId.setText(txtId);
-    }
-
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    public int getIdOffre() {
+        return idOffre;
+    }
+
+    public void setIdOffre(int idOffre) {
+        this.idOffre = idOffre;
+    }
+
+    public int getIDEntreprise() {
+        return IDEntreprise;
+    }
+
+    public void setIDEntreprise(int IDEntreprise) {
+        this.IDEntreprise = IDEntreprise;
+    }
+
 
     public Stage getStage() {
         return stage;

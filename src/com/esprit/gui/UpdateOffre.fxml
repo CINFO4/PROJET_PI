@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -44,8 +43,7 @@
                </font>
             </Label>
             <DatePicker fx:id="datePickerPub" editable="false" layoutX="191.0" layoutY="302.0" onAction="#selectDate" />
-            <ChoiceBox fx:id="ChoiseBoxDomaine" layoutX="191.0" layoutY="243.0" prefWidth="150.0" />
-            <ComboBox fx:id="ddddddd" layoutX="238.0" layoutY="74.0" prefWidth="150.0" promptText="salah" />
+            <ComboBox fx:id="ChoiseBoxDomaine" layoutX="173.0" layoutY="243.0" prefWidth="150.0" promptText="Domaine" />
          </children>
       </Pane>
       <Label layoutX="78.0" layoutY="21.0" text="Mettre a jour l'offre">
