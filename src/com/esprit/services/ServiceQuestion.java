@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package esprit.services;
-import esprit.entities.Question;
-import esprit.utils.DataSource;
+package com.esprit.services;
+import com.esprit.entities.Question;
+import com.esprit.utils.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,10 +23,11 @@ public class ServiceQuestion {
     
     public void ajouter(Question q) {
         try {
-            String req = "INSERT INTO Question(libelle, id_c) VALUES (?,?);";
+            String req = "INSERT INTO Question(libelle, etat_question, id_c) VALUES (?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, q.getLibelle());
-             pst.setInt(2, q.getId_c());
+            pst.setString(2, q.getEtat_question());
+             pst.setInt(3, q.getId_c());
             pst.executeUpdate();
             System.out.println("Question ajoutée !");
         } catch (SQLException ex) {
@@ -36,11 +37,12 @@ public class ServiceQuestion {
     
     public void modifier(Question q) {
         try {
-            String req = "UPDATE Question SET libelle=?, id_c=? WHERE id=?";
+            String req = "UPDATE Question SET libelle=?, etat_question=?, id_c=? WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(3, q.getId_question());
+            pst.setInt(4, q.getId_question());
             pst.setString(1, q.getLibelle());
-            pst.setInt(2, q.getId_c());
+            pst.setString(2, q.getEtat_question());
+            pst.setInt(3, q.getId_c());
             pst.executeUpdate();
             System.out.println("Question modifiée !");
         } catch (SQLException ex) {
@@ -68,7 +70,7 @@ public class ServiceQuestion {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
-                list.add(new Question(rs.getInt("id_question"), rs.getString("libelle"), rs.getInt("id_c")));
+                list.add(new Question(rs.getInt("id_question"), rs.getString("libelle"), rs.getString("etat_question"), rs.getInt("id_c")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package esprit.main;
+package com.esprit.main;
 
-import esprit.entities.Question;
-import esprit.entities.proposition;
-import esprit.services.ServiceProposition;
-import esprit.services.ServiceQuestion;
+import com.esprit.entities.Question;
+import com.esprit.entities.proposition;
+import com.esprit.services.ServiceProposition;
+import com.esprit.services.ServiceQuestion;
 
 /**
  *
@@ -20,9 +20,9 @@ public class main {
      */
     public static void main(String[] args) {
         
-        ServiceProposition p1 = new ServiceProposition();
+        ServiceQuestion p1 = new ServiceQuestion();
         //p1.ajouter(new proposition("tunis","valid",1));
-        p1.ajouter(new proposition("paris","nonvalid",1));
+        System.out.println(p1.afficher());;
     }
     
 }
