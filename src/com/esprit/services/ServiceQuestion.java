@@ -79,4 +79,105 @@ public class ServiceQuestion {
         
         return list;
     }
+    public class QuestionView {
+        
+    private int id_question;
+    private String libelle;
+    private String etat_question;
+    private int id_c;
+    private String nomc;
+
+        public int getId_question() {
+            return id_question;
+        }
+
+        public void setId_question(int id_question) {
+            this.id_question = id_question;
+        }
+
+        public String getLibelle() {
+            return libelle;
+        }
+
+        public void setLibelle(String libelle) {
+            this.libelle = libelle;
+        }
+
+        public String getEtat_question() {
+            return etat_question;
+        }
+
+        public void setEtat_question(String etat_question) {
+            this.etat_question = etat_question;
+        }
+
+        public int getId_c() {
+            return id_c;
+        }
+
+        public void setId_c(int id_c) {
+            this.id_c = id_c;
+        }
+
+        public String getNomc() {
+            return nomc;
+        }
+
+        public void setNomc(String nomc) {
+            this.nomc = nomc;
+        }
+
+        public QuestionView(int id_question, String libelle, String etat_question, int id_c, String nomc) {
+            this.id_question = id_question;
+            this.libelle = libelle;
+            this.etat_question = etat_question;
+            this.id_c = id_c;
+            this.nomc = nomc;
+        }
+
+        @Override
+        public String toString() {
+            return "QuestionView{" + "id_question=" + id_question + ", libelle=" + libelle + ", etat_question=" + etat_question + ", id_c=" + id_c + ", nomc=" + nomc + '}';
+        }
+    
+    
+    }
+    
+    public List<QuestionView> afficherQuestionView() {
+        List<QuestionView> list = new ArrayList<>();
+        
+        String req = "SELECT id_question, libelle,etat_question,id_c,(select c.nom from Competence c where c.id_c=q.id_c) as nomc FROM Question q";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                list.add(new QuestionView(rs.getInt("id_question"), rs.getString("libelle"), rs.getString("etat_question"), rs.getInt("id_c"), rs.getString("nomc")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        return list;
+    }
+    
+     public int GetidQuestionbynom(String libelle){
+    int id = 0;
+    String req = "SELECT id_question FROM Question q where q.libelle like ?";
+    try {
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setString(1, libelle);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            
+            id = rs.getInt("id_question");
+         
+                    
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    return id;
+    }
 }

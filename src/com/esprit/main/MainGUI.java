@@ -29,7 +29,7 @@ public class MainGUI extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         
-        primaryStage.setTitle("PIDEV");
+        primaryStage.setTitle("QUIZ");
         primaryStage.show();
     }
 

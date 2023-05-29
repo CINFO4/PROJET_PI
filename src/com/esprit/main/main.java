@@ -6,8 +6,10 @@ package com.esprit.main;
 
 import com.esprit.entities.Question;
 import com.esprit.entities.proposition;
+import com.esprit.entities.Competence;
 import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
+import com.esprit.services.ServiceCompetence;
 
 /**
  *
@@ -21,8 +23,9 @@ public class main {
     public static void main(String[] args) {
         
         ServiceQuestion p1 = new ServiceQuestion();
+        //ServiceCompetence p2 = new ServiceCompetence();
         //p1.ajouter(new proposition("tunis","valid",1));
-        System.out.println(p1.afficher());;
+        System.out.println(p1.afficherQuestionView());
     }
     
 }
