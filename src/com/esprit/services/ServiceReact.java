@@ -22,12 +22,11 @@ public class ServiceReact implements IService<React>{
     
     public void ajouter(React R) {
         try {
-            String req = "INSERT INTO react(id_react, liked, id_commentaire, id_user) VALUES (?,?,?,?);";
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1, R.getId_react());            
-            pst.setBoolean(2, R.isLiked());
-            pst.setInt(3, R.getId_Commentaire());
-            pst.setInt(4, R.getId_user());           
+            String req = "INSERT INTO react(liked, id_commentaire, id_user) VALUES (?,?,?);";
+            PreparedStatement pst = cnx.prepareStatement(req);          
+            pst.setBoolean(1, R.isLiked());
+            pst.setInt(2, R.getId_Commentaire());
+            pst.setInt(3, R.getId_user());           
             pst.executeUpdate();
             System.out.println("react ajoutée !");
         } catch (SQLException ex) {
