@@ -11,15 +11,59 @@ package com.esprit.entities;
 public class Entreprise extends User {
     
     private String NomEntreprise;
+    private Taille TailleEntreprise;
+    private String SiteWeb;
+    private String Linkedin;
+    private int id_domaine;
 
-    public Entreprise(String NomEntreprise, int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
-        super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
+    public Entreprise( int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+        super(id, nom, prenom, mail, numero_téléphone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
+        this.TailleEntreprise = TailleEntreprise;
+        this.SiteWeb = SiteWeb;
+        this.Linkedin = Linkedin;
+        this.id_domaine = id_domaine;
     }
 
-    public Entreprise(String NomEntreprise, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
-        super(nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
+    public Entreprise(String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+        super(nom, prenom, mail, numero_téléphone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
+        this.TailleEntreprise = TailleEntreprise;
+        this.SiteWeb = SiteWeb;
+        this.Linkedin = Linkedin;
+        this.id_domaine = id_domaine;
+    }
+
+    public Taille getTailleEntreprise() {
+        return TailleEntreprise;
+    }
+
+    public void setTailleEntreprise(Taille TailleEntreprise) {
+        this.TailleEntreprise = TailleEntreprise;
+    }
+
+    public String getSiteWeb() {
+        return SiteWeb;
+    }
+
+    public void setSiteWeb(String SiteWeb) {
+        this.SiteWeb = SiteWeb;
+    }
+
+    public String getLinkedin() {
+        return Linkedin;
+    }
+
+    public void setLinkedin(String Linkedin) {
+        this.Linkedin = Linkedin;
+    }
+
+    public int getId_domaine() {
+        return id_domaine;
+    }
+
+    public void setId_domaine(int id_domaine) {
+        this.id_domaine = id_domaine;
     }
 
     
@@ -34,8 +78,12 @@ public class Entreprise extends User {
 
     @Override
     public String toString() {
-        return "Entreprise{" + super.toString() + "NomEntreprise=" + NomEntreprise + '}';
+        return "Entreprise{" + super.toString() + "NomEntreprise=" + NomEntreprise + ", TailleEntreprise=" + TailleEntreprise + ", SiteWeb=" + SiteWeb + ", Linkedin=" + Linkedin + ", id_domaine=" + id_domaine + '}';
     }
+    
+   
+
+    
 
     
 

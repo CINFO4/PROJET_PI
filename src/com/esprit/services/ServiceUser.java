@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
         
 
 /**
@@ -26,7 +28,7 @@ public class ServiceUser {
         if (p instanceof Candidat) {
             try{
              int id_user =0;   
-            String req = "insert into user (nom,prenom,adresse,numero_téléphone,motdepasse,description,education,role) values (?,?,?,?,?,?,?,?);";
+            String req = "insert into user (nom,prenom,mail,numero_telephone,motdepasse,description,education,role, Github, experience) values (?,?,?,?,?,?,?,?,?,?);";
             String req1 = "insert into profil (id_user,id_competence) values (?,?);";
             String req2= "select last_insert_id() from user;";
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -34,21 +36,23 @@ public class ServiceUser {
             PreparedStatement pst2 = cnx.prepareStatement(req2);
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Candidat) p).getEducation().name());
-            pst.setString(8, p.getRole().name());
+            pst.setString(8, p.getClass().toString());
+            pst.setString(9, ((Candidat) p).getGithub());
+            pst.setString(10, ((Candidat) p).getExperience().name());
             pst.executeUpdate();
             ResultSet rs = pst2.executeQuery();
             while (rs.next()){
                 id_user = rs.getInt("last_insert_id()");
             }
-            for(Competence competence : ((Candidat) p).getListeCompetences()){
-                pst1.setInt(1,id_user );
-                pst1.setInt(2, competence.getId_competence());
-                pst1.executeUpdate();
+            for (int id : ((Candidat) p).getListeCompetences()){
+                 pst1.setInt(1,id_user );
+                 pst1.setInt(2, id);
+                 pst1.executeUpdate();
             }
             
             
@@ -61,16 +65,20 @@ public class ServiceUser {
     }
         else if(p  instanceof Entreprise){
             try{
-            String req = "insert into user (nom,prenom,adresse,numero_téléphone,motdepasse,description,NomEntreprise,role) values (?,?,?,?,?,?,?,?);";
+            String req = "insert into user (nom,prenom,mail,numero_telephone,motdepasse,description,NomEntreprise,role,TailleEntreprise,SiteWeb,Linkedin,id_domaine) values (?,?,?,?,?,?,?,?,?,?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Entreprise) p).getNomEntreprise());
-            pst.setString(8, p.getRole().name());
+            pst.setString(8, p.getClass().toString());
+            pst.setString(9, ((Entreprise) p).getTailleEntreprise().name());
+            pst.setString(10, ((Entreprise) p).getSiteWeb());
+            pst.setString(11, ((Entreprise) p).getLinkedin());
+            pst.setInt(12, ((Entreprise) p).getId_domaine());
             
             pst.executeUpdate();
             System.out.println("Entreprise ajoutée");
@@ -82,15 +90,15 @@ public class ServiceUser {
         }
         else {
             try{
-            String req = "insert into user (nom,prenom,adresse,numero_téléphone,motdepasse,description,role) values (?,?,?,?,?,?,?);";
+            String req = "insert into user (nom,prenom,mail,numero_telephone,motdepasse,description,role) values (?,?,?,?,?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
-            pst.setString(7, p.getRole().name());
+            pst.setString(7, p.getClass().toString());
             
             pst.executeUpdate();
             System.out.println("Admin ajouté");
@@ -106,17 +114,18 @@ public class ServiceUser {
         if (p instanceof Candidat){
             
          try {
-            String req = "UPDATE User SET nom=?, prenom=?, adresse=?, numero_téléphone=?, motdepasse=?, description=?, education=?, role=?   WHERE id=?";
+            String req = "UPDATE User SET nom=?, prenom=?, mail=?, numero_telephone=?, motdepasse=?, description=?, education=?, github=?, experience=?   WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(9, p.getId());
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
-            pst.setString(7, ((Candidat) p).getEducation().toString());
-            pst.setString(8, p.getRole().name());
+            pst.setString(7, ((Candidat) p).getEducation().name());
+            pst.setString(8, ((Candidat) p).getGithub());
+            pst.setString(9, ((Candidat) p).getExperience().name());
             pst.executeUpdate();
             System.out.println("Candidat modifiée !");
         } catch (SQLException ex) {
@@ -126,17 +135,22 @@ public class ServiceUser {
     }
         else if (p instanceof Entreprise){
             try {
-            String req = "UPDATE User SET nom=?, prenom=?, adresse=?, numero_téléphone=?, motdepasse=?, description=?, NomEntreprise, role=?   WHERE id=?";
+            String req = "UPDATE User SET nom=?, prenom=?, adresse=?, numero_telephone=?, motdepasse=?, description=?, NomEntreprise=?, role=?, TailleEntreprise=?, SiteWeb=?, Linkedin=?, id_domaine=?   WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(9, p.getId());
+            pst.setInt(13, p.getId());
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Entreprise) p).getNomEntreprise());
-            pst.setString(8, p.getRole().name());
+            pst.setString(8, p.getClass().toString());
+            pst.setString(9, ((Entreprise) p).getTailleEntreprise().name());
+            pst.setString(10, ((Entreprise) p).getSiteWeb());
+            pst.setString(11, ((Entreprise) p).getLinkedin());
+            pst.setInt(12, ((Entreprise) p).getId_domaine());
+            
             pst.executeUpdate();
             System.out.println("Entreprise modifiée !");
         } catch (SQLException ex) {
@@ -145,16 +159,16 @@ public class ServiceUser {
         }
         else {
             try {
-            String req = "UPDATE User SET nom=?, prenom=?, adresse=?, numero_téléphone=?, motdepasse=?, description=?,role=?   WHERE id=?";
+            String req = "UPDATE User SET nom=?, prenom=?, mail=?, numero_telephone=?, motdepasse=?, description=?,role=?   WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(8, p.getId());
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
-            pst.setString(3, p.getAdresse());
+            pst.setString(3, p.getMail());
             pst.setInt(4, p.getNumero_téléphone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
-            pst.setString(7, p.getRole().name());
+            pst.setString(7, p.getClass().toString());
             pst.executeUpdate();
             System.out.println("Admin modifiée !");
         }
@@ -197,26 +211,29 @@ public class ServiceUser {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
-                String adresse = rs.getString("adresse");
-                int numeroTelephone = rs.getInt("numero_téléphone");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
                 String motdepasse = rs.getString("motdepasse");
                 String description = rs.getString("description");
-                //Diplome education = Diplome.Autre;
-                //if (rs.getString("education")!= null)
-                    
                 String NomEntreprise= rs.getString("NomEntreprise");
-                Role role = Role.valueOf(rs.getString("role"));
-                if (role.name().equals("Candidat")){
+                String role = rs.getString("role");               
+                if (role.equals("class com.esprit.entities.Candidat")){
                     Diplome education = Diplome.valueOf(rs.getString("education"));
-                    User candidat = new Candidat(id,nom, prenom, adresse, numeroTelephone, motdepasse, description, education, role);
+                    String Github = rs.getString("Github");
+                    Experience experience = Experience.valueOf(rs.getString("experience"));
+                    User candidat = new Candidat(id,nom, prenom, mail, numeroTelephone, motdepasse, description, education,Github, experience );
                     list.add(candidat);
                 }
-                else if (role.name().equals("Entreprise")){
-                    User entreprise = new Entreprise(NomEntreprise,id, nom, prenom, adresse, numeroTelephone, motdepasse, description, role);
+                else if (role.equals("class com.esprit.entities.Entreprise")){
+                    Taille TailleEntreprise = Taille.valueOf(rs.getString("TailleEntreprise"));
+                    String SiteWeb = rs.getString("SiteWeb");
+                    String Linkedin = rs.getString("Linkedin");
+                    int id_domaine = rs.getInt("id_domaine");
+                    User entreprise = new Entreprise(id, nom, prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine);
                     list.add(entreprise);
                 }
                 else{
-                    User admin = new Administrateur(id,nom, prenom, adresse, numeroTelephone, motdepasse, description, role);
+                    User admin = new Administrateur(id,nom, prenom, mail, numeroTelephone, motdepasse, description);
                     list.add(admin);
                 }
             }
@@ -229,4 +246,154 @@ public class ServiceUser {
     
     
     }
+    
+
+public class entreprisedomaine extends Entreprise{
+
+        
+        private String nom_domaine;
+
+        public entreprisedomaine(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine, String nom_domaine) {
+            super(id, nom, prenom, mail, numero_téléphone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine);
+            this.nom_domaine = nom_domaine;
+        }
+        
+        public String getNom_domaine() {
+            return nom_domaine;
+        }
+
+        public void setNom_domaine(String nom_domaine) {
+            this.nom_domaine = nom_domaine;
+        }
+
+        @Override
+        public String toString() {
+            return "entreprisedomaine{" + super.toString() + "nom_domaine=" + nom_domaine + '}';
+        }
+
+       
+
     }
+        public List<entreprisedomaine> afficherentreprise(){
+        List<entreprisedomaine> list = new ArrayList<>();
+        String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                Taille TailleEntreprise = Taille.valueOf(rs.getString("TailleEntreprise"));
+                String NomEntreprise= rs.getString("NomEntreprise");    
+                String SiteWeb = rs.getString("SiteWeb");
+                String Linkedin = rs.getString("Linkedin");
+                int id_domaine = rs.getInt("id_domaine");
+                String nom_domaine = rs.getString("nom_domaine");
+                entreprisedomaine ed = new entreprisedomaine(id,nom,prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine, nom_domaine);
+                    list.add(ed);
+            }
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+            
+        }
+        public ObservableList<User> getalluser() {
+        ObservableList<User> list = FXCollections.observableArrayList();
+        boolean entrepriseajoutee = false;
+        String req = "SELECT * FROM user";
+     
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                String NomEntreprise= rs.getString("NomEntreprise");
+                String role = rs.getString("role");               
+                if (role.equals("class com.esprit.entities.Candidat")){
+                    Diplome education = Diplome.valueOf(rs.getString("education"));
+                    String Github = rs.getString("Github");
+                    Experience experience = Experience.valueOf(rs.getString("experience"));
+                    User candidat = new Candidat(id,nom, prenom, mail, numeroTelephone, motdepasse, description, education,Github, experience );
+                    list.add(candidat);
+                }
+                else if (role.equals("class com.esprit.entities.Entreprise")){
+                   
+                    if (!entrepriseajoutee ){
+                    list.addAll(afficherentreprise());
+                    entrepriseajoutee  = true;
+                }
+                }
+                else{
+                    User admin = new Administrateur(id,nom, prenom, mail, numeroTelephone, motdepasse, description);
+                    list.add(admin);
+                }
+            }
+           
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        return list;
+    
+    
+    }
+        
+        public List<String> affichercompetence(int id) {
+        List<String> list = new ArrayList<>();
+        
+        String req = "SELECT nom FROM profil where id=?";
+     
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1,id);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                list.add(res.getString("nom"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        return list;
+    
+    
+    }
+        
+    public int getuserid(String mail){
+        int id=0;
+        String req = "SELECT id from User where mail=?";
+     
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1,mail);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                id = res.getInt("id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return id;
+    }
+    
+     
+    }
+   
+    
+    
+
+

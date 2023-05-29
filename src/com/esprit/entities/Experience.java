@@ -8,7 +8,7 @@ package com.esprit.entities;
  *
  * @author Anis
  */
-public enum Role {
-    Candidat,Entreprise, Admin;
+public enum Experience {
+    Junior, Confirme, Senior;
     
 }

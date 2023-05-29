@@ -10,13 +10,16 @@ package com.esprit.entities;
  */
 public class Administrateur extends User {
 
-    public Administrateur(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
-        super(id, nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
+    public Administrateur(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
+        super(id, nom, prenom, mail, numero_téléphone, motdepasse, description);
     }
 
-    public Administrateur(String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
-        super(nom, prenom, adresse, numero_téléphone, motdepasse, description, role);
+    public Administrateur(String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
+        super(nom, prenom, mail, numero_téléphone, motdepasse, description);
     }
+
+    
+    
     
     
 }

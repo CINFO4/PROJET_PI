@@ -9,39 +9,39 @@ package com.esprit.entities;
  * @author Anis
  */
 public class Competence {
-    
-    private int id_competence;
-    private String nom_competence;
+    private int id_c;
+    private String nom;
     private String description;
-    private String niveau;
+    
+    
+    public Competence(String nom,String description ) {
+        this.nom=nom;
+        this.description=description;
+        
+   }
+    
+    public Competence(int id_c , String nom , String description) {
+        this.id_c=id_c;
+        this.nom=nom;
+        this.description=description;
+        
+   }
 
-    public Competence(int id_competence, String nom_competence, String description, String niveau) {
-        this.id_competence = id_competence;
-        this.nom_competence = nom_competence;
-        this.description = description;
-        this.niveau = niveau;
+
+    public int getId_c() {
+        return id_c;
     }
 
-    public Competence(String nom_competence, String description, String niveau) {
-        this.nom_competence = nom_competence;
-        this.description = description;
-        this.niveau = niveau;
+    public void setId_c(int id_c) {
+        this.id_c = id_c;
     }
 
-    public int getId_competence() {
-        return id_competence;
+    public String getNom() {
+        return nom;
     }
 
-    public void setId_competence(int id_competence) {
-        this.id_competence = id_competence;
-    }
-
-    public String getNom_competence() {
-        return nom_competence;
-    }
-
-    public void setNom_competence(String nom_competence) {
-        this.nom_competence = nom_competence;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getDescription() {
@@ -52,13 +52,13 @@ public class Competence {
         this.description = description;
     }
 
-    public String getNiveau() {
-        return niveau;
+  
+    @Override
+    public String toString() {
+        return nom ;
     }
-
-    public void setNiveau(String niveau) {
-        this.niveau = niveau;
-    }
-    
     
 }
+    
+    
+

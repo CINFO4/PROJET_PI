@@ -10,35 +10,35 @@ import java.util.Objects;
  *
  * @author Anis
  */
-public class  User {
+public abstract class  User {
     private int id;
     private String nom;
     private String prenom;
-    private String adresse;
-    private int numero_téléphone;
+    private String mail;
+    private int numero_telephone;
     private String motdepasse;
     private String description;
-    private Role role;
+    
 
-    public User(int id, String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+    public User(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        this.adresse = adresse;
-        this.numero_téléphone = numero_téléphone;
+        this.mail = mail;
+        this.numero_telephone = numero_téléphone;
         this.motdepasse = motdepasse;
         this.description = description;
-        this.role = role;
+        
     }
 
-    public User(String nom, String prenom, String adresse, int numero_téléphone, String motdepasse, String description, Role role) {
+    public User(String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
         this.nom = nom;
         this.prenom = prenom;
-        this.adresse = adresse;
-        this.numero_téléphone = numero_téléphone;
+        this.mail = mail;
+        this.numero_telephone = numero_téléphone;
         this.motdepasse = motdepasse;
         this.description = description;
-        this.role = role;
+        
     }
 
     
@@ -66,20 +66,24 @@ public class  User {
         this.prenom = prenom;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getMail() {
+        return mail;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
+
+
+
+   
 
     public int getNumero_téléphone() {
-        return numero_téléphone;
+        return numero_telephone;
     }
 
     public void setNumero_téléphone(int numero_téléphone) {
-        this.numero_téléphone = numero_téléphone;
+        this.numero_telephone = numero_téléphone;
     }
 
     public String getMotdepasse() {
@@ -98,41 +102,19 @@ public class  User {
         this.description = description;
     }
 
-    public Role getRole() {
-        return role;
-    }
+    
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.role);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        return this.role == other.role;
-    }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", numero_t\u00e9l\u00e9phone=" + numero_téléphone + ", motdepasse=" + motdepasse + ", description=" + description + ", role=" + role + '}';
+        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_phone=" + numero_telephone + ", motdepasse=" + motdepasse + ", description=" + description + '}';
     }
+    
 
+  
     
     
     
