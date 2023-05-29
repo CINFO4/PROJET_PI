@@ -19,9 +19,9 @@ public class MainProg {
     public static void main(String[] args) {
         
         ServiceGererDocument sd = new ServiceGererDocument();
-        //sd.ajouter(new Document(2, "Document 6", "aaa", "bbb", "ccc", 1));
-     //   sd.modifier(new Document(2, "Document99", "vv", "qq", "dd", 1));
-        //sd.supprimer(new Document(1, "", "", "", "", 0));
+        sd.ajouter(new Document( "Document 6", "aaa", "bbb", "ccc", 1));
+       // sd.modifier(new Document(2, "Document990", "vva", "qqss", "ddaziz", 1));
+       // sd.supprimer(new Document(2, "", "", "", "", 1));
        // System.out.println(sd.afficher());
 
         
@@ -29,7 +29,7 @@ public class MainProg {
         //sc.ajouter(new Competence(1, "Competence 1", "Description 1"));
         System.out.println(sc.afficher());
         
-        ServiceProfile sp = new ServiceProfile();
+        //ServiceProfile sp = new ServiceProfile();
         //sp.ajouter(new Profile(1, 1, "Niveau 1"));
         //System.out.println(sp.afficher());
 

@@ -7,20 +7,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.paint.Color;
 
 public class GererDocumentController implements Initializable {
 
     @FXML
     private TextField txtTitre;
+
+    @FXML
+    private TextField txtUserId;
 
     @FXML
     private ChoiceBox<String> choiceType;
@@ -29,105 +29,157 @@ public class GererDocumentController implements Initializable {
     private TextField txtLien;
 
     @FXML
-    private TextField txtDescription;
+    private TableView<Document> tblDocuments;
 
     @FXML
-    private Button btnAdd;
+    private TableColumn<Document, String> colTitre;
 
     @FXML
-    private Button btnClear;
+    private TableColumn<Document, String> colUserId;
 
     @FXML
-    private TableView<Document> tableDocument;
+    private TableColumn<Document, String> colType;
 
     @FXML
-    private TableColumn<Document, String> titreCol;
+    private TableColumn<Document, String> colLien;
 
     @FXML
-    private TableColumn<Document, String> typeCol;
+    private Button btnSupprimer;
 
+    private ObservableList<Document> documentsList;
+    private ServiceGererDocument serviceGererDocument;
     @FXML
-    private TableColumn<Document, String> lienCol;
-
+    private Color linearGradientEnd;
     @FXML
-    private TableColumn<Document, String> descCol;
-
+    private Button btnAjouter;
     @FXML
-    private Button btnDelete;
-
-    private ServiceGererDocument service;
+    private Button btnModifier;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize your choice box with values
-        ObservableList<String> typeOptions = FXCollections.observableArrayList(
-                "Type 1", "Type 2", "Type 3");
-        choiceType.setItems(typeOptions);
+    public void initialize(URL location, ResourceBundle resources) {
+        loadChoiceBox();
+        refresh();
 
-        // Initialize your table columns
-     titreCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getTitre_document()));
-typeCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getType()));
-lienCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getLien()));
-descCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getDescription_document()));
-
-
-        // Initialize your service
-        service = new ServiceGererDocument();
-
-        // Load documents into the table
-        loadDocuments();
+        tblDocuments.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Document selectedDocument = tblDocuments.getSelectionModel().getSelectedItem();
+                txtTitre.setText(selectedDocument.getTitre_document());
+                txtUserId.setText(String.valueOf(selectedDocument.getId_user()));
+                choiceType.getSelectionModel().select(selectedDocument.getType());
+                txtLien.setText(selectedDocument.getLien());
+            }
+        });
     }
 
     @FXML
-    void handleAdd(ActionEvent event) {
+    void ajouter(ActionEvent event) {
         String titre = txtTitre.getText();
+        String description = "";
         String type = choiceType.getValue();
         String lien = txtLien.getText();
-        String description = txtDescription.getText();
+        int userId = Integer.parseInt(txtUserId.getText());
 
-        Document document = new Document();
-        document.setTitre_document(titre);
-        document.setType(type);
-        document.setLien(lien);
-        document.setDescription_document(description);
+//        if (titre.isEmpty() || type.isEmpty() || lien.isEmpty()) {
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("Warning");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please fill in all the fields");
+//            alert.showAndWait();
+//            return;
+//        }
 
-        // Call your service to add the document
-        service.ajouter(document);
+       // Create a new Document instance
+Document document = new Document();
+document.setTitre_document(titre);
+document.setDescription_document(description);
+document.setType(type);
+document.setLien(lien);
+document.setId_user(userId);
+ServiceGererDocument sd= new ServiceGererDocument();
 
-        // Clear input fields and reload the documents
-        clearFields();
-        loadDocuments();
+sd.ajouter(document);
+refresh();
     }
+    
+  
+    
+    
 
     @FXML
-    void handleClear(ActionEvent event) {
-        clearFields();
-    }
-
-    @FXML
-    void handleDelete(ActionEvent event) {
-        Document selectedDocument = tableDocument.getSelectionModel().getSelectedItem();
+    void modifier(ActionEvent event) {
+        Document selectedDocument = tblDocuments.getSelectionModel().getSelectedItem();
         if (selectedDocument != null) {
-            // Call your service to delete the selected document
-            service.supprimer(selectedDocument);
+            String titre = txtTitre.getText();
+            String description = "";
+            String type = choiceType.getValue();
+            String lien = txtLien.getText();
+            int userId = Integer.parseInt(txtUserId.getText());
 
-            // Reload the documents
-            loadDocuments();
+            if (titre.isEmpty() || type.isEmpty() || lien.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in all the fields");
+                alert.showAndWait();
+                return;
+            }
+
+            selectedDocument.setTitre_document(titre);
+            selectedDocument.setDescription_document(description);
+            selectedDocument.setType(type);
+            selectedDocument.setLien(lien);
+            selectedDocument.setId_user(userId);
+
+            serviceGererDocument.modifier(selectedDocument);
+            tblDocuments.refresh();
+            clearFields();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a document to edit");
+            alert.showAndWait();
         }
     }
 
-    private void loadDocuments() {
-        // Call your service to retrieve the documents
-        ObservableList<Document> documents = FXCollections.observableArrayList(service.afficher());
+    @FXML
+    void supprimer(ActionEvent event) {
+        Document selectedDocument = tblDocuments.getSelectionModel().getSelectedItem();
+        if (selectedDocument != null) {
+            serviceGererDocument.supprimer(selectedDocument);
+            documentsList.remove(selectedDocument);
+            clearFields();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a document to delete");
+            alert.showAndWait();
+        }
+    }
 
-        // Load the documents into the table
-        tableDocument.setItems(documents);
+    private void loadChoiceBox() {
+        ObservableList<String> types = FXCollections.observableArrayList("Type 1", "Type 2", "Type 3");
+        choiceType.setItems(types);
     }
 
     private void clearFields() {
         txtTitre.clear();
+        txtUserId.clear();
         choiceType.getSelectionModel().clearSelection();
         txtLien.clear();
-        txtDescription.clear();
+    }
+    
+    public void refresh(){
+        
+       serviceGererDocument = new ServiceGererDocument();
+       
+        colTitre.setCellValueFactory(new PropertyValueFactory<>("titre_document"));
+        colUserId.setCellValueFactory(new PropertyValueFactory<>("id_user"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colLien.setCellValueFactory(new PropertyValueFactory<>("lien"));
+
+        documentsList = FXCollections.observableArrayList(serviceGererDocument.afficher());
+        tblDocuments.setItems(documentsList);
     }
 }
