@@ -1,8 +1,11 @@
 package com.esprit.gui;
 
 import com.esprit.entities.Commentaire;
+import com.esprit.entities.React;
 import com.esprit.services.ServiceCommentaire;
+import com.esprit.services.ServiceReact;
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +27,15 @@ public class CommentaireController {
     private Commentaire comment;
     private ServiceCommentaire serviceCommentaire;
     private ForumController forumController;
+    private ServiceReact serviceReact;
+
+    @FXML
+    private Button likeButton;
 
     public CommentaireController() {
     }
 
-    public CommentaireController(Commentaire comment, ForumController forumController) {
+    public CommentaireController(Commentaire comment, ForumController forumController) throws SQLException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("commentaire.fxml"));
 
@@ -42,12 +49,19 @@ public class CommentaireController {
         controller.initialize(comment, forumController);
     }
 
-    private void initialize(Commentaire comment, ForumController forumController) {
+    private void initialize(Commentaire comment, ForumController forumController) throws SQLException {
         serviceCommentaire = new ServiceCommentaire();
+        serviceReact = new ServiceReact();
+
         this.comment = comment;
         this.forumController = forumController;
 
         contentTextArea.setText(comment.getContenu());
+        
+        int id_react = serviceReact.getIdReactbyCommentAndUser(getCurrentUser(), comment.getId_commentaire());
+        if (id_react != -1) {
+            likeButton.setText("Aimé");
+        }
     }
 
     @FXML
@@ -69,8 +83,6 @@ public class CommentaireController {
 
     @FXML
     private void deleteComment(ActionEvent event) throws IOException {
-        System.out.println("comment" + comment);
-        System.out.println("servicecomment" + serviceCommentaire);
         serviceCommentaire.supprimer(comment);
         loadComments();
     }
@@ -87,4 +99,20 @@ public class CommentaireController {
         forumController.loadComments();
     }
 
+    @FXML
+    private void likeComment(ActionEvent event) throws SQLException {
+        int id_react = serviceReact.getIdReactbyCommentAndUser(getCurrentUser(), comment.getId_commentaire());
+        if (id_react == -1) {
+            serviceReact.ajouter(new React(true, comment.getId_commentaire(), getCurrentUser()));
+        } else {
+            React R = new React(id_react, true, comment.getId_commentaire(), getCurrentUser());
+            serviceReact.supprimer(R);
+        }
+        loadComments();
+    }
+
+    public int getCurrentUser() {
+        //function that return current user
+        return 1;
+    }
 }
