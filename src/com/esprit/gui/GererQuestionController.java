@@ -10,6 +10,7 @@ import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
 import com.esprit.services.ServiceCompetence;
 import com.esprit.services.ServiceQuestion.QuestionView;
+//import java.awt.Insets;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
@@ -31,6 +36,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.geometry.Insets;
 import javax.swing.JOptionPane;
 
 
@@ -104,12 +111,19 @@ public class GererQuestionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         AfficherQuestion();
         refresh();
+        information.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2) {
+            modifierQuestion();
+        }
+    });
+}
         
-    }    
+     
     
     
     public void AfficherQuestion() {
     ServiceQuestion serviceQuestion = new ServiceQuestion();
+    ServiceProposition serviceProposition = new ServiceProposition();
     ServiceCompetence sc = new ServiceCompetence();
     listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
     listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -192,9 +206,93 @@ public class GererQuestionController implements Initializable {
     }
 
     @FXML
-    private void modifierQuestion(ActionEvent event) {
-    }
+    private void modifierQuestion() {
+        
+     QuestionView selectedQuestion = information.getSelectionModel().getSelectedItem();
+    if (selectedQuestion != null) {
+        // Afficher une boîte de dialogue pour modifier la question
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Modifier la question");
+        dialog.setHeaderText(null);
 
+        // Créer les champs de saisie pour les nouveaux valeurs de la question
+        TextField tfLibelle = new TextField(selectedQuestion.getLibelle());
+        RadioButton rdActive = new RadioButton("Active");
+        RadioButton rdDesactive = new RadioButton("Desactive");
+        ToggleGroup etat = new ToggleGroup();
+        rdActive.setToggleGroup(etat);
+        rdDesactive.setToggleGroup(etat);
+
+        // Pré-sélectionner l'état de la question
+        if (selectedQuestion.getEtat_question().equals("Active")) {
+            rdActive.setSelected(true);
+        } else if (selectedQuestion.getEtat_question().equals("Desactive")) {
+            rdDesactive.setSelected(true);
+        }
+
+        // Créer le bouton de confirmation
+        ButtonType btnModifier = new ButtonType("Modifier", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnModifier, ButtonType.CANCEL);
+
+        // Ajouter les champs de saisie à la boîte de dialogue
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        // Utiliser javafx.geometry.Insets
+        gridPane.setPadding(new Insets(20, 150, 10, 10));
+        gridPane.add(new Label("Libelle:"), 0, 0);
+        gridPane.add(tfLibelle, 1, 0);
+        gridPane.add(new Label("Etat:"), 0, 1);
+        gridPane.add(rdActive, 1, 1);
+        gridPane.add(rdDesactive, 2, 1);
+        dialog.getDialogPane().setContent(gridPane);
+
+        // Activer le bouton de confirmation uniquement si le libellé est saisi
+        Node btnModifierNode = dialog.getDialogPane().lookupButton(btnModifier);
+        btnModifierNode.setDisable(true);
+        tfLibelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            btnModifierNode.setDisable(newValue.trim().isEmpty());
+        });
+
+        // Récupérer les nouveaux valeurs de la question et les appliquer
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == btnModifier) {
+                String libelle = tfLibelle.getText().trim();
+                String etatQuestion = rdActive.isSelected() ? "Active" : "Desactive";
+                Question modifiedQuestion = new Question(
+                selectedQuestion.getId_question(),
+                libelle,
+                etatQuestion,
+                selectedQuestion.getId_c()
+        );
+
+      return dialogButton;
+            }
+            return null;
+       });
+
+        // Afficher la boîte de dialogue et mettre à jour la question si les modifications sont confirmées
+       Optional<ButtonType> result = dialog.showAndWait();
+         result.ifPresent(dialogButton -> {
+            if (dialogButton == btnModifier) {
+            ServiceQuestion serviceQuestion = new ServiceQuestion();
+            QuestionView modifiedQuestion = information.getSelectionModel().getSelectedItem();
+                 if (modifiedQuestion != null) {
+                      Question q = new Question(
+                         modifiedQuestion.getId_question(),
+                         modifiedQuestion.getLibelle(),
+                         modifiedQuestion.getEtat_question(),
+                         modifiedQuestion.getId_c()
+                        );
+        serviceQuestion.modifier(q);
+            refresh();
+                 }
+             }
+    });
+              
+                 } }              
+   
+          
     @FXML
     private void supprimerQuestion(ActionEvent event) {
         

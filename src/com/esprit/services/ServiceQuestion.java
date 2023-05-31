@@ -37,7 +37,7 @@ public class ServiceQuestion {
     
     public void modifier(Question q) {
         try {
-            String req = "UPDATE Question SET libelle=?, etat_question=?, id_c=? WHERE id=?";
+            String req = "UPDATE Question SET libelle=?, etat_question=?, id_c=? WHERE id_question=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(4, q.getId_question());
             pst.setString(1, q.getLibelle());
