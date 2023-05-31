@@ -49,14 +49,14 @@ public class ServiceProposition {
         }
     }
     
-    public void supprimer(proposition p) {
+    public void supprimer(int id_question) {
         try {
-            String req = "DELETE from proposition WHERE id_proposition=?";
+            String req = "DELETE from proposition WHERE id_question=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1, p.getId_proposition());
+            pst.setInt(1, id_question);
             pst.executeUpdate();
-            System.out.println("Proposition supprimée !");
-        } catch (SQLException ex) {
+            } 
+            catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }

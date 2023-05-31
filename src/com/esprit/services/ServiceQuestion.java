@@ -52,7 +52,7 @@ public class ServiceQuestion {
     
     public void supprimer(Question q) {
         try {
-            String req = "DELETE from Question WHERE id=?";
+            String req = "DELETE from Question WHERE id_question=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, q.getId_question());
             pst.executeUpdate();
