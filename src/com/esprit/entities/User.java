@@ -15,12 +15,12 @@ public abstract class  User {
     private String nom;
     private String prenom;
     private String mail;
-    private int numero_telephone;
+    private Integer numero_telephone;
     private String motdepasse;
     private String description;
     
 
-    public User(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
+    public User(int id, String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -31,7 +31,7 @@ public abstract class  User {
         
     }
 
-    public User(String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description) {
+    public User(String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
@@ -78,11 +78,11 @@ public abstract class  User {
 
    
 
-    public int getNumero_téléphone() {
+    public Integer getNumeroTelephone() {
         return numero_telephone;
     }
 
-    public void setNumero_téléphone(int numero_téléphone) {
+    public void setNumeroTelephone(Integer numero_téléphone) {
         this.numero_telephone = numero_téléphone;
     }
 
@@ -110,7 +110,7 @@ public abstract class  User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_phone=" + numero_telephone + ", motdepasse=" + motdepasse + ", description=" + description + '}';
+        return  "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_phone=" + getNumeroTelephone() + ", motdepasse=" + motdepasse + ", description=" + description + '}';
     }
     
 

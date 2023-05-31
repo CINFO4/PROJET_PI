@@ -17,7 +17,7 @@ public class Candidat extends User {
     private String Github;
     private Experience experience;
 
-    public Candidat(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, Diplome education, String Github, Experience experience) {
+    public Candidat(int id, String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description, Diplome education, String Github, Experience experience) {
         super(id, nom, prenom, mail, numero_téléphone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Candidat extends User {
         this.experience=experience;
     }
 
-    public Candidat( String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description,Diplome education, String Github, Experience experience) {
+    public Candidat( String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description,Diplome education, String Github, Experience experience) {
         super(nom, prenom, mail, numero_téléphone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Candidat extends User {
 
     @Override
     public String toString() {
-        return "Candidat{" + super.toString() + "education=" + education + ", ListeCompetences=" + ListeCompetences + ", Github=" + Github + ", experience=" + experience + '}';
+        return "Candidat{" + super.toString() + "education=" + education + ", Github=" + Github + ", experience=" + experience + '}';
     }
 
    

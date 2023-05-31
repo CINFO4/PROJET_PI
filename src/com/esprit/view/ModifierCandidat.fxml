@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="856.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.AjoutCandidatController">
+<AnchorPane id="AnchorPane" prefHeight="856.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.ModifierCandidatController">
    <children>
       <ScrollPane prefHeight="859.0" prefWidth="921.0">
         <content>
@@ -42,7 +42,7 @@
                   <ComboBox fx:id="cbdiplome" layoutX="194.0" layoutY="462.0" prefWidth="150.0" />
                   <ComboBox fx:id="cbexperience" layoutX="664.0" layoutY="462.0" prefWidth="150.0" />
                   <ListView fx:id="listcompetence" layoutX="192.0" layoutY="521.0" prefHeight="140.0" prefWidth="665.0" />
-                  <Button fx:id="envoye" layoutX="468.0" layoutY="777.0" mnemonicParsing="false" onAction="#ajouterCandidat" text="Submit" />
+                  <Button fx:id="envoye" layoutX="468.0" layoutY="777.0" mnemonicParsing="false" onAction="#ModifierCandidat" text="Modifier" />
                   <PasswordField fx:id="tfmotdepasse" layoutX="192.0" layoutY="391.0" />
                   <PasswordField fx:id="tfmotdepasse2" layoutX="670.0" layoutY="391.0" />
                </children>

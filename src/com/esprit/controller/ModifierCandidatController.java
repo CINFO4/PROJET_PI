@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
  *
  * @author Anis
  */
-public class AjoutCandidatController implements Initializable {
+public class ModifierCandidatController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -78,12 +78,23 @@ public class AjoutCandidatController implements Initializable {
             refreshEvent.onRefresh();
         }
      }
+    public void initData(Candidat candidat) {
+        tfnom.setText(candidat.getNom());
+        tfprenom.setText(candidat.getPrenom());
+        tfadresse.setText(candidat.getMail());
+        tftelephone.setText(String.valueOf(candidat.getNumeroTelephone()));
+        tfgithub.setText(candidat.getGithub());
+        tadescription.setText(candidat.getDescription());
+        cbdiplome.setValue(candidat.getEducation());
+        cbexperience.setValue(candidat.getExperience());
+        
+    }
      @FXML
-    public void ajouterCandidat(ActionEvent event) throws IOException {
+    public void ModifierCandidat(ActionEvent event) throws IOException {
         if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
         ServiceUser sp = new ServiceUser();
-        sp.ajouter(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
-        JOptionPane.showMessageDialog(null, "Candidat ajouté !");
+        sp.modifier(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
+        JOptionPane.showMessageDialog(null, "Candidat modifié !");
         triggerRefreshEvent();
         }
         else {

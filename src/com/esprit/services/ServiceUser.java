@@ -37,11 +37,11 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Candidat) p).getEducation().name());
-            pst.setString(8, p.getClass().toString());
+            pst.setString(8, p.getClass().getSimpleName());
             pst.setString(9, ((Candidat) p).getGithub());
             pst.setString(10, ((Candidat) p).getExperience().name());
             pst.executeUpdate();
@@ -70,11 +70,11 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Entreprise) p).getNomEntreprise());
-            pst.setString(8, p.getClass().toString());
+            pst.setString(8, p.getClass().getSimpleName());
             pst.setString(9, ((Entreprise) p).getTailleEntreprise().name());
             pst.setString(10, ((Entreprise) p).getSiteWeb());
             pst.setString(11, ((Entreprise) p).getLinkedin());
@@ -95,10 +95,10 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
-            pst.setString(7, p.getClass().toString());
+            pst.setString(7, p.getClass().getSimpleName());
             
             pst.executeUpdate();
             System.out.println("Admin ajouté");
@@ -120,7 +120,7 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Candidat) p).getEducation().name());
@@ -141,7 +141,7 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, ((Entreprise) p).getNomEntreprise());
@@ -165,7 +165,7 @@ public class ServiceUser {
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
-            pst.setInt(4, p.getNumero_téléphone());
+            pst.setInt(4, p.getNumeroTelephone());
             pst.setString(5, p.getMotdepasse());
             pst.setString(6, p.getDescription());
             pst.setString(7, p.getClass().toString());
@@ -303,6 +303,35 @@ public class entreprisedomaine extends Entreprise{
         return list;
             
         }
+        public List<Candidat> afficherCandidat(){
+            List<Candidat> list = new ArrayList<>();
+            String req = "select * from User;";
+            try{
+                PreparedStatement pst = cnx.prepareStatement(req);
+                ResultSet rs = pst.executeQuery();
+                while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = " ";
+                String description = rs.getString("description"); 
+                String role = rs.getString("role"); 
+                if (role.equals("Candidat")){
+                    Diplome education = Diplome.valueOf(rs.getString("education"));
+                    String Github = rs.getString("Github");
+                    Experience experience = Experience.valueOf(rs.getString("experience"));
+                    Candidat candidat = new Candidat(id,nom, prenom, mail, numeroTelephone, motdepasse, description, education,Github, experience );
+                    list.add(candidat);
+                }
+                }
+            }catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        return list;
+            
+        }
         public ObservableList<User> getalluser() {
         ObservableList<User> list = FXCollections.observableArrayList();
         boolean entrepriseajoutee = false;
@@ -316,7 +345,7 @@ public class entreprisedomaine extends Entreprise{
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
                 String mail = rs.getString("mail");
-                int numeroTelephone = rs.getInt("numero_telephone");
+                Integer numeroTelephone = rs.getInt("numero_telephone");
                 String motdepasse = rs.getString("motdepasse");
                 String description = rs.getString("description");
                 String NomEntreprise= rs.getString("NomEntreprise");
@@ -350,45 +379,15 @@ public class entreprisedomaine extends Entreprise{
     
     
     }
-        
-        public List<String> affichercompetence(int id) {
-        List<String> list = new ArrayList<>();
-        
-        String req = "SELECT nom FROM profil where id=?";
-     
-        try {
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1,id);
-            ResultSet res = pst.executeQuery();
-            while(res.next()){
-                list.add(res.getString("nom"));
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        
+        public ObservableList<Candidat> getallcandidat() {
+            List l=afficherCandidat();
+        ObservableList<Candidat> list = FXCollections.observableArrayList();
+     list.addAll(l);
         return list;
     
-    
     }
         
-    public int getuserid(String mail){
-        int id=0;
-        String req = "SELECT id from User where mail=?";
-     
-        try {
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1,mail);
-            ResultSet res = pst.executeQuery();
-            while(res.next()){
-                id = res.getInt("id");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return id;
-    }
+   
     
      
     }
