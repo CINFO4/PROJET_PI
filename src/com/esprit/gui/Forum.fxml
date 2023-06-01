@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,15 +32,23 @@
             <ChoiceBox fx:id="domaineChoiceBox" prefWidth="400.0" />
             <Button fx:id="saveButton" onAction="#modifyForum" text="Enregistrer" />
         </VBox>
-        <VBox fx:id="forumInfoBox" layoutX="1200.0" layoutY="50.0" spacing="20.0">
-            <Label fx:id="forumSujetLabel" styleClass="header-label" text="forum" />
-            <Label fx:id="forumContenuLabel" />         
-            <HBox spacing="10.0">
-                <TextArea fx:id="commentTextArea" HBox.hgrow="ALWAYS" />
-                <Button fx:id="addCommentButton" onAction="#addComment" text="Ajouter" />
-            </HBox>
-            <VBox fx:id="commentContainer" spacing="10" />
-        </VBox>
+      <ScrollPane layoutX="1200.0" layoutY="50.0">
+         <content>
+            <AnchorPane>
+               <children>
+                    <VBox fx:id="forumInfoBox" spacing="20.0">
+                        <Label fx:id="forumSujetLabel" styleClass="header-label" text="forum" />
+                        <Label fx:id="forumContenuLabel" />         
+                        <HBox spacing="10.0">
+                            <TextArea fx:id="commentTextArea" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="addCommentButton" onAction="#addComment" text="Ajouter" />
+                        </HBox>
+                        <VBox fx:id="commentContainer" spacing="10" />
+                    </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
     </children>
     <stylesheets>
         <URL value="@ForumCrud.css" />

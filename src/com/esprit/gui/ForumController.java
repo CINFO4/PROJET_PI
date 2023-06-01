@@ -8,13 +8,17 @@ import com.esprit.entities.Forum;
 import com.esprit.services.ServiceCommentaire;
 import com.esprit.services.ServiceForum;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import javax.swing.JOptionPane;
 
 public class ForumController {
 
@@ -28,7 +32,7 @@ public class ForumController {
     private TextArea contenuTextArea;
 
     @FXML
-    private ChoiceBox<Domaine> domaineChoiceBox; 
+    private ChoiceBox<Domaine> domaineChoiceBox;
 
     private ServiceForum serviceForum;
     private ServiceCommentaire serviceCommentaire;
@@ -70,7 +74,11 @@ public class ForumController {
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         selectedForum = newValue;
-                        displayForumDetails(newValue);
+                        try {
+                            displayForumDetails(newValue);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         forumInfoBox.setVisible(true);
                     } else {
                         forumInfoBox.setVisible(false);
@@ -83,7 +91,7 @@ public class ForumController {
     private void createForum(ActionEvent event) throws IOException {
         String sujet = sujetTextField.getText();
         String contenu = contenuTextArea.getText();
-        Domaine selectedDomaine = domaineChoiceBox.getValue(); 
+        Domaine selectedDomaine = domaineChoiceBox.getValue();
 
         if (sujet.isEmpty() || contenu.isEmpty() || selectedDomaine == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -112,16 +120,18 @@ public class ForumController {
         Forum selectedForum = forumListView.getSelectionModel().getSelectedItem();
 
         if (selectedForum != null) {
-            serviceForum.supprimer(selectedForum);
 
-            loadForums();
-            clearFields();
+            if (JOptionPane.showConfirmDialog(null, "Voulez vous supprimer ?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION) == 0) {
+                serviceForum.supprimer(selectedForum);
+                loadForums();
+                clearFields();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Succès");
+                alert.setHeaderText(null);
+                alert.setContentText("Forum supprimé avec succès !");
+                alert.showAndWait();
+            }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText(null);
-            alert.setContentText("Forum supprimé avec succès !");
-            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Attention");
@@ -210,7 +220,7 @@ public class ForumController {
         });
     }
 
-    private void displayForumDetails(Forum forum) {
+    private void displayForumDetails(Forum forum) throws SQLException {
         sujetTextField.setText(forum.getSujet());
         contenuTextArea.setText(forum.getContenu());
         domaineChoiceBox.setValue(serviceForum.getDomainById(forum.getId_domaine()));
@@ -228,7 +238,7 @@ public class ForumController {
     }
 
     @FXML
-    private void addComment(ActionEvent event) throws IOException {
+    private void addComment(ActionEvent event) throws IOException, SQLException {
         String commentText = commentTextArea.getText();
         if (commentText.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -251,17 +261,16 @@ public class ForumController {
         loadComments();
     }
 
-    void loadComments() {
-        commentContainer.getChildren().clear(); 
+    void loadComments() throws SQLException {
+        commentContainer.getChildren().clear();
 
         List<Commentaire> commentaires = serviceCommentaire.getCommentsForForum(selectedForum.getId_forum());
         for (Commentaire commentaire : commentaires) {
-            CommentaireController commentaireController = new CommentaireController(commentaire,this);
+            CommentaireController commentaireController = new CommentaireController(commentaire, this);
             commentaireController.setForumController(this);
             VBox commentComponent = commentaireController.getCommentComponent();
             commentContainer.getChildren().add(commentComponent);
         }
     }
-    
-    
+
 }

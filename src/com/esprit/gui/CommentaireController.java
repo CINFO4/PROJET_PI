@@ -9,9 +9,11 @@ import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javax.swing.JOptionPane;
 
 public class CommentaireController {
 
@@ -57,7 +59,7 @@ public class CommentaireController {
         this.forumController = forumController;
 
         contentTextArea.setText(comment.getContenu());
-        
+
         int id_react = serviceReact.getIdReactbyCommentAndUser(getCurrentUser(), comment.getId_commentaire());
         if (id_react != -1) {
             likeButton.setText("Aimé");
@@ -65,7 +67,7 @@ public class CommentaireController {
     }
 
     @FXML
-    private void editComment(ActionEvent event) throws IOException {
+    private void editComment(ActionEvent event) throws IOException, SQLException {
         if (contentTextArea.isEditable()) {
             String newContent = contentTextArea.getText();
             comment.setContenu(newContent);
@@ -73,7 +75,11 @@ public class CommentaireController {
             editButton.setText("Modifier");
             contentTextArea.setEditable(false);
             loadComments();
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Commentaire modifé avec succès !");
+            alert.showAndWait();
         } else {
             contentTextArea.setEditable(true);
             editButton.setText("Enregistrer");
@@ -82,9 +88,17 @@ public class CommentaireController {
     }
 
     @FXML
-    private void deleteComment(ActionEvent event) throws IOException {
-        serviceCommentaire.supprimer(comment);
-        loadComments();
+    private void deleteComment(ActionEvent event) throws IOException, SQLException {
+        if (JOptionPane.showConfirmDialog(null, "Voulez vous supprimer ?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION) == 0) {
+            serviceCommentaire.supprimer(comment);
+            loadComments();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Commentaire supprimé avec succès !");
+            alert.showAndWait();
+        }
+
     }
 
     public VBox getCommentComponent() {
@@ -95,7 +109,7 @@ public class CommentaireController {
         this.forumController = forumController;
     }
 
-    private void loadComments() {
+    private void loadComments() throws SQLException {
         forumController.loadComments();
     }
 
