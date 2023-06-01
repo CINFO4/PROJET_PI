@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.esprit.services;
+import com.esprit.entities.Competence;
 import com.esprit.entities.Question;
 import com.esprit.utils.DataSource;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -78,6 +80,10 @@ public class ServiceQuestion {
         
         
         return list;
+    }
+
+    public List<QuestionView> GetQuestionsByCompetences(ObservableList<String> selectedCompetences) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public class QuestionView {
         
@@ -179,5 +185,73 @@ public class ServiceQuestion {
     }
 
     return id;
+    }
+     
+       public List<Question> GetQuestionsByCompetences(List<Competence> competences) {
+    List<Question> relatedQuestions = new ArrayList<>();
+
+    String req = "SELECT libelle, etat, id_c FROM Question q WHERE q.id_c IN (";
+    
+    // Créez une chaîne de paramètres de placeholder pour les compétences
+    StringBuilder placeholders = new StringBuilder();
+    for (int i = 0; i < competences.size(); i++) {
+        placeholders.append("?");
+        if (i < competences.size() - 1) {
+            placeholders.append(", ");
+        }
+    }
+    
+    req += placeholders.toString() + ")";
+    
+    try {
+        PreparedStatement pst = cnx.prepareStatement(req);
+        
+        // Définissez les valeurs des paramètres avec les IDs des compétences
+        for (int i = 0; i < competences.size(); i++) {
+            pst.setInt(i + 1, competences.get(i).getId_c());
+        }
+        
+        ResultSet rs = pst.executeQuery();
+        
+        // Parcourez les résultats et créez des objets Question
+        while (rs.next()) {
+            String libelle = rs.getString("libelle");
+            String etat = rs.getString("etat");
+            int id_c = rs.getInt("id_c");
+            Question question = new Question(libelle, etat,id_c);
+            relatedQuestions.add(question);
+        }
+        
+        rs.close();
+        pst.close();
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    return relatedQuestions;
+}
+
+       
+       public List<Question> GetQuestionsByCompetences(int id_c){
+           List<Question> relatedQuestions = new ArrayList<>();
+    String req = "SELECT libelle, etat_question, id_c FROM Question q where q.id_c = ?";
+    try {
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setInt(1, id_c);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            
+           String libelle = rs.getString("libelle");
+            String etat_question = rs.getString("etat_question");
+            Question question = new Question(libelle, etat_question,id_c);
+            relatedQuestions.add(question);
+         
+                    
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    return relatedQuestions;
     }
 }

@@ -140,4 +140,27 @@ public class ServiceCompetence {
 
     return id;
     }
+    
+        
+  public List<String> GetCompetencesByNames() {
+    List<String> list = new ArrayList<>();
+
+    String req = "SELECT nom FROM competence";
+    try {
+        PreparedStatement pst = cnx.prepareStatement(req);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            
+            String nom = rs.getString("nom");
+            
+           
+            list.add(nom);
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    return list;
+    
+    }
 }

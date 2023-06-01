@@ -38,6 +38,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 
 
@@ -100,6 +101,7 @@ public class GererQuestionController implements Initializable {
     private Button btSupprimer;
     @FXML
     private ListView<String> listcompetence;
+   
     
    
     /**
@@ -107,15 +109,20 @@ public class GererQuestionController implements Initializable {
      * @param url
      * @param rb
      */
+    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         AfficherQuestion();
+        
         refresh();
-        information.setOnMouseClicked(event -> {
-        if (event.getClickCount() == 2) {
-            modifierQuestion();
-        }
-    });
+//        information.setOnMouseClicked(event -> {
+//        if (event.getClickCount() == 2) {
+//            modifierQuestion();
+//        }
+//    });
+        
 }
         
      
@@ -128,11 +135,24 @@ public class GererQuestionController implements Initializable {
     listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
     listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     ObservableList<QuestionView> questionList = FXCollections.observableArrayList(serviceQuestion.afficherQuestionView()) ;
+    ObservableList<proposition> propositionList = FXCollections.observableArrayList(serviceProposition.afficher()) ;
     information.setItems(questionList);
     collibelle.setCellValueFactory(new PropertyValueFactory<>("libelle"));
     coletat.setCellValueFactory(new PropertyValueFactory<>("etat_question"));
     colnomc.setCellValueFactory(new PropertyValueFactory<>("nomc"));
+  
+    
+    listcompetence.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2) {
+            int index = listcompetence.getSelectionModel().getSelectedIndex();
+            List<Question> relatedQuestions = serviceQuestion.GetQuestionsByCompetences(index);
+            ObservableList<Question> observableRelatedQuestions = FXCollections.observableArrayList(relatedQuestions);
+//            information.setItems(relatedQuestions);
+                  
+        }
+    });
     }
+    
     
     
     @FXML
@@ -209,6 +229,7 @@ public class GererQuestionController implements Initializable {
     private void modifierQuestion() {
         
      QuestionView selectedQuestion = information.getSelectionModel().getSelectedItem();
+    ServiceCompetence sc = new ServiceCompetence();
     if (selectedQuestion != null) {
         // Afficher une boîte de dialogue pour modifier la question
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -222,7 +243,9 @@ public class GererQuestionController implements Initializable {
         ToggleGroup etat = new ToggleGroup();
         rdActive.setToggleGroup(etat);
         rdDesactive.setToggleGroup(etat);
-
+        listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
+        listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
         // Pré-sélectionner l'état de la question
         if (selectedQuestion.getEtat_question().equals("Active")) {
             rdActive.setSelected(true);
@@ -245,6 +268,8 @@ public class GererQuestionController implements Initializable {
         gridPane.add(new Label("Etat:"), 0, 1);
         gridPane.add(rdActive, 1, 1);
         gridPane.add(rdDesactive, 2, 1);
+        
+        
         dialog.getDialogPane().setContent(gridPane);
 
         // Activer le bouton de confirmation uniquement si le libellé est saisi
@@ -276,7 +301,9 @@ public class GererQuestionController implements Initializable {
          result.ifPresent(dialogButton -> {
             if (dialogButton == btnModifier) {
             ServiceQuestion serviceQuestion = new ServiceQuestion();
+            ServiceProposition serviceProposition = new ServiceProposition();
             QuestionView modifiedQuestion = information.getSelectionModel().getSelectedItem();
+           
                  if (modifiedQuestion != null) {
                       Question q = new Question(
                          modifiedQuestion.getId_question(),
@@ -325,5 +352,17 @@ public class GererQuestionController implements Initializable {
     ObservableList<QuestionView> questionList = FXCollections.observableArrayList(serviceQuestion.afficherQuestionView()) ;
     information.setItems(questionList);
    }
+
+    @FXML
+    private void setElement(MouseEvent event) {
+        int index = information.getSelectionModel().getSelectedIndex();
+        tfLibelle.setText(information.getItems().get(index).getLibelle());
+        
+//        listcompetence.setItems();
+        
+    }
+
+   
+    
 
 }
