@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import static jdk.internal.dynalink.support.Guards.isNull;
 
 /**
  * FXML Controller class
@@ -48,10 +49,20 @@ ServiceCandidature sc = new ServiceCandidature();
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (sc.checkCandidature(idu, idoffre)) {
-            dejaPostuler.setText("deja Postuler");
-        }
+        
+        showMsg();
     }    
+    
+    public void showMsg(){
+        System.out.println(sc.checkCandidature(idu, idoffre));
+        if (!sc.checkCandidature(idu, idoffre)) {
+                dejaPostuler.setText("deja Postuler");
+        }else{
+        dejaPostuler.setText("");
+
+        }
+    }
+    
 
     public void setLNomEntreprise(String LNomEntreprise) {
         this.LNomEntreprise.setText(LNomEntreprise);
@@ -91,9 +102,8 @@ ServiceCandidature sc = new ServiceCandidature();
 
     @FXML
     private void postuler(ActionEvent event) {
-        
-        
-        if (sc.checkCandidature(1, idoffre)) {
+        System.out.println(idoffre);
+        if (! sc.checkCandidature(1, idoffre)) {
             JOptionPane.showMessageDialog(null, "Vous Aver Deja Postuler Dans Cet Offre!");
             return ;
         }

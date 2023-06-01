@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudDomaineController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/CrudDomaine.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudDomaineController">
    <children>
       <TableView fx:id="tableDomaine" editable="true" layoutX="359.0" layoutY="81.0" prefHeight="272.0" prefWidth="210.0">
         <columns>
@@ -18,7 +18,7 @@
       </TableView>
       <Pane layoutX="43.0" layoutY="81.0" prefHeight="176.0" prefWidth="247.0" style="-fx-background-color: #DCDCDC;">
          <children>
-            <Label layoutX="43.0" layoutY="21.0" text="Nom Domaine ">
+            <Label id="title" layoutX="43.0" layoutY="21.0" text="Nom Domaine ">
                <font>
                   <Font size="24.0" />
                </font>
@@ -26,12 +26,12 @@
             <TextField fx:id="TFnomDomaine" layoutX="31.0" layoutY="81.0" />
          </children>
       </Pane>
-      <Button layoutX="36.0" layoutY="281.0" mnemonicParsing="false" onAction="#ajouterDomaine" text="ajouter">
+      <Button fx:id="btnAjout" layoutX="36.0" layoutY="281.0" mnemonicParsing="false" onAction="#ajouterDomaine" text="ajouter">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <Button layoutX="210.0" layoutY="281.0" mnemonicParsing="false" onAction="#supprimerDomaine" text="supprimer">
+      <Button fx:id="btnSupp" layoutX="210.0" layoutY="281.0" mnemonicParsing="false" onAction="#supprimerDomaine" text="supprimer">
          <font>
             <Font size="17.0" />
          </font>

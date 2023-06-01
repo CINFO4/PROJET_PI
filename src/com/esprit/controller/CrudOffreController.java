@@ -80,6 +80,11 @@ public class CrudOffreController implements Initializable {
     private TableColumn<OffreView, String> NomEntCol;
     
     ServiceOffre sf = new ServiceOffre();
+    @FXML
+    private ComboBox<String> ComboChercher;
+    Integer index;
+    String domaineRechercher = "";
+    ObservableList<OffreView> listOffres;
     /**
      * Initializes the controller class.
      * @param url
@@ -87,11 +92,12 @@ public class CrudOffreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        table();
-        ServiceDomaine sd = new ServiceDomaine();
-       
-        ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
         
+        ServiceDomaine sd = new ServiceDomaine();
+        ComboChercher.getItems().add("All");
+        ComboChercher.getItems().addAll(sd.getDomainesName());
+        ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
+
         titreCol.setCellFactory(TextFieldTableCell.forTableColumn());
         titreCol.setOnEditCommit(this::editTitre);
         
@@ -100,9 +106,19 @@ public class CrudOffreController implements Initializable {
         
 //        datePubCol.setCellFactory(DatePickerTableCell.forTableColumn());
 //        datePubCol.setOnEditCommit(this::editDatePub);
-        
+            
+        table();
     }    
 
+    
+    
+     @FXML
+    private void changeRecherche(ActionEvent event) {
+        domaineRechercher = ComboChercher.getSelectionModel().getSelectedItem();
+        System.out.println(domaineRechercher);
+
+        table();
+    }
 
 
     @FXML
@@ -120,10 +136,6 @@ public class CrudOffreController implements Initializable {
                 return ;
             }
     }
-    
-    
-    Integer index;
-        
     
     
     @FXML
@@ -186,11 +198,13 @@ public class CrudOffreController implements Initializable {
     
     public void table(){
         
-         ServiceOffre sf = new ServiceOffre();
-        
-        ObservableList<OffreView> listOffres = observableArrayList(sf.afficherOffres());
-        System.out.println(listOffres);
-        
+
+        if(domaineRechercher.equals("") || domaineRechercher.equals("All")){
+        listOffres  = observableArrayList(sf.afficherOffres());
+        }else{
+            listOffres = observableArrayList(sf.afficherOffresByDomaine(domaineRechercher));
+         }
+
         NomEntCol.setCellValueFactory(new PropertyValueFactory<OffreView,String>("nomEntreprise"));
         titreCol.setCellValueFactory(new PropertyValueFactory<OffreView,String>("titre"));
         descCol.setCellValueFactory(new PropertyValueFactory<OffreView,String>("description"));
@@ -221,10 +235,10 @@ public class CrudOffreController implements Initializable {
             odc.setLDatePub(datePubCol.getCellData(index).toString());
             odc.setLDateExp(dateExpCol.getCellData(index).toString());
             odc.setIdoffre(tableOffre.getItems().get(index).getId_offre());
+            System.out.println(tableOffre.getItems().get(index).getId_offre());
             odc.setStage(stage);
 //            
-            
-            
+
             stage.show();
            
         }
@@ -262,6 +276,8 @@ public class CrudOffreController implements Initializable {
 //        sf.modifier(f);
 //        table();
     }
+
+   
     
 
     

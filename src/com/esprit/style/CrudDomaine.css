@@ -1,0 +1,16 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 30 mai 2023, 22:52:51
+    Author     : ASUS
+*/
+
+#btnAjout{
+    
+    -fx-background-color: red;
+    -fx-color: white;
+    
+}
+

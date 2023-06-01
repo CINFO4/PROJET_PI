@@ -245,6 +245,8 @@ public class ServiceCandidature implements IServices<Candidature>{
         try {  
             String req ="select id_user,id_offre from candidature where id_user = ? and  id_offre = ?";
             PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, idu);
+            pst.setInt(2, ido);
             ResultSet res = pst.executeQuery();
             
             while (res.next()) {
@@ -255,9 +257,9 @@ public class ServiceCandidature implements IServices<Candidature>{
         }
         
         if(can == null){
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
     

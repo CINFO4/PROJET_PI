@@ -22,6 +22,7 @@ public class MainProg {
 //        sf.supprimer(new Offre(17, "", "",1,null,null));
 //        System.out.println(sf.afficher());
 //        System.out.println(sf.afficherOffres());
+//System.out.println(sf.afficherOffresByDomaine("informatique"));
 
     
         ServiceDomaine sd = new ServiceDomaine();
@@ -36,7 +37,7 @@ public class MainProg {
 //        sc.modifier(new Candidature(1, 15, 4,Date.valueOf("2000-8-8"),EtatCandidature.Refuser));
 //        sc.supprimer(new Candidature(1, 5, 4, null, ""));
 //        System.out.println(sc.afficher());
-            System.out.println(sc.candidatureDetails());
+//            System.out.println(sc.checkCandidature(1, 15));
           
         
 
