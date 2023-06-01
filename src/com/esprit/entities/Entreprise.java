@@ -16,8 +16,8 @@ public class Entreprise extends User {
     private String Linkedin;
     private int id_domaine;
 
-    public Entreprise( int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
-        super(id, nom, prenom, mail, numero_téléphone, motdepasse, description);
+    public Entreprise( int id, String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+        super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
         this.TailleEntreprise = TailleEntreprise;
         this.SiteWeb = SiteWeb;
@@ -25,8 +25,8 @@ public class Entreprise extends User {
         this.id_domaine = id_domaine;
     }
 
-    public Entreprise(String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
-        super(nom, prenom, mail, numero_téléphone, motdepasse, description);
+    public Entreprise(String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+        super(nom, prenom, mail, numero_telephone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
         this.TailleEntreprise = TailleEntreprise;
         this.SiteWeb = SiteWeb;

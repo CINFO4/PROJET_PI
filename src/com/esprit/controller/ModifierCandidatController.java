@@ -88,7 +88,7 @@ public class ModifierCandidatController implements Initializable {
         tfnom.setText(candidat.getNom());
         tfprenom.setText(candidat.getPrenom());
         tfadresse.setText(candidat.getMail());
-        tftelephone.setText(String.valueOf(candidat.getNumeroTelephone()));
+        tftelephone.setText(String.valueOf(candidat.getNumero_telephone()));
         tfgithub.setText(candidat.getGithub());
         tadescription.setText(candidat.getDescription());
         cbdiplome.setValue(candidat.getEducation());

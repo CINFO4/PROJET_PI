@@ -88,7 +88,7 @@ public class ModifierEntrepriseController implements Initializable {
         tfNom.setText(entreprise.getNom());
         tfPrenom.setText(entreprise.getPrenom());
         tfAdresse.setText(entreprise.getMail());
-        tfnumero.setText(String.valueOf(entreprise.getNumeroTelephone()));
+        tfnumero.setText(String.valueOf(entreprise.getNumero_telephone()));
         tfLinkedin.setText(entreprise.getLinkedin());
         taDescription.setText(entreprise.getDescription());
         tfSIteWeb.setText(entreprise.getSiteWeb());

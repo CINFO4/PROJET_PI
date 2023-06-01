@@ -35,13 +35,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-
 /**
  * FXML Controller class
  *
  * @author Anis
  */
 public class CandidatController implements Initializable, Refresh {
+
     @FXML
     private TableColumn<Candidat, Integer> id;
     @FXML
@@ -53,7 +53,7 @@ public class CandidatController implements Initializable, Refresh {
     @FXML
     private TableColumn<Candidat, String> prenom;
     @FXML
-    private TableColumn<Candidat, String>mail;
+    private TableColumn<Candidat, String> mail;
     @FXML
     private TableColumn<Candidat, Integer> phone;
     @FXML
@@ -65,14 +65,12 @@ public class CandidatController implements Initializable, Refresh {
     @FXML
     private TableColumn<Candidat, String> github;
     @FXML
-    private TableView<Candidat> table;
-    @FXML
     private TableColumn<Candidat, Void> deleteColumn;
-    
-    
+
+    @FXML
+    private TableView<Candidat> table;
+
     ServiceUser su = new ServiceUser();
-   
-           
 
     /**
      * Initializes the controller class.
@@ -80,7 +78,7 @@ public class CandidatController implements Initializable, Refresh {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-            deleteColumn.setCellFactory(column -> {
+        deleteColumn.setCellFactory(column -> {
             TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
                 private final Button deleteButton = new Button("Supprimer");
 
@@ -119,75 +117,74 @@ public class CandidatController implements Initializable, Refresh {
         });
 
         id.setVisible(false);
-        id.setCellValueFactory(new PropertyValueFactory<Candidat,Integer>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("nom"));
-      phone.setCellValueFactory(new PropertyValueFactory<Candidat,Integer>("numero_telephone"));
-        prenom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("prenom"));
-        
-       
-        github.setCellValueFactory(new PropertyValueFactory<Candidat,String>("Github"));
-        
-        
-        mail.setCellValueFactory(new PropertyValueFactory<Candidat,String>("mail"));
-        description.setCellValueFactory(new PropertyValueFactory<Candidat,String>("description"));
-        education.setCellValueFactory(new PropertyValueFactory<Candidat,String>("education"));
-        experience.setCellValueFactory(new PropertyValueFactory<Candidat,String>("experience"));
+        id.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("nom"));
+        phone.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("numero_telephone"));
+        prenom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("prenom"));
+
+        github.setCellValueFactory(new PropertyValueFactory<Candidat, String>("Github"));
+
+        mail.setCellValueFactory(new PropertyValueFactory<Candidat, String>("mail"));
+        description.setCellValueFactory(new PropertyValueFactory<Candidat, String>("description"));
+        education.setCellValueFactory(new PropertyValueFactory<Candidat, String>("education"));
+        experience.setCellValueFactory(new PropertyValueFactory<Candidat, String>("experience"));
         ObservableList<Candidat> lu = FXCollections.observableArrayList(su.getallcandidat());
-       table.setItems(lu);
+        table.setItems(lu);
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-            Candidat selectedUser = table.getSelectionModel().getSelectedItem();
-            if (selectedUser != null) {
-                try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ModifierCandidat.fxml"));
-            Parent root = loader.load();
+                Candidat selectedUser = table.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ModifierCandidat.fxml"));
+                        Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.show();
 
-            ModifierCandidatController controller = loader.getController();
-            controller.initData(selectedUser);
-            controller.setRefreshEvent(this);
-                }catch(Exception e){
-                    e.getMessage();
+                        ModifierCandidatController controller = loader.getController();
+                        controller.initData(selectedUser);
+                        controller.setRefreshEvent(this);
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
                 }
-            }   
             }
-});
-    }    
+        });
+    }
+
     @FXML
     public void AjouterCandidat(ActionEvent event) throws IOException {
-    
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
-            Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
+        Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
 
-            AjoutCandidatController controller = loader.getController();
-            controller.setRefreshEvent(this);
-      
-}
+        AjoutCandidatController controller = loader.getController();
+        controller.setRefreshEvent(this);
+
+    }
+
     @FXML
     private void deleteButtonClicked() {
-        
+
         // Obtenir l'élément sélectionné dans la TableView
         Candidat selectedCandidat = table.getSelectionModel().getSelectedItem();
-        
-        if (selectedCandidat  != null) {
+
+        if (selectedCandidat != null) {
             // Afficher la fenêtre contextuelle de confirmation
             Alert confirmation = new Alert(AlertType.CONFIRMATION);
             confirmation.setTitle("Confirmation");
             confirmation.setHeaderText("Supprimer l'élément ?");
             confirmation.setContentText("Êtes-vous sûr de vouloir supprimer cet élément ?");
-            
+
             confirmation.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     // Supprimer l'élément de la liste
-                    table.getItems().remove(selectedCandidat );
+                    table.getItems().remove(selectedCandidat);
                     su.supprimer(selectedCandidat);
                 }
             });
@@ -201,22 +198,20 @@ public class CandidatController implements Initializable, Refresh {
         }
     }
 
-    public void onRefresh(){
-        nom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("nom"));
-      
-        prenom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("prenom"));
+    public void onRefresh() {
+        nom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("nom"));
+
+        prenom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("prenom"));
         phone.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("numero_telephone"));
-       
-        github.setCellValueFactory(new PropertyValueFactory<Candidat,String>("Github"));
-        
-        
-        mail.setCellValueFactory(new PropertyValueFactory<Candidat,String>("mail"));
-        description.setCellValueFactory(new PropertyValueFactory<Candidat,String>("description"));
-        education.setCellValueFactory(new PropertyValueFactory<Candidat,String>("education"));
-        experience.setCellValueFactory(new PropertyValueFactory<Candidat,String>("experience"));
+
+        github.setCellValueFactory(new PropertyValueFactory<Candidat, String>("Github"));
+
+        mail.setCellValueFactory(new PropertyValueFactory<Candidat, String>("mail"));
+        description.setCellValueFactory(new PropertyValueFactory<Candidat, String>("description"));
+        education.setCellValueFactory(new PropertyValueFactory<Candidat, String>("education"));
+        experience.setCellValueFactory(new PropertyValueFactory<Candidat, String>("experience"));
         ObservableList<Candidat> lu = FXCollections.observableArrayList(su.getallcandidat());
         table.setItems(lu);
-}
-    
-    
+    }
+
 }

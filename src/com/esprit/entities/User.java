@@ -10,7 +10,8 @@ import java.util.Objects;
  *
  * @author Anis
  */
-public abstract class  User {
+public abstract class User {
+
     private int id;
     private String nom;
     private String prenom;
@@ -18,30 +19,28 @@ public abstract class  User {
     private Integer numero_telephone;
     private String motdepasse;
     private String description;
-    
 
-    public User(int id, String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description) {
+    public User(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        this.numero_telephone = numero_téléphone;
+        this.numero_telephone = numero_telephone;
         this.motdepasse = motdepasse;
         this.description = description;
-        
+
     }
 
-    public User(String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description) {
+    public User(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        this.numero_telephone = numero_téléphone;
+        this.numero_telephone = numero_telephone;
         this.motdepasse = motdepasse;
         this.description = description;
-        
+
     }
 
-    
     public int getId() {
         return id;
     }
@@ -74,16 +73,12 @@ public abstract class  User {
         this.mail = mail;
     }
 
-
-
-   
-
-    public Integer getNumeroTelephone() {
+    public Integer getNumero_telephone() {
         return numero_telephone;
     }
 
-    public void setNumeroTelephone(Integer numero_téléphone) {
-        this.numero_telephone = numero_téléphone;
+    public void setNumero_telephone(Integer numero_telephone) {
+        this.numero_telephone = numero_telephone;
     }
 
     public String getMotdepasse() {
@@ -102,24 +97,9 @@ public abstract class  User {
         this.description = description;
     }
 
-    
-
-    
-
-
-
     @Override
     public String toString() {
-        return  "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_telephone=" + getNumeroTelephone() + ", motdepasse=" + motdepasse + ", description=" + description + '}';
+        return "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_telephone=" + numero_telephone + ", motdepasse=" + motdepasse + ", description=" + description + '}';
     }
-    
 
-  
-    
-    
-    
-    
-
-    
-    
 }

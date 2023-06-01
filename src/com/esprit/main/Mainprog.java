@@ -35,7 +35,7 @@ public class Mainprog {
 //        sc.ajouter(new Competence("Reseau", "Définit les projets d'évolution du réseau"));
         ServiceUser sv = new ServiceUser();
         //sv.ajouter(new Candidat("hazem", "landolsi", "hazem@gmail.com", 25412542, "admin", "azert", Diplome.Bacclauréat, "git", Experience.Confirme));
-        System.out.println(sv.afficherCandidat());
+        System.out.println(sv.getallcandidat());
        // sv.ajouter(new Entreprise("anis", "othman", "anis@ip-label.com", 25623767, "azerty", "it entreprise", "sofrecom", Taille.PLUS_DE_50_EMPLOYES, "sofrecom.com", "linkdin.fr",1));
         //sv.ajouter(new Entreprise("khh", "klhh", "jghjig", 54654, "jgh", "ljkhg", "jhjh", Taille.DE_1_A_10_EMPLOYES, "khoh", "lkhh", 1));
         //sv.ajouter(new Candidat("helmi", "amdouni", "hmd@ip.fr", 45216584, "admin", "un jeune etudiant", Diplome.Ingénierie, "helmi.github", Experience.Confirme));
