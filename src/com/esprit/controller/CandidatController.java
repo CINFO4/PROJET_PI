@@ -12,6 +12,8 @@ import com.esprit.entities.User;
 import com.esprit.services.ServiceUser;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,12 +23,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 /**
@@ -35,7 +42,8 @@ import javafx.stage.Stage;
  * @author Anis
  */
 public class CandidatController implements Initializable, Refresh {
-
+    @FXML
+    private TableColumn<Candidat, Integer> id;
     @FXML
     private TextField txtSearch;
     @FXML
@@ -47,7 +55,7 @@ public class CandidatController implements Initializable, Refresh {
     @FXML
     private TableColumn<Candidat, String>mail;
     @FXML
-    private TableColumn<Candidat, Integer> tele;
+    private TableColumn<Candidat, Integer> phone;
     @FXML
     private TableColumn<Candidat, String> description;
     @FXML
@@ -58,6 +66,9 @@ public class CandidatController implements Initializable, Refresh {
     private TableColumn<Candidat, String> github;
     @FXML
     private TableView<Candidat> table;
+    @FXML
+    private TableColumn<Candidat, Void> deleteColumn;
+    
     
     ServiceUser su = new ServiceUser();
    
@@ -69,10 +80,50 @@ public class CandidatController implements Initializable, Refresh {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+            deleteColumn.setCellFactory(column -> {
+            TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
+                private final Button deleteButton = new Button("Supprimer");
+
+                {
+                    deleteButton.setOnAction(event -> {
+                        Candidat candidat = getTableView().getItems().get(getIndex());
+                        if (candidat != null) {
+                            // Afficher la fenêtre contextuelle de confirmation
+                            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+                            confirmation.setTitle("Confirmation");
+                            confirmation.setHeaderText("Supprimer le candidat ?");
+                            confirmation.setContentText("Êtes-vous sûr de vouloir supprimer ce candidat ?");
+
+                            Optional<ButtonType> result = confirmation.showAndWait();
+                            if (result.isPresent() && result.get() == ButtonType.OK) {
+                                // Supprimer le candidat de la liste
+                                table.getItems().remove(candidat);
+                                su.supprimer(candidat);
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(deleteButton);
+                    }
+                }
+            };
+
+            return cell;
+        });
+
+        id.setVisible(false);
+        id.setCellValueFactory(new PropertyValueFactory<Candidat,Integer>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("nom"));
-      
+      phone.setCellValueFactory(new PropertyValueFactory<Candidat,Integer>("numero_telephone"));
         prenom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("prenom"));
-        tele.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("numero_telephone"));
+        
        
         github.setCellValueFactory(new PropertyValueFactory<Candidat,String>("Github"));
         
@@ -82,7 +133,7 @@ public class CandidatController implements Initializable, Refresh {
         education.setCellValueFactory(new PropertyValueFactory<Candidat,String>("education"));
         experience.setCellValueFactory(new PropertyValueFactory<Candidat,String>("experience"));
         ObservableList<Candidat> lu = FXCollections.observableArrayList(su.getallcandidat());
-        table.setItems(lu);
+       table.setItems(lu);
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
             Candidat selectedUser = table.getSelectionModel().getSelectedItem();
@@ -96,8 +147,9 @@ public class CandidatController implements Initializable, Refresh {
             stage.show();
 
             ModifierCandidatController controller = loader.getController();
-            controller.initData(selectedUser);}
-                catch(Exception e){
+            controller.initData(selectedUser);
+            controller.setRefreshEvent(this);
+                }catch(Exception e){
                     e.getMessage();
                 }
             }   
@@ -119,12 +171,41 @@ public class CandidatController implements Initializable, Refresh {
             controller.setRefreshEvent(this);
       
 }
+    @FXML
+    private void deleteButtonClicked() {
+        
+        // Obtenir l'élément sélectionné dans la TableView
+        Candidat selectedCandidat = table.getSelectionModel().getSelectedItem();
+        
+        if (selectedCandidat  != null) {
+            // Afficher la fenêtre contextuelle de confirmation
+            Alert confirmation = new Alert(AlertType.CONFIRMATION);
+            confirmation.setTitle("Confirmation");
+            confirmation.setHeaderText("Supprimer l'élément ?");
+            confirmation.setContentText("Êtes-vous sûr de vouloir supprimer cet élément ?");
+            
+            confirmation.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    // Supprimer l'élément de la liste
+                    table.getItems().remove(selectedCandidat );
+                    su.supprimer(selectedCandidat);
+                }
+            });
+        } else {
+            // Aucun élément sélectionné, afficher une alerte d'erreur
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Aucun élément sélectionné");
+            alert.setContentText("Veuillez sélectionner un élément à supprimer.");
+            alert.showAndWait();
+        }
+    }
 
     public void onRefresh(){
         nom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("nom"));
       
         prenom.setCellValueFactory(new PropertyValueFactory<Candidat,String>("prenom"));
-        tele.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("numero_telephone"));
+        phone.setCellValueFactory(new PropertyValueFactory<Candidat, Integer>("numero_telephone"));
        
         github.setCellValueFactory(new PropertyValueFactory<Candidat,String>("Github"));
         

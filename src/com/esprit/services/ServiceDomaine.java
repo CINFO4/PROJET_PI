@@ -66,4 +66,19 @@ public class ServiceDomaine {
         }
         return id ;
     }
+     public String getDomainenameByid(int id){
+        String req = "SELECT nom_domaine FROM domaine WHERE id_domaine = ? ";
+       String nom="";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1,id);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                nom = res.getString("nom_domaine");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nom ;
+    }
 }

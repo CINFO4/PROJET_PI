@@ -48,11 +48,13 @@
                 <TableColumn fx:id="nom" prefWidth="75.0" text="Nom" />
                 <TableColumn fx:id="prenom" prefWidth="75.0" text="Prénom" />
                   <TableColumn fx:id="mail" prefWidth="75.0" text="Mail" />
-                  <TableColumn fx:id="tele" prefWidth="94.0" text="Téléphone" />
+                  <TableColumn fx:id="phone" prefWidth="94.0" text="Téléphone" />
                   <TableColumn fx:id="description" prefWidth="145.0" text="Description" />
                   <TableColumn fx:id="education" prefWidth="113.0" text="Education" />
                   <TableColumn fx:id="experience" prefWidth="113.0" text="Experience" />
                   <TableColumn fx:id="github" prefWidth="113.0" text="Github" />
+                  <TableColumn fx:id="id" prefWidth="113.0" text="id" />
+                  <TableColumn fx:id="deleteColumn" prefWidth="75.0" text="Supprimer" />
               </columns>
             </TableView>
          </bottom>

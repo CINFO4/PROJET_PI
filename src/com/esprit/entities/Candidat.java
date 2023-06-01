@@ -17,16 +17,16 @@ public class Candidat extends User {
     private String Github;
     private Experience experience;
 
-    public Candidat(int id, String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description, Diplome education, String Github, Experience experience) {
-        super(id, nom, prenom, mail, numero_téléphone, motdepasse, description);
+    public Candidat(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, Diplome education, String Github, Experience experience) {
+        super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
         this.Github= Github;
         this.experience=experience;
     }
 
-    public Candidat( String nom, String prenom, String mail, Integer numero_téléphone, String motdepasse, String description,Diplome education, String Github, Experience experience) {
-        super(nom, prenom, mail, numero_téléphone, motdepasse, description);
+    public Candidat( String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description,Diplome education, String Github, Experience experience) {
+        super(nom, prenom, mail, numero_telephone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
         this.Github= Github;

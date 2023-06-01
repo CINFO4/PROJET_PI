@@ -110,7 +110,7 @@ public abstract class  User {
 
     @Override
     public String toString() {
-        return  "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_phone=" + getNumeroTelephone() + ", motdepasse=" + motdepasse + ", description=" + description + '}';
+        return  "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", numero_telephone=" + getNumeroTelephone() + ", motdepasse=" + motdepasse + ", description=" + description + '}';
     }
     
 

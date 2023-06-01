@@ -19,9 +19,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
+import com.esprit.controller.Refresh;
 
 /**
  * FXML Controller class
@@ -33,6 +35,7 @@ public class ModifierCandidatController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private Integer id =0;
     @FXML
     private TextField tfnom;
     @FXML
@@ -58,6 +61,8 @@ public class ModifierCandidatController implements Initializable {
     @FXML
     private Button envoye;
     
+    
+    
     private Refresh refreshEvent;
    
     public void setRefreshEvent(Refresh refreshListener) {
@@ -79,6 +84,7 @@ public class ModifierCandidatController implements Initializable {
         }
      }
     public void initData(Candidat candidat) {
+         id = candidat.getId();
         tfnom.setText(candidat.getNom());
         tfprenom.setText(candidat.getPrenom());
         tfadresse.setText(candidat.getMail());
@@ -93,7 +99,7 @@ public class ModifierCandidatController implements Initializable {
     public void ModifierCandidat(ActionEvent event) throws IOException {
         if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
         ServiceUser sp = new ServiceUser();
-        sp.modifier(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
+        sp.modifier(new Candidat(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
         JOptionPane.showMessageDialog(null, "Candidat modifié !");
         triggerRefreshEvent();
         }

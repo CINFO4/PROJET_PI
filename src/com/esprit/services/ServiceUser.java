@@ -116,7 +116,7 @@ public class ServiceUser {
          try {
             String req = "UPDATE User SET nom=?, prenom=?, mail=?, numero_telephone=?, motdepasse=?, description=?, education=?, github=?, experience=?   WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(9, p.getId());
+            pst.setInt(10, p.getId());
             pst.setString(1, p.getNom());
             pst.setString(2, p.getPrenom());
             pst.setString(3, p.getMail());
@@ -135,7 +135,7 @@ public class ServiceUser {
     }
         else if (p instanceof Entreprise){
             try {
-            String req = "UPDATE User SET nom=?, prenom=?, adresse=?, numero_telephone=?, motdepasse=?, description=?, NomEntreprise=?, role=?, TailleEntreprise=?, SiteWeb=?, Linkedin=?, id_domaine=?   WHERE id=?";
+            String req = "UPDATE User SET nom=?, prenom=?, mail=?, numero_telephone=?, motdepasse=?, description=?, NomEntreprise=?, role=?, TailleEntreprise=?, SiteWeb=?, Linkedin=?, id_domaine=?   WHERE id=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(13, p.getId());
             pst.setString(1, p.getNom());
@@ -248,12 +248,12 @@ public class ServiceUser {
     }
     
 
-public class entreprisedomaine extends Entreprise{
+public class Entreprisedomaine extends Entreprise{
 
         
         private String nom_domaine;
 
-        public entreprisedomaine(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine, String nom_domaine) {
+        public Entreprisedomaine(int id, String nom, String prenom, String mail, int numero_téléphone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine, String nom_domaine) {
             super(id, nom, prenom, mail, numero_téléphone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine);
             this.nom_domaine = nom_domaine;
         }
@@ -274,8 +274,8 @@ public class entreprisedomaine extends Entreprise{
        
 
     }
-        public List<entreprisedomaine> afficherentreprise(){
-        List<entreprisedomaine> list = new ArrayList<>();
+        public List<Entreprisedomaine> afficherentreprise(){
+        List<Entreprisedomaine> list = new ArrayList<>();
         String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine;";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -294,7 +294,7 @@ public class entreprisedomaine extends Entreprise{
                 String Linkedin = rs.getString("Linkedin");
                 int id_domaine = rs.getInt("id_domaine");
                 String nom_domaine = rs.getString("nom_domaine");
-                entreprisedomaine ed = new entreprisedomaine(id,nom,prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine, nom_domaine);
+                Entreprisedomaine ed = new Entreprisedomaine(id,nom,prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine, nom_domaine);
                     list.add(ed);
             }
         }catch (SQLException ex) {
@@ -303,6 +303,27 @@ public class entreprisedomaine extends Entreprise{
         return list;
             
         }
+        public List<String> afficherDomainebynom() {
+            List<String> list = new ArrayList<>();
+
+            String req = "SELECT nom_domaine from Domaine";
+            try {
+                PreparedStatement pst = cnx.prepareStatement(req);
+                ResultSet rs = pst.executeQuery();
+                while (rs.next()) {
+
+                    String nom = rs.getString("nom_domaine");
+
+
+                    list.add(nom);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        return list;
+        }
+        
         public List<Candidat> afficherCandidat(){
             List<Candidat> list = new ArrayList<>();
             String req = "select * from User;";
