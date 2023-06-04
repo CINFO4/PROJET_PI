@@ -26,8 +26,9 @@ public class Mainprog extends Application {
        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

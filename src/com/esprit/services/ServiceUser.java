@@ -387,5 +387,24 @@ public class ServiceUser {
         return list;
 
     }
+    
+    public boolean login(String login, String password){
+       String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
+       try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, login);
+            pst.setString(2, login);
+            pst.setString(3, password);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+            else
+                return false;
+       }catch(Exception e){
+           System.out.println(e.getMessage());
+           return false;
+       }
+    }
 
 }
