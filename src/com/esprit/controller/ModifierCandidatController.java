@@ -24,6 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 import com.esprit.controller.Refresh;
+import javafx.scene.control.Alert;
 
 /**
  * FXML Controller class
@@ -95,8 +96,22 @@ public class ModifierCandidatController implements Initializable {
         cbexperience.setValue(candidat.getExperience());
         
     }
+    public boolean validateFields() {
+        if (tfnom.getText().isEmpty() || tfprenom.getText().isEmpty() || tfadresse.getText().isEmpty() || tfmotdepasse.getText().isEmpty() || tfmotdepasse2.getText().isEmpty() || tftelephone.getText().isEmpty() || tfgithub.getText().isEmpty() || tadescription.getText().isEmpty() || cbexperience.getValue() == null || cbdiplome.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Champs obligatoires");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir tous les champs obligatoires.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
      @FXML
     public void ModifierCandidat(ActionEvent event) throws IOException {
+        if(!validateFields()){
+            return;
+        }
         if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
         ServiceUser sp = new ServiceUser();
         sp.modifier(new Candidat(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));

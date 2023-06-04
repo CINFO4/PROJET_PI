@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -54,16 +55,16 @@ public class AjoutCandidatController implements Initializable {
     @FXML
     private ComboBox<Diplome> cbdiplome;
     @FXML
-     private ListView<String> listcompetence; 
+    private ListView<String> listcompetence;
     @FXML
     private Button envoye;
-    
+
     private Refresh refreshEvent;
-   
+
     public void setRefreshEvent(Refresh refreshListener) {
-    this.refreshEvent = refreshListener;
-}
-        
+        this.refreshEvent = refreshListener;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -72,23 +73,39 @@ public class AjoutCandidatController implements Initializable {
         cbexperience.setItems(FXCollections.observableArrayList(Experience.values()));
         listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
         listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    }   
+    }
+
     public void triggerRefreshEvent() {
         if (refreshEvent != null) {
             refreshEvent.onRefresh();
         }
-     }
-     @FXML
+    }
+
+    @FXML
     public void ajouterCandidat(ActionEvent event) throws IOException {
-        if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
-        ServiceUser sp = new ServiceUser();
-        sp.ajouter(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
-        JOptionPane.showMessageDialog(null, "Candidat ajouté !");
-        triggerRefreshEvent();
+        if (!validateFields()) {
+            return;
         }
-        else {
+        if (tfmotdepasse.getText().equals(tfmotdepasse2.getText())) {
+            ServiceUser sp = new ServiceUser();
+            sp.ajouter(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(), cbdiplome.getValue(), tfgithub.getText(), cbexperience.getValue()));
+            JOptionPane.showMessageDialog(null, "Candidat ajouté !");
+            triggerRefreshEvent();
+        } else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
     }
-    
+
+    public boolean validateFields() {
+        if (tfnom.getText().isEmpty() || tfprenom.getText().isEmpty() || tfadresse.getText().isEmpty() || tfmotdepasse.getText().isEmpty() || tfmotdepasse2.getText().isEmpty() || tftelephone.getText().isEmpty() || tfgithub.getText().isEmpty() || tadescription.getText().isEmpty() || cbexperience.getValue() == null || cbdiplome.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Champs obligatoires");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir tous les champs obligatoires.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
 }

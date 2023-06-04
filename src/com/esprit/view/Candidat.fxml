@@ -38,7 +38,10 @@
                         <Image url="@../image/icons8-search-64.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="add" layoutX="27.0" layoutY="57.0" mnemonicParsing="false" onAction="#AjouterCandidat" prefHeight="42.0" prefWidth="76.0" styleClass="button4" text="ADD" />
+                  <Button fx:id="add" layoutX="27.0" layoutY="57.0" mnemonicParsing="false" onAction="#AjouterCandidat" prefHeight="42.0" prefWidth="76.0" style="-fx-background-color: #0077B5;" styleClass="button4" text="ADD" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
                </children>
             </Pane>
          </top>

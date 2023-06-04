@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -102,9 +103,22 @@ public class ModifierEntrepriseController implements Initializable {
             refreshEvent.onRefresh();
         }
      }
-
+     public boolean validateFields() {
+        if (tfNom.getText().isEmpty() || tfPrenom.getText().isEmpty() || tfNomEntreprise.getText().isEmpty() || tfnumero.getText().isEmpty() || tfPassword.getText().isEmpty() || tfPassword2.getText().isEmpty() || tfSIteWeb.getText().isEmpty() || tfLinkedin.getText().isEmpty() || taDescription.getText().isEmpty() || tfAdresse.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Champs obligatoires");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir tous les champs obligatoires.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
     @FXML
     public void ModifierEntreprise(ActionEvent event) throws IOException {
+        if(!validateFields()){
+            return;
+        }
         ServiceDomaine sd = new ServiceDomaine();
         if(tfPassword.getText().equals(tfPassword2.getText())){
         ServiceUser sp = new ServiceUser();

@@ -14,8 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,18 +25,16 @@ import javax.swing.JOptionPane;
  *
  * @author Anis
  */
-public class LoginController implements Initializable {
+public class MotdepasseController implements Initializable {
 
     @FXML
     private TextField login;
     @FXML
-    private TextField motdepasse;
+    private Button submit;
     @FXML
-    private Button sidentitfier;
+    private Button retour;
     @FXML
-    private Button sinscrire;
-    @FXML
-    private Button motdepasseoublie;
+    private Label erreur;
 
     /**
      * Initializes the controller class.
@@ -46,15 +42,13 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }  
-    public void sign(Event e) throws IOException {
-        if (!validateFields()) {
-        return;
-    }
-    ServiceUser su = new ServiceUser();
+    }    
+    
+    public void login(Event e){
+        
+        ServiceUser su = new ServiceUser();
     String loginText = login.getText();
-    String passwordText = motdepasse.getText();
-    if (su.login(loginText, passwordText)) {
+    if (su.loginpasse(loginText)){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Candidat.fxml"));
             Parent root = loader.load();
@@ -62,41 +56,27 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
             stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
             stage.show(); // Affiche la nouvelle scène
-            
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Login ou mot de passe erroné !","Erreur", JOptionPane.ERROR_MESSAGE);
+        erreur.setText("Nous n'avons trouvé aucun compte associé à" + " " + login.getText() + " " + "Veuillez essayer avec une adresse e-mail ou un numéro de téléphone alternatif.");
+        erreur.setWrapText(true);
     }
-}
+        
+    }
     
-    public void oublier(Event e){
+    public void retour(Event e){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("motdepasse.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
             stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
             stage.show(); // Affiche la nouvelle scène
-            
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
     }
-    
-    public boolean validateFields() {
-    if (login.getText().isEmpty() || motdepasse.getText().isEmpty()) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Champs obligatoires");
-        alert.setHeaderText(null);
-        alert.setContentText("Veuillez remplir tous les champs obligatoires.");
-        alert.showAndWait();
-        return false;
-    }
-    return true;
-}
-
     
 }
