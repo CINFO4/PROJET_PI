@@ -60,6 +60,10 @@ public class ForumController {
     private VBox forumInfoBox;
     @FXML
     private VBox commentContainer;
+    @FXML
+    private Button saveButton1;
+    @FXML
+    private TextField chercherTextField;
 
     public ForumController() {
         serviceForum = new ServiceForum();
@@ -271,6 +275,34 @@ public class ForumController {
             VBox commentComponent = commentaireController.getCommentComponent();
             commentContainer.getChildren().add(commentComponent);
         }
+    }
+
+    @FXML
+    private void chercher(ActionEvent event) {
+        forumListView.getItems().clear();
+        List<Forum> forums = serviceForum.rechercher(chercherTextField.getText());
+        for (Forum forum : forums) {
+            forumListView.getItems().add(forum);
+        }
+
+        forumListView.setCellFactory(listView -> new ListCell<Forum>() {
+            @Override
+            protected void updateItem(Forum forum, boolean empty) {
+                super.updateItem(forum, empty);
+                if (empty || forum == null) {
+                    setText(null);
+                } else {
+                    setText("Sujet: " + forum.getSujet() + ", Contenu: " + forum.getContenu()
+                            + ", ID User: " + forum.getId_user() + ", ID Domaine: " + forum.getId_domaine());
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void clear(ActionEvent event) {
+        chercherTextField.setText("");
+        loadForums();
     }
 
 }

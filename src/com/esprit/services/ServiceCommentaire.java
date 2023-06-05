@@ -12,6 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 /**
  *
@@ -20,16 +24,53 @@ import java.util.List;
 public class ServiceCommentaire implements IService<Commentaire> {
 
     private Connection cnx = DataSource.getInstance().getCnx();
+    private ServiceForum serviceForum;
+    String[] wordsToReplace = {"fail", "kill", "bad"};
 
     public void ajouter(Commentaire C) {
         try {
             String req = "INSERT INTO commentaire(contenu, id_forum, id_user) VALUES (?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, C.getContenu());
+            pst.setString(1, replaceBadWords(C.getContenu()));
             pst.setInt(2, C.getId_forum());
             pst.setInt(3, C.getId_user());
             pst.executeUpdate();
             System.out.println("Commentaire ajoutée !");
+
+            String senderEmail = "rafikpidev@gmail.com";
+            String senderPassword = "";
+
+            serviceForum = new ServiceForum();
+            String recipientEmail = serviceForum.getUserEmailByForumId(C.getId_forum());
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props, new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(senderEmail, senderPassword);
+                }
+            });
+
+            try {
+                Message message = new MimeMessage(session);
+
+                message.setFrom(new InternetAddress(senderEmail));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+
+                message.setSubject(serviceForum.getUserNameByForumId(C.getId_user()) + " a Commenté sur votre forum");
+                message.setText("Bonjour " + serviceForum.getUserNameByForumId(C.getId_forum()) + ",\n\nVous avez un nouveau commentaire sur votre forum par " + serviceForum.getUserNameByForumId(C.getId_user()) + ".\n"
+                        + "Le contenu du commentaire est " + replaceBadWords(C.getContenu()) + "\n\nCordialement\nPI-Dev");
+                Transport.send(message);
+
+                System.out.println("Email sent successfully.");
+            } catch (MessagingException e) {
+                System.out.println("Failed to send email. Error: " + e.getMessage());
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -39,7 +80,7 @@ public class ServiceCommentaire implements IService<Commentaire> {
         try {
             String req = "UPDATE commentaire SET contenu=? WHERE id_commentaire=?";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, C.getContenu());
+            pst.setString(1, replaceBadWords(C.getContenu()));
             pst.setInt(2, C.getId_commentaire());
             pst.executeUpdate();
             System.out.println("Commentaire modifiée !");
@@ -94,4 +135,17 @@ public class ServiceCommentaire implements IService<Commentaire> {
 
         return list;
     }
+
+    public String replaceBadWords(String input) {
+        for (String word : wordsToReplace) {
+            String stars = "";
+            for (int i = 0; i < word.length(); i++) {
+                stars += "*";
+            }
+            input = input.replaceAll(word, stars);
+        }
+
+        return input;
+    }
+
 }

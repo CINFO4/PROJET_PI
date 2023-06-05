@@ -18,14 +18,14 @@ import java.util.List;
  *
  * @author Acer
  */
-public class ServiceForum implements IService<Forum>{
-    
+public class ServiceForum implements IService<Forum> {
+
     private Connection cnx = DataSource.getInstance().getCnx();
-    
+
     public void ajouter(Forum F) {
         try {
             String req = "INSERT INTO forum(sujet, contenu, id_user, id_domaine) VALUES (?,?,?,?);";
-            PreparedStatement pst = cnx.prepareStatement(req);           
+            PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, F.getSujet());
             pst.setString(2, F.getContenu());
             pst.setInt(3, F.getId_user());
@@ -36,7 +36,7 @@ public class ServiceForum implements IService<Forum>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void modifier(Forum F) {
         try {
             String req = "UPDATE forum SET sujet=?, contenu=?,id_domaine=? WHERE id_forum=?";
@@ -51,7 +51,7 @@ public class ServiceForum implements IService<Forum>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void supprimer(Forum F) {
         try {
             String req = "DELETE from forum WHERE id_forum=?";
@@ -63,34 +63,31 @@ public class ServiceForum implements IService<Forum>{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public List<Forum> afficher() {
         List<Forum> list = new ArrayList<>();
-        
+
         String req = "SELECT * FROM forum";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
-            while(rs.next()) {
-                list.add(new Forum(rs.getInt("id_forum"), rs.getString("sujet"),rs.getString("contenu"), rs.getInt("id_user"),rs.getInt("id_domaine")));
+            while (rs.next()) {
+                list.add(new Forum(rs.getInt("id_forum"), rs.getString("sujet"), rs.getString("contenu"), rs.getInt("id_user"), rs.getInt("id_domaine")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        
         return list;
     }
-    
+
     public List<Domaine> getDomaines() {
         List<Domaine> domainNames = new ArrayList<>();
 
         String query = "SELECT * FROM domaine";
-        try (PreparedStatement pst = cnx.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
+        try ( PreparedStatement pst = cnx.prepareStatement(query);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-                Domaine domaine = new Domaine(rs.getInt("id_domaine"),rs.getString("nom_domaine"));
+                Domaine domaine = new Domaine(rs.getInt("id_domaine"), rs.getString("nom_domaine"));
                 domainNames.add(domaine);
             }
 
@@ -117,5 +114,57 @@ public class ServiceForum implements IService<Forum>{
         }
         return null; // Domaine not found
     }
-    
+
+    public String getUserEmailByForumId(int id_forum) {
+        String query = "SELECT email FROM user u left join forum f on u.id=f.id_user WHERE f.id_forum = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, id_forum);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String email = rs.getString("email");
+                return email;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public String getUserNameByForumId(int id_forum) {
+        String query = "SELECT nom,prenom FROM user u left join forum f on u.id=f.id_user WHERE f.id_forum = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, id_forum);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String fullname = rs.getString("nom") + " " + rs.getString("prenom");
+                return fullname;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public List<Forum> rechercher(String searchword) {
+        List<Forum> list = new ArrayList<>();
+
+        String req = "SELECT * FROM forum WHERE sujet LIKE CONCAT('%', ?, '%') OR contenu LIKE CONCAT('%', ?, '%')";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, searchword);
+            pst.setString(2, searchword);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                list.add(new Forum(rs.getInt("id_forum"), rs.getString("sujet"), rs.getString("contenu"), rs.getInt("id_user"), rs.getInt("id_domaine")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("here");
+            System.out.println(ex.getMessage());
+        }
+
+        return list;
+    }
+
 }
