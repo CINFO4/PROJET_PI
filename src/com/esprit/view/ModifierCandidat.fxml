@@ -24,7 +24,7 @@
                   </Label>
                   <Label layoutX="97.0" layoutY="109.0" text="Nom" />
                   <Label layoutX="563.0" layoutY="109.0" text="Prénom" />
-                  <Label layoutX="87.0" layoutY="171.0" text="Adresse" />
+                  <Label layoutX="87.0" layoutY="171.0" text="Adresse mail" />
                   <Label layoutX="554.0" layoutY="171.0" text="Téléphone" />
                   <Label layoutX="82.0" layoutY="277.0" text="Description" />
                   <Label layoutX="75.0" layoutY="396.0" text="Mot de passe" />

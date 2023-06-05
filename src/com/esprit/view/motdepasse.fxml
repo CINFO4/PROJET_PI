@@ -19,12 +19,15 @@
          </font>
       </Label>
       <TextField fx:id="login" layoutX="75.0" layoutY="221.0" prefHeight="51.0" prefWidth="452.0" promptText="E-mail ou téléphone" />
-      <Button fx:id="submit" layoutX="83.0" layoutY="317.0" mnemonicParsing="false" onAction="#login" prefHeight="31.0" prefWidth="452.0" style="-fx-background-color: #0077B5;" styleClass="button2" text="Réinitialiser le mot de passe" textFill="WHITE">
+      <Button fx:id="submit" layoutX="76.0" layoutY="297.0" mnemonicParsing="false" onAction="#login" prefHeight="51.0" prefWidth="459.0" style="-fx-background-color: #0077B5;" styleClass="button2" text="Réinitialiser le mot de passe" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
       <Label fx:id="erreur" layoutX="42.0" layoutY="25.0" prefHeight="51.0" prefWidth="540.0" textFill="#e80d0d" />
-      <Button fx:id="retour" layoutX="260.0" layoutY="373.0" mnemonicParsing="false" onAction="#retour" style="-fx-background-color: #EAEDED;" text="Retour" textFill="#626567" />
+      <Button fx:id="retour" layoutX="260.0" layoutY="373.0" mnemonicParsing="false" onAction="#retour" style="-fx-background-color: #EAEDED;" text="Retour" textFill="#626567">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

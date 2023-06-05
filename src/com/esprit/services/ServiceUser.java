@@ -387,41 +387,55 @@ public class ServiceUser {
         return list;
 
     }
-    
-    public boolean login(String login, String password){
-       String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
-       try {
+
+    public boolean login(String login, String password) {
+        String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
+        try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, login);
             pst.setString(2, login);
             pst.setString(3, password);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 return true;
-            }
-            else
+            } else {
                 return false;
-       }catch(Exception e){
-           System.out.println(e.getMessage());
-           return false;
-       }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
-    public boolean loginpasse(String login){
-       String req = "select * from user where (mail=? or numero_telephone=?);";
-       try {
+
+    public boolean loginpasse(String login) {
+        String req = "select * from user where (mail=? or numero_telephone=?);";
+        try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, login);
             pst.setString(2, login);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 return true;
-            }
-            else
+            } else {
                 return false;
-       }catch(Exception e){
-           System.out.println(e.getMessage());
-           return false;
-       }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public void modifiermotdepasse(String motdepasse, String login) {
+        String req = "UPDATE User SET motdepasse=? where (mail=? or CAST(numero_telephone AS CHAR)=?);";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, motdepasse);
+            pst.setString(2, login);
+            pst.setString(3, login);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }
