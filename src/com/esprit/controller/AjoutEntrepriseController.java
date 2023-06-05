@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
  * @author Anis
  */
 public class AjoutEntrepriseController implements Initializable {
+
     @FXML
     private TextField tfNom;
     @FXML
@@ -52,44 +53,41 @@ public class AjoutEntrepriseController implements Initializable {
     private TextArea taDescription;
     @FXML
     private TextField tfAdresse;
-    
-     
+
     @FXML
-    private ComboBox<Taille> cbTailleEntreprise;
+    private ComboBox<String> cbTailleEntreprise;
     @FXML
     private ComboBox<String> cbSecteurActivite;
-   
+
     private Refresh refreshEvent;
-   
+
     public void setRefreshEvent(Refresh refreshListener) {
-    this.refreshEvent = refreshListener;
-}
-    
-    
-    
+        this.refreshEvent = refreshListener;
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        Taille[] t = Taille.values();
-//        String[] t2 = new String[t.length];
-//        for(int i=0; i<t.length;i++){
-//            t2[i]=t[i].toString().replace('_', ' ');
-//        }
+        Taille[] t = Taille.values();
+        String[] t2 = new String[t.length];
+        for (int i = 0; i < t.length; i++) {
+            t2[i] = t[i].toString().replace('_', ' ');
+        }
         ServiceDomaine sd = new ServiceDomaine();
         cbSecteurActivite.setItems(FXCollections.observableArrayList(sd.getDomainesName()));
-        cbTailleEntreprise.setItems(FXCollections.observableArrayList(Taille.values()));
-        
+        cbTailleEntreprise.setItems(FXCollections.observableArrayList(t2));
+
         // TODO
-    }  
+    }
+
     public void triggerRefreshEvent() {
         if (refreshEvent != null) {
             refreshEvent.onRefresh();
         }
-     }
-    
+    }
+
     public boolean validateFields() {
         if (tfNom.getText().isEmpty() || tfPrenom.getText().isEmpty() || tfNomEntreprise.getText().isEmpty() || tfnumero.getText().isEmpty() || tfPassword.getText().isEmpty() || tfPassword2.getText().isEmpty() || tfSIteWeb.getText().isEmpty() || tfLinkedin.getText().isEmpty() || taDescription.getText().isEmpty() || tfAdresse.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -101,28 +99,30 @@ public class AjoutEntrepriseController implements Initializable {
         }
         return true;
     }
-     @FXML
+
+    @FXML
     public void ajouterEntreprise(ActionEvent event) throws IOException {
-        if(!validateFields()){
+        if (!validateFields()) {
             return;
         }
-        if(tfPassword.getText().equals(tfPassword2.getText())){
-        ServiceUser sp = new ServiceUser();
-        ServiceDomaine sd = new ServiceDomaine();
-        sp.ajouter(new Entreprise(tfNom.getText(), tfPrenom.getText(), tfAdresse.getText(), Integer.parseInt(tfnumero.getText()), tfPassword.getText(), taDescription.getText(),tfNomEntreprise.getText(),cbTailleEntreprise.getValue(),tfSIteWeb.getText(),tfLinkedin.getText(),sd.getIdDomaineByName(cbSecteurActivite.getValue())));
-        JOptionPane.showMessageDialog(null, "Entreprise ajoutée !");
-        triggerRefreshEvent();
-        }
-        else {
+        if (tfPassword.getText().equals(tfPassword2.getText())) {
+            String tailleSelectionneeString = cbTailleEntreprise.getValue(); // Récupérer la valeur sélectionnée en tant que chaîne de caractères
+            Taille tailleSelectionnee = null; // Variable pour stocker la valeur convertie
+
+            // Convertir la chaîne de caractères sélectionnée en une valeur de l'énumération Taille
+            if (tailleSelectionneeString != null) {
+                tailleSelectionneeString = tailleSelectionneeString.replace(" ", "_"); // Remettre les underscores si nécessaire
+                tailleSelectionnee = Taille.valueOf(tailleSelectionneeString);
+            }
+            ServiceUser sp = new ServiceUser();
+            ServiceDomaine sd = new ServiceDomaine();
+            sp.ajouter(new Entreprise(tfNom.getText(), tfPrenom.getText(), tfAdresse.getText(), Integer.parseInt(tfnumero.getText()), tfPassword.getText(), taDescription.getText(), tfNomEntreprise.getText(), tailleSelectionnee , tfSIteWeb.getText(), tfLinkedin.getText(), sd.getIdDomaineByName(cbSecteurActivite.getValue())));
+            JOptionPane.showMessageDialog(null, "Entreprise ajoutée !");
+            triggerRefreshEvent();
+        } else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
-        
-     
+
     }
-    
 
-    
-     
-
-    
 }

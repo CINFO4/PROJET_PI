@@ -25,11 +25,11 @@ public class Mainprog extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
-     //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
+     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/motdepasse.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));
         Parent root = loader.load();
