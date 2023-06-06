@@ -277,6 +277,29 @@ public class CrudOffreController implements Initializable {
 //        table();
     }
 
+    @FXML
+    private void supprimer(MouseEvent event) {
+        int index;
+        index = tableOffre.getSelectionModel().getSelectedIndex();
+        ServiceOffre sf = new ServiceOffre();
+        if(index < 0){
+            JOptionPane.showMessageDialog(null, "Selectionner un offre !");
+        }else{
+            int id = Integer.parseInt(String.valueOf(tableOffre.getItems().get(index).getId_offre())); 
+            int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter ce offre ?","Confirmation",JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION){
+                
+              sf.supprimerParId(id);
+             JOptionPane.showMessageDialog(null, "offre supprimer !");
+                
+                table();
+               
+            }else{
+                return ;
+            }
+        }
+    }
+
    
     
 

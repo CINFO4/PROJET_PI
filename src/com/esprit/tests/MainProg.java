@@ -8,6 +8,9 @@ import com.esprit.entities.*;
 import com.esprit.services.*;
 import com.esprit.utils.DataSource;
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -38,10 +41,11 @@ public class MainProg {
 //        sc.supprimer(new Candidature(1, 5, 4, null, ""));
 //        System.out.println(sc.afficher());
 //            System.out.println(sc.checkCandidature(1, 15));
-          
-        
-
-       
+        try {
+            ServiceMail.sendMail("salemoussama614@gmail.com");
+        } catch (MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
        
        
        
