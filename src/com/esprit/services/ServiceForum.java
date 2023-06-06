@@ -167,4 +167,36 @@ public class ServiceForum implements IService<Forum> {
         return list;
     }
 
+    public String getUserNameById(int id_user) {
+        String query = "SELECT nom,prenom FROM user WHERE id = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, id_user);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String fullname = rs.getString("nom") + " " + rs.getString("prenom");
+                return fullname;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public String getDomaineNameById(int id_domaine) {
+        String query = "SELECT nom_domaine FROM domaine WHERE id_domaine = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, id_domaine);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String nomDomaine = rs.getString("nom_domaine");
+                return nomDomaine;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
 }

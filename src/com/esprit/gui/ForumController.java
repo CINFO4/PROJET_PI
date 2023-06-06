@@ -200,7 +200,7 @@ public class ForumController {
                     setText(null);
                 } else {
                     setText("Sujet: " + forum.getSujet() + ", Contenu: " + forum.getContenu()
-                            + ", ID User: " + forum.getId_user() + ", ID Domaine: " + forum.getId_domaine());
+                            + ", Utilisateur: " + serviceForum.getUserNameById(forum.getId_user()) + ",Domaine: " + serviceForum.getDomaineNameById(forum.getId_domaine()));
                 }
             }
         });
@@ -293,7 +293,7 @@ public class ForumController {
                     setText(null);
                 } else {
                     setText("Sujet: " + forum.getSujet() + ", Contenu: " + forum.getContenu()
-                            + ", ID User: " + forum.getId_user() + ", ID Domaine: " + forum.getId_domaine());
+                            + ", Utilisateur: " + serviceForum.getUserNameById(forum.getId_user()) + ",Domaine: " + serviceForum.getDomaineNameById(forum.getId_domaine()));
                 }
             }
         });

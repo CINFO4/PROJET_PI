@@ -28,29 +28,29 @@
             <Label text="Domaine :" />
             <ChoiceBox fx:id="domaineChoiceBox" prefWidth="400.0" />
         </VBox>
-      <ScrollPane layoutX="1200.0" layoutY="50.0">
-         <content>
-            <AnchorPane>
-               <children>
-                    <VBox fx:id="forumInfoBox" spacing="20.0">
-                        <Label fx:id="forumSujetLabel" styleClass="header-label" text="forum" />
-                        <Label fx:id="forumContenuLabel" />         
-                        <HBox spacing="10.0">
-                            <TextArea fx:id="commentTextArea" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="addCommentButton" onAction="#addComment" text="Ajouter" />
-                        </HBox>
-                        <VBox fx:id="commentContainer" spacing="10" />
-                    </VBox>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-          <Button fx:id="createButton" layoutX="700.0" layoutY="645.0" onAction="#createForum" text="Créer" />
-          <Button fx:id="deleteButton" layoutX="829.0" layoutY="645.0" onAction="#deleteForum" text="Supprimer" />
-         <Button fx:id="saveButton" layoutX="990.0" layoutY="645.0" onAction="#modifyForum" text="Enregistrer" />
-      <TextField fx:id="chercherTextField" layoutX="52.0" layoutY="127.0" prefHeight="31.0" prefWidth="253.0" promptText="chercher..." />
-      <Button fx:id="saveButton1" layoutX="363.0" layoutY="124.0" onAction="#chercher" text="Chercher" />
-      <Button layoutX="516.0" layoutY="124.0" onAction="#clear" text="Reinitialiser" />
+        <ScrollPane layoutX="1200.0" layoutY="50.0">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <VBox fx:id="forumInfoBox" spacing="20.0">
+                            <Label fx:id="forumSujetLabel" styleClass="header-label" text="forum" />
+                            <Label fx:id="forumContenuLabel" />         
+                            <HBox spacing="10.0">
+                                <TextArea fx:id="commentTextArea" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="addCommentButton" onAction="#addComment" text="Ajouter" />
+                            </HBox>
+                            <VBox fx:id="commentContainer" spacing="10" />
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <Button fx:id="createButton" layoutX="700.0" layoutY="681.0" onAction="#createForum" text="Créer" />
+        <Button fx:id="deleteButton" layoutX="824.0" layoutY="681.0" onAction="#deleteForum" text="Supprimer" />
+        <Button fx:id="saveButton" layoutX="990.0" layoutY="681.0" onAction="#modifyForum" text="Enregistrer" />
+        <TextField fx:id="chercherTextField" layoutX="52.0" layoutY="127.0" prefHeight="31.0" prefWidth="253.0" promptText="chercher..." />
+        <Button fx:id="saveButton1" layoutX="363.0" layoutY="124.0" onAction="#chercher" text="Chercher" />
+        <Button layoutX="516.0" layoutY="124.0" onAction="#clear" text="Reinitialiser" />
     </children>
     <stylesheets>
         <URL value="@ForumCrud.css" />
