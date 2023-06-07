@@ -42,12 +42,12 @@ public class MainProg {
 //        System.out.println(sc.afficher());
 //            System.out.println(sc.checkCandidature(1, 15));
         try {
-            ServiceMail.sendMail("salemoussama614@gmail.com");
+            ServiceMail mail = new ServiceMail();
+            ServiceMail.sendMail("salemoussama614@gmail.com","fff","dfdgf");
         } catch (MessagingException ex) {
             System.out.println(ex.getMessage());
         }
-       
-       
+//       
        
        
        

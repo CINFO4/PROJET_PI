@@ -25,7 +25,9 @@ import javax.mail.internet.MimeMessage;
  */
 public class ServiceMail{
     
-    public static void sendMail(String recepient) throws MessagingException{
+        
+    
+    public static void sendMail(String recepient,String object , String msg) throws MessagingException{
         System.out.println("preparing to send Email !   ");
         Properties properties = new Properties();
         
@@ -44,20 +46,20 @@ public class ServiceMail{
                 return new PasswordAuthentication(myAdr,password);
             }
         });
-        Message message = prepareMessaage(session,myAdr,recepient);
+        Message message = prepareMessaage(session,myAdr,recepient,object,msg);
         Transport.send(message);
         System.out.println("message sent successfully !");
     }
 
-    private static Message prepareMessaage(Session session, String myAdr, String recepient) {
+    private static Message prepareMessaage(Session session, String myAdr, String recepient, String object, String msg) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAdr));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-            message.setSubject("first email subject");
-            message.setText("hi there ! \n email api is working ! ");
+            message.setSubject(object);
+            message.setText(msg);
             return message;
-        } catch (Exception ex) {
+        } catch (MessagingException ex) {
             Logger.getLogger(ServiceMail.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

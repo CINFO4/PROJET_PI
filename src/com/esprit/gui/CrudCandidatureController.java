@@ -7,11 +7,16 @@ package com.esprit.gui;
 import com.esprit.entities.Candidature;
 import com.esprit.entities.Domaine;
 import com.esprit.entities.EtatCandidature;
+import com.esprit.entities.User;
 import com.esprit.services.ServiceCandidature;
 import com.esprit.services.ServiceCandidature.CandidatureDetails;
+import com.esprit.services.ServiceMail;
 import java.net.URL;
+import com.esprit.services.ServiceUser;
 import java.sql.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +32,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import static javafx.scene.input.KeyCode.S;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
 /**
@@ -148,6 +154,22 @@ public class CrudCandidatureController implements Initializable {
             sc.modifier(new Candidature(id_user, id_offre, id_can, date_condidature, EtatCandidature.Refuser));
               JOptionPane.showMessageDialog(null, "Candidat refuser  !");
               refreshTable();
+              
+              
+                ServiceUser su = new ServiceUser();
+                User u = su.getUserByID(id_user);
+                String nomEntreprise = tableCandidature.getItems().get(index).getNom_entreprise();
+
+                String titre = tableCandidature.getItems().get(index).getTitreoffre();
+
+                String recepient =u.getMail();
+                String object=nomEntreprise;
+                String message="Votre Candidature dans poste "+titre+" a ete refuser";
+                try {
+                    ServiceMail.sendMail(recepient, object, message);
+                } catch (MessagingException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }else{
                 return ;
             }
@@ -156,7 +178,8 @@ public class CrudCandidatureController implements Initializable {
     }
 
     @FXML
-    private void accpeter(ActionEvent event) {      
+    private void accpeter(ActionEvent event) {   
+        
         int index = tableCandidature.getSelectionModel().getSelectedIndex();
         if(index < 0){
             JOptionPane.showMessageDialog(null, "selectionner une candidature  !");
@@ -165,12 +188,31 @@ public class CrudCandidatureController implements Initializable {
             int id_user = tableCandidature.getItems().get(index).getId_user();
             int id_can = tableCandidature.getItems().get(index).getId_candidature();
             int id_offre = tableCandidature.getItems().get(index).getId_offre();
+            
             Date date_condidature = tableCandidature.getItems().get(index).getDate_condidature();
             int result = JOptionPane.showConfirmDialog(null, "vouler vous refuser ce candidat ?","Confirmation",JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION){
                sc.modifier(new Candidature(id_user, id_offre, id_can, date_condidature, EtatCandidature.Accepter));
               JOptionPane.showMessageDialog(null, "Candidat Accepter  !");
               refreshTable();
+              
+              
+            ServiceUser su = new ServiceUser();
+            User u = su.getUserByID(id_user);
+            String nomEntreprise = tableCandidature.getItems().get(index).getNom_entreprise();
+            
+            String titre = tableCandidature.getItems().get(index).getTitreoffre();
+            
+            String recepient =u.getMail();
+            String object=nomEntreprise;
+            String message="Votre Candidature dans poste "+titre+" a ete accepter";
+                try {
+                    ServiceMail.sendMail(recepient, object, message);
+                } catch (MessagingException ex) {
+                    System.out.println(ex.getMessage());
+                }
+              
+              
             }else{
                 return ;
             }

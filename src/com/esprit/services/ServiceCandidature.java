@@ -96,6 +96,7 @@ public class ServiceCandidature implements IServices<Candidature>{
     }
     
     
+    
     public class CandidatureDetails{
         private int id_candidature; 
         private Date date_condidature;
