@@ -43,7 +43,8 @@ public class Mainprog {
         //System.out.println(CodeGenerator.generateCode());
         
         // code api : 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
-        sv.modifiermotdepasse("goalooot", "2562");
+        //sv.modifiermotdepasse("goalooot", "2562")
+        sv.ajouter(new Candidat("ali", "ali", "ali", 256, "hali", "khhi", Diplome.Bacclauréat, "git", Experience.Confirme));
     }  
     
 }

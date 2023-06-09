@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.esprit.view;
+package com.esprit.controller;
 
 import com.esprit.services.ServiceUser;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class ChangermotdepasseController implements Initializable {
         if (motdepasse.getText().equals(motdepasse2.getText())) {
             ServiceUser su = new ServiceUser();
             su.modifiermotdepasse(motdepasse.getText(),id);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) motdepasse.getScene().getWindow(); // Récupère la fenêtre actuelle

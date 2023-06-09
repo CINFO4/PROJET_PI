@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.esprit.view;
+package com.esprit.controller;
 
+import com.esprit.controller.ChangermotdepasseController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -62,7 +63,7 @@ public class VerificationcodeController implements Initializable {
     public void verifcode(ActionEvent e) throws IOException{
         String cd = tfcode.getText();
         if(cd.equals(generatecode)){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("changermotdepasse.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/changermotdepasse.fxml"));
             Parent root = loader.load();
             ChangermotdepasseController cm = loader.getController();
             cm.setId(id);

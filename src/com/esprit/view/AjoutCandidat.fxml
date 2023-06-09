@@ -17,9 +17,9 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="861.0" prefWidth="897.0">
                <children>
-                  <Label layoutX="66.0" layoutY="41.0" text="Candidat">
+                  <Label layoutX="75.0" layoutY="14.0" text="Créer votre espace Candidat ici" textFill="LIGHTCORAL">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold Italic" size="26.0" />
                      </font>
                   </Label>
                   <Label layoutX="97.0" layoutY="109.0" text="Nom" />
@@ -42,9 +42,17 @@
                   <ComboBox fx:id="cbdiplome" layoutX="194.0" layoutY="462.0" prefWidth="150.0" style="-fx-background-color: #FFFFFF;" />
                   <ComboBox fx:id="cbexperience" layoutX="664.0" layoutY="462.0" prefWidth="150.0" style="-fx-background-color: #FFFFFF;" />
                   <ListView fx:id="listcompetence" layoutX="192.0" layoutY="521.0" prefHeight="140.0" prefWidth="665.0" />
-                  <Button fx:id="envoye" layoutX="468.0" layoutY="777.0" mnemonicParsing="false" onAction="#ajouterCandidat" style="-fx-background-color: #0077B5;" styleClass="button2" text="Submit" />
+                  <Button fx:id="envoye" layoutX="427.0" layoutY="777.0" mnemonicParsing="false" onAction="#ajouterCandidat" prefHeight="38.0" prefWidth="119.0" style="-fx-background-color: #0077B5;" styleClass="button2" text="Submit" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Button>
                   <PasswordField fx:id="tfmotdepasse" layoutX="192.0" layoutY="391.0" />
                   <PasswordField fx:id="tfmotdepasse2" layoutX="670.0" layoutY="391.0" />
+                  <Label layoutX="75.0" layoutY="61.0" text="Ca prend uniquement 5 secondes :)" textFill="#0077b5">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
         </content>

@@ -89,8 +89,10 @@ public class EntrepriseController implements Initializable, Refresh {
                             confirmation.setTitle("Confirmation");
                             confirmation.setHeaderText("Supprimer l'entreprise ?");
                             confirmation.setContentText("Êtes-vous sûr de vouloir supprimer cette Entreprise ?");
-
+                            //L'interface Optional<T> est une fonctionnalité introduite à partir de Java 8 qui permet de représenter une valeur optionnelle qui peut être présente ou absente.
+                            //Dans le contexte du code que vous avez partagé, Optional<ButtonType> est utilisé pour représenter le résultat de la boîte de dialogue de confirmation.
                             Optional<ButtonType> result = confirmation.showAndWait();
+                            //La méthode showAndWait() de la classe Alert renvoie un objet Optional<ButtonType>. Cet objet Optional contient le résultat de la boîte de dialogue (le bouton sur lequel l'utilisateur a cliqué) s'il est présent, sinon il est vide.
                             if (result.isPresent() && result.get() == ButtonType.OK) {
                                 // Supprimer le candidat de la liste
                                 table.getItems().remove(c);
