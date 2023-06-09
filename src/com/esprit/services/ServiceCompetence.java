@@ -66,7 +66,7 @@ public class ServiceCompetence {
     public List<Competence> afficher() {
     List<Competence> list = new ArrayList<>();
 
-    String req = "SELECT id_c, nom, description FROM competences";
+    String req = "SELECT id_c, nom, description FROM Competence";
     try {
         PreparedStatement pst = cnx.prepareStatement(req);
         ResultSet rs = pst.executeQuery();
@@ -85,8 +85,11 @@ public class ServiceCompetence {
 }
     
     
+    
+    
+    
     public String getNameCompetenceById(int id_c){
-        String req = "SELECT nom FROM Competence WHERE  id_c= ? ";
+        String req = "SELECT nom FROM Competence WHERE  id_c = ? ";
         String  name = null ;
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -163,4 +166,7 @@ public class ServiceCompetence {
     return list;
     
     }
+  
+  
+  
 }

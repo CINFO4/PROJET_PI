@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.ListeQuizController">
+   <children>
+      <Label layoutX="41.0" layoutY="23.0" prefHeight="70.0" prefWidth="649.0" text="   LISTE DES QUIZ" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman Bold" size="65.0" />
+         </font>
+      </Label>
+      <TableView fx:id="infocompetence" layoutX="25.0" layoutY="183.0" prefHeight="305.0" prefWidth="678.0">
+        <columns>
+          <TableColumn fx:id="colcompetence" prefWidth="677.0" text="Selectionner une competence" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

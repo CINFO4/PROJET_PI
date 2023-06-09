@@ -36,7 +36,7 @@ public class ServiceProposition {
     
     public void modifier(proposition p) {
         try {
-            String req = "UPDATE proposition SET description=?, etat=? id_question=? WHERE id_proposition=?";
+            String req = "UPDATE proposition SET description=?, etat=?, id_question=? WHERE id_proposition=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(4, p.getId_proposition());
             pst.setString(1, p.getDescription());
@@ -67,6 +67,25 @@ public class ServiceProposition {
         String req = "SELECT * FROM proposition";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                list.add(new proposition(rs.getInt("id_proposition"), rs.getString("description"), rs.getString("etat"), rs.getInt("id_question")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        return list;
+    }
+    
+    public List<proposition> afficherByIDquestion(int id) {
+        List<proposition> list = new ArrayList<>();
+        
+        String req = "SELECT * FROM proposition where id_question = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
                 list.add(new proposition(rs.getInt("id_proposition"), rs.getString("description"), rs.getString("etat"), rs.getInt("id_question")));

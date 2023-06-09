@@ -25,7 +25,9 @@ public class main {
         ServiceQuestion p1 = new ServiceQuestion();
         //ServiceCompetence p2 = new ServiceCompetence();
         //p1.ajouter(new proposition("tunis","valid",1));
-        System.out.println(p1.afficherQuestionView());
+//        System.out.println(p1.afficherQuestionView());
+ServiceQuestion s = new ServiceQuestion();
+        System.out.println(s.afficherQuestionViewByCom("java"));
     }
     
 }

@@ -167,7 +167,30 @@ public class ServiceQuestion {
         return list;
     }
     
-     public int GetidQuestionbynom(String libelle){
+    
+    
+    public List<QuestionView> afficherQuestionViewByCom(String comp) {
+        List<QuestionView> list = new ArrayList<>();
+        
+        String req = "SELECT id_question, libelle,etat_question,id_c,(select c.nom from Competence c where c.id_c=q.id_c) as nomc FROM Question q WHERE c.nomc = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, comp);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                list.add(new QuestionView(rs.getInt("id_question"), rs.getString("libelle"), rs.getString("etat_question"), rs.getInt("id_c"), rs.getString("nomc")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        return list;
+    }
+    
+    
+    
+    public int GetidQuestionbynom(String libelle){
     int id = 0;
     String req = "SELECT id_question FROM Question q where q.libelle like ?";
     try {
@@ -187,50 +210,7 @@ public class ServiceQuestion {
     return id;
     }
      
-       public List<Question> GetQuestionsByCompetences(List<Competence> competences) {
-    List<Question> relatedQuestions = new ArrayList<>();
-
-    String req = "SELECT libelle, etat, id_c FROM Question q WHERE q.id_c IN (";
     
-    // Créez une chaîne de paramètres de placeholder pour les compétences
-    StringBuilder placeholders = new StringBuilder();
-    for (int i = 0; i < competences.size(); i++) {
-        placeholders.append("?");
-        if (i < competences.size() - 1) {
-            placeholders.append(", ");
-        }
-    }
-    
-    req += placeholders.toString() + ")";
-    
-    try {
-        PreparedStatement pst = cnx.prepareStatement(req);
-        
-        // Définissez les valeurs des paramètres avec les IDs des compétences
-        for (int i = 0; i < competences.size(); i++) {
-            pst.setInt(i + 1, competences.get(i).getId_c());
-        }
-        
-        ResultSet rs = pst.executeQuery();
-        
-        // Parcourez les résultats et créez des objets Question
-        while (rs.next()) {
-            String libelle = rs.getString("libelle");
-            String etat = rs.getString("etat");
-            int id_c = rs.getInt("id_c");
-            Question question = new Question(libelle, etat,id_c);
-            relatedQuestions.add(question);
-        }
-        
-        rs.close();
-        pst.close();
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-    }
-
-    return relatedQuestions;
-}
-
        
        public List<Question> GetQuestionsByCompetences(int id_c){
            List<Question> relatedQuestions = new ArrayList<>();
@@ -243,7 +223,7 @@ public class ServiceQuestion {
             
            String libelle = rs.getString("libelle");
             String etat_question = rs.getString("etat_question");
-            Question question = new Question(libelle, etat_question,id_c);
+            Question question = new Question(libelle,id_c);
             relatedQuestions.add(question);
          
                     

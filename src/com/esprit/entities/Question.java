@@ -22,9 +22,9 @@ public class Question {
         this.id_c = id_c;
     }
 
-    public Question(String libelle, String etat_question, int id_c) {
+    public Question(String libelle,int id_c) {
         this.libelle = libelle;
-        this.etat_question = etat_question;
+        this.etat_question = "Active";
         this.id_c = id_c;
     }
 
