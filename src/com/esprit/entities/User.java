@@ -21,6 +21,30 @@ public abstract class User {
     private Integer numero_telephone;
     private String motdepasse;
     private String description;
+
+    
+    public int Codepasse(String motdepasse) {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(motdepasse);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        return true;
+    }
+    
+    
     
    public boolean emailvalidator(String mail) {
     String emailPattern = "^(.+)@(.+)$";
@@ -29,8 +53,6 @@ public abstract class User {
     return matcher.matches();
 }
 
-    public User() {
-    }
 
 
 
@@ -39,9 +61,8 @@ public abstract class User {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        int nbr = numero_telephone.toString().length();
         this.numero_telephone = numero_telephone;
-        this.motdepasse = motdepasse;
+        this.motdepasse = String.valueOf(Codepasse(motdepasse));
         this.description = description;
 
     }
@@ -51,9 +72,8 @@ public abstract class User {
         this.prenom = prenom;
         this.mail = mail;
         this.numero_telephone = numero_telephone;
-        this.motdepasse = motdepasse;
+        this.motdepasse = String.valueOf(Codepasse(motdepasse));
         this.description = description;
-        int nbr = numero_telephone.toString().length();
         this.numero_telephone = numero_telephone;
  
     }

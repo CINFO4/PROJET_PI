@@ -90,7 +90,17 @@ public class ServiceUser {
                 pst.setString(10, ((Entreprise) p).getSiteWeb());
                 pst.setString(11, ((Entreprise) p).getLinkedin());
                 pst.setInt(12, ((Entreprise) p).getId_domaine());
-
+                List<Entreprisedomaine> list = afficherentreprise();
+                Boolean entreprisetexiste = false;
+                for (Entreprisedomaine u : list) {
+                    if (u.getMail().equals(p.getMail()) || u.getNumero_telephone() == p.getNumero_telephone()) {
+                        entreprisetexiste = true;
+                        break;
+                    }
+                }
+                    if(entreprisetexiste){
+                        throw new MailException("Entreprise existe deja");
+                    }
                 pst.executeUpdate();
                 System.out.println("Entreprise ajoutée");
             } catch (SQLException e) {
@@ -118,7 +128,7 @@ public class ServiceUser {
         }
     }
 
-    public void modifier(User p) {
+    public void modifier(User p) throws MailException {
         if (p instanceof Candidat) {
 
             try {
@@ -134,6 +144,17 @@ public class ServiceUser {
                 pst.setString(7, ((Candidat) p).getEducation().name());
                 pst.setString(8, ((Candidat) p).getGithub());
                 pst.setString(9, ((Candidat) p).getExperience().name());
+                List<Candidat> list = afficherCandidat();
+                Boolean candidatexiste = false;
+                for (Candidat u : list) {
+                    if (u.getMail().equals(p.getMail()) || u.getNumero_telephone() == p.getNumero_telephone()) {
+                        candidatexiste = true;
+                        break;
+                    }
+                }
+                    if(candidatexiste){
+                        throw new MailException("candidat existe deja");
+                    }
                 pst.executeUpdate();
                 System.out.println("Candidat modifiée !");
             } catch (SQLException ex) {
