@@ -16,22 +16,36 @@ public class Entreprise extends User {
     private String Linkedin;
     private int id_domaine;
 
-    public Entreprise( int id, String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+    public Entreprise( int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) throws MailException {
         super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
         this.TailleEntreprise = TailleEntreprise;
         this.SiteWeb = SiteWeb;
         this.Linkedin = Linkedin;
         this.id_domaine = id_domaine;
+         if (!emailvalidator(mail)) {
+            throw new MailException("Mail invalide");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
-    public Entreprise(String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) {
+    public Entreprise(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) throws MailException {
         super(nom, prenom, mail, numero_telephone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
         this.TailleEntreprise = TailleEntreprise;
         this.SiteWeb = SiteWeb;
         this.Linkedin = Linkedin;
         this.id_domaine = id_domaine;
+         if (!emailvalidator(mail)) {
+            throw new MailException("Mail invalide");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
     public Taille getTailleEntreprise() {

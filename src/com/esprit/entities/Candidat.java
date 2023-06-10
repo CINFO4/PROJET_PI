@@ -17,20 +17,34 @@ public class Candidat extends User {
     private String Github;
     private Experience experience;
 
-    public Candidat(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, Diplome education, String Github, Experience experience) {
+    public Candidat(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, Diplome education, String Github, Experience experience) throws MailException {
         super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
         this.Github= Github;
         this.experience=experience;
+        if (!emailvalidator(mail)) {
+            throw new MailException("Mail non");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
-    public Candidat( String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description,Diplome education, String Github, Experience experience) {
+    public Candidat( String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description,Diplome education, String Github, Experience experience) throws MailException {
         super(nom, prenom, mail, numero_telephone, motdepasse, description);
         this.education = education;
         this.ListeCompetences = new ArrayList<>();
         this.Github= Github;
         this.experience=experience;
+        if (!emailvalidator(mail)) {
+            throw new MailException("mail up");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
     public List<Integer> getListeCompetences() {

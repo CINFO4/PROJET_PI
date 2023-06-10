@@ -15,8 +15,8 @@ import java.util.List;
  * @author Anis
  */
 public class Mainprog {
-    
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws MailException {
         //ServiceUser sv = new ServiceUser();
         //sv.ajouter(new Candidat("ahmed", "othman", "ariana", 52421452, "aaaa", "vvvv", Diplome.Mastére, Role.Candidat));
         //sv.ajouter(new Entreprise("iplabel", "anis", "othman", "mohamed V", 71586248, "hyjkhiuh", "IT", Role.Entreprise));
@@ -30,21 +30,27 @@ public class Mainprog {
 //        sv.ajouter(c);
         //ServiceDomaine sd = new ServiceDomaine();
         //sd.ajouter(new Domaine("Ecommerce"));
-          //System.out.println(sd.getDomainesName());
+        //System.out.println(sd.getDomainesName());
 //        ServiceCompetence sc = new ServiceCompetence();
 //        sc.ajouter(new Competence("Reseau", "Définit les projets d'évolution du réseau"));
         ServiceUser sv = new ServiceUser();
         //sv.ajouter(new Candidat("hazem", "landolsi", "hazem@gmail.com", 25412542, "admin", "azert", Diplome.Bacclauréat, "git", Experience.Confirme));
-       // System.out.println(sv.getallcandidat());
-       // sv.ajouter(new Entreprise("anis", "othman", "anis@ip-label.com", 25623767, "azerty", "it entreprise", "sofrecom", Taille.PLUS_DE_50_EMPLOYES, "sofrecom.com", "linkdin.fr",1));
+        // System.out.println(sv.getallcandidat());
+        // sv.ajouter(new Entreprise("anis", "othman", "anis@ip-label.com", 25623767, "azerty", "it entreprise", "sofrecom", Taille.PLUS_DE_50_EMPLOYES, "sofrecom.com", "linkdin.fr",1));
         //sv.ajouter(new Entreprise("khh", "klhh", "jghjig", 54654, "jgh", "ljkhg", "jhjh", Taille.DE_1_A_10_EMPLOYES, "khoh", "lkhh", 1));
         //sv.ajouter(new Candidat("helmi", "amdouni", "hmd@ip.fr", 45216584, "admin", "un jeune etudiant", Diplome.Ingénierie, "helmi.github", Experience.Confirme));
         //System.out.println(sv.login("anis@ip-label.com", "azerty"));
         //System.out.println(CodeGenerator.generateCode());
-        
+
         // code api : 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
         //sv.modifiermotdepasse("goalooot", "2562")
-        sv.ajouter(new Candidat("ali", "ali", "ali", 256, "hali", "khhi", Diplome.Bacclauréat, "git", Experience.Confirme));
-    }  
-    
+        try {
+            sv.ajouter(new Candidat("isam", "laabidi", "anis@gmail.com", 25623761, "admin", "admin", Diplome.Autre, "git", Experience.Confirme));
+            //System.out.println(sv.afficherCandidat());
+        } catch (MailException e) {
+            System.out.println(e.getMessage());
+        }
+        
+    }
+
 }

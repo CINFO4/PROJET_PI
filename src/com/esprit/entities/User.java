@@ -22,43 +22,40 @@ public abstract class User {
     private String motdepasse;
     private String description;
     
-    public boolean emailvalidator(String mail){
-       String email_pattern = "^[A-Za-z0-9+_.-]+@^[A-Za-z0-9+_.-]+\\.[A-Za-z]+";
-        Pattern pattern = Pattern.compile(email_pattern);
-        Matcher matcher = pattern.matcher(mail);
-        return matcher.matches();
+   public boolean emailvalidator(String mail) {
+    String emailPattern = "^(.+)@(.+)$";
+    Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(mail);
+    return matcher.matches();
+}
+
+    public User() {
     }
 
-    public User(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) {
+
+
+    public User(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) throws MailException {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        if(emailvalidator(mail)){
         this.mail = mail;
-        }
-        else{
-            System.out.println("mail invalide");
-        }
-        int nbr = String.valueOf(numero_telephone).length();
-        if(nbr==8){
+        int nbr = numero_telephone.toString().length();
         this.numero_telephone = numero_telephone;
-        }
-        else{
-            System.out.println("le numero de téléphone doit contenir 8 chiffres");
-        }
         this.motdepasse = motdepasse;
         this.description = description;
 
     }
 
-    public User(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) {
+    public User(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) throws MailException {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.numero_telephone = numero_telephone;
         this.motdepasse = motdepasse;
         this.description = description;
-
+        int nbr = numero_telephone.toString().length();
+        this.numero_telephone = numero_telephone;
+ 
     }
 
     public int getId() {

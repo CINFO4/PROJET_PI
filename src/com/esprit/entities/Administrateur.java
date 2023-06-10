@@ -10,12 +10,26 @@ package com.esprit.entities;
  */
 public class Administrateur extends User {
 
-    public Administrateur(int id, String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description) {
+    public Administrateur(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) throws MailException {
         super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
+        if (!emailvalidator(mail)) {
+            throw new MailException("Mail invalide");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
-    public Administrateur(String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description) {
+    public Administrateur(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) throws MailException {
         super(nom, prenom, mail, numero_telephone, motdepasse, description);
+        if (!emailvalidator(mail)) {
+            throw new MailException("Mail invalide");
+        }
+
+        if (numero_telephone.toString().length() != 8) {
+            throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
     }
 
     

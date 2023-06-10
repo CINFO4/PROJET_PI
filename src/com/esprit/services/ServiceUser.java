@@ -24,7 +24,7 @@ public class ServiceUser {
 
     private Connection cnx = DataSource.GetInstance().getCnx();
 
-    public void ajouter(User p) {
+    public void ajouter(User p) throws MailException {
         if (p instanceof Candidat) {
             try {
                 int id_user = 0;
@@ -44,7 +44,21 @@ public class ServiceUser {
                 pst.setString(8, p.getClass().getSimpleName());
                 pst.setString(9, ((Candidat) p).getGithub());
                 pst.setString(10, ((Candidat) p).getExperience().name());
-                pst.executeUpdate();
+                List<Candidat> list = afficherCandidat();
+                Boolean candidatexiste = false;
+                for (Candidat u : list) {
+                    if (u.getMail().equals(p.getMail()) || u.getNumero_telephone() == p.getNumero_telephone()) {
+                        candidatexiste = true;
+                        break;
+                    }
+                }
+                    if(candidatexiste){
+                        throw new MailException("candidat existe deja");
+                    }
+                    pst.executeUpdate();
+
+                
+
                 ResultSet rs = pst2.executeQuery();
                 while (rs.next()) {
                     id_user = rs.getInt("last_insert_id()");
@@ -188,7 +202,7 @@ public class ServiceUser {
         }
     }
 
-    public List<User> afficher() {
+    public List<User> afficher() throws MailException {
         List<User> list = new ArrayList<>();
 
         String req = "SELECT * FROM user";
@@ -206,13 +220,13 @@ public class ServiceUser {
                 String description = rs.getString("description");
                 String NomEntreprise = rs.getString("NomEntreprise");
                 String role = rs.getString("role");
-                if (role.equals("class com.esprit.entities.Candidat")) {
+                if (role.equals("Candidat")) {
                     Diplome education = Diplome.valueOf(rs.getString("education"));
                     String Github = rs.getString("Github");
                     Experience experience = Experience.valueOf(rs.getString("experience"));
                     User candidat = new Candidat(id, nom, prenom, mail, numeroTelephone, motdepasse, description, education, Github, experience);
                     list.add(candidat);
-                } else if (role.equals("class com.esprit.entities.Entreprise")) {
+                } else if (role.equals("Entreprise")) {
                     Taille TailleEntreprise = Taille.valueOf(rs.getString("TailleEntreprise"));
                     String SiteWeb = rs.getString("SiteWeb");
                     String Linkedin = rs.getString("Linkedin");
@@ -236,7 +250,7 @@ public class ServiceUser {
 
         private String nom_domaine;
 
-        public Entreprisedomaine(int id, String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine, String nom_domaine) {
+        public Entreprisedomaine(int id, String nom, String prenom, String mail, int numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine, String nom_domaine) throws MailException {
             super(id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine);
             this.nom_domaine = nom_domaine;
         }
@@ -256,7 +270,7 @@ public class ServiceUser {
 
     }
 
-    public List<Entreprisedomaine> afficherentreprise() {
+    public List<Entreprisedomaine> afficherentreprise() throws MailException {
         List<Entreprisedomaine> list = new ArrayList<>();
         String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine;";
         try {
@@ -306,7 +320,7 @@ public class ServiceUser {
         return list;
     }
 
-    public List<Candidat> afficherCandidat() {
+    public List<Candidat> afficherCandidat() throws MailException {
         List<Candidat> list = new ArrayList<>();
         String req = "select * from User;";
         try {
@@ -336,7 +350,7 @@ public class ServiceUser {
 
     }
 
-    public ObservableList<User> getalluser() {
+    public ObservableList<User> getalluser() throws MailException {
         ObservableList<User> list = FXCollections.observableArrayList();
         boolean entrepriseajoutee = false;
         String req = "SELECT * FROM user";
@@ -380,7 +394,7 @@ public class ServiceUser {
 
     }
 
-    public ObservableList<Candidat> getallcandidat() {
+    public ObservableList<Candidat> getallcandidat() throws MailException {
         List l = afficherCandidat();
         ObservableList<Candidat> list = FXCollections.observableArrayList();
         list.addAll(l);
