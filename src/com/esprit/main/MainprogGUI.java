@@ -6,6 +6,7 @@ package com.esprit.main;
  */
 
 
+import com.esprit.controller.AjoutCandidatController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -26,12 +27,14 @@ public class MainprogGUI extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
+        
+        
      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/motdepasse.fxml"));
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));
         Parent root = loader.load();
@@ -41,7 +44,10 @@ public class MainprogGUI extends Application {
         primaryStage.setTitle("FindJob");
         
         primaryStage.show();
-        
+        AjoutCandidatController candidatcontroller = loader.getController();
+        candidatcontroller.setPrimarystage(primaryStage);
+      
+       
        
     }
 

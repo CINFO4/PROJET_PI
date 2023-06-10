@@ -7,6 +7,7 @@ package com.esprit.controller;
 import com.esprit.entities.Candidat;
 import com.esprit.entities.Diplome;
 import com.esprit.entities.Experience;
+import com.esprit.entities.MailException;
 import com.esprit.entities.Taille;
 import com.esprit.entities.User;
 import com.esprit.services.ServiceUser;
@@ -15,6 +16,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,11 +75,9 @@ public class CandidatController implements Initializable, Refresh {
 
     ServiceUser su = new ServiceUser();
 
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)  {
         // TODO
         deleteColumn.setCellFactory(column -> {
             TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
@@ -128,7 +129,13 @@ public class CandidatController implements Initializable, Refresh {
         description.setCellValueFactory(new PropertyValueFactory<Candidat, String>("description"));
         education.setCellValueFactory(new PropertyValueFactory<Candidat, String>("education"));
         experience.setCellValueFactory(new PropertyValueFactory<Candidat, String>("experience"));
-        ObservableList<Candidat> lu = FXCollections.observableArrayList(su.getallcandidat());
+           ObservableList<Candidat> lu = FXCollections.observableArrayList();
+           try{
+               lu.addAll(su.getallcandidat());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+        
         table.setItems(lu);
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -210,7 +217,12 @@ public class CandidatController implements Initializable, Refresh {
         description.setCellValueFactory(new PropertyValueFactory<Candidat, String>("description"));
         education.setCellValueFactory(new PropertyValueFactory<Candidat, String>("education"));
         experience.setCellValueFactory(new PropertyValueFactory<Candidat, String>("experience"));
-        ObservableList<Candidat> lu = FXCollections.observableArrayList(su.getallcandidat());
+        ObservableList<Candidat> lu = FXCollections.observableArrayList();
+           try{
+               lu.addAll(su.getallcandidat());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
         table.setItems(lu);
     }
 

@@ -43,15 +43,20 @@ public abstract class User {
         final User other = (User) obj;
         return true;
     }
+
+    public User() {
+    }
     
     
     
    public boolean emailvalidator(String mail) {
-    String emailPattern = "^(.+)@(.+)$";
+    String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
     Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
     Matcher matcher = pattern.matcher(mail);
     return matcher.matches();
 }
+
+   
 
 
 

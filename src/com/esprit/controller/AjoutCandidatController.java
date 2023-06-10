@@ -10,6 +10,7 @@ import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceUser;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,6 +60,11 @@ public class AjoutCandidatController implements Initializable {
     private ListView<String> listcompetence;
     @FXML
     private Button envoye;
+    private Stage primarystage;
+
+    public void setPrimarystage(Stage primarystage) {
+        this.primarystage = primarystage;
+    }
 
     private Refresh refreshEvent;
 
@@ -82,15 +89,43 @@ public class AjoutCandidatController implements Initializable {
     }
 
     @FXML
-    public void ajouterCandidat(ActionEvent event) throws IOException {
+    public void ajouterCandidat(ActionEvent event) throws IOException, MailException {
         if (!validateFields()) {
             return;
         }
+        Candidat c = new Candidat();
+        ServiceUser sp = new ServiceUser();
+        if (!c.emailvalidator(tfadresse.getText()) || tftelephone.getText().length() != 8 || tfmotdepasse.getText().length() < 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Champs invalide");
+            alert.showAndWait();
+            return;
+        }
+        List<Candidat> list = sp.afficherCandidat();
+        Boolean candidatexiste = false;
+        for (Candidat u : list) {
+            if (u.getMail().equals(tfadresse.getText()) || u.getNumero_telephone() == Integer.parseInt(tftelephone.getText())) {
+                candidatexiste = true;
+                break;
+            }
+        }
+        if (candidatexiste) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Candidat existe déja");
+            alert.showAndWait();
+            return;
+
+        }
         if (tfmotdepasse.getText().equals(tfmotdepasse2.getText())) {
-            ServiceUser sp = new ServiceUser();
             sp.ajouter(new Candidat(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(), cbdiplome.getValue(), tfgithub.getText(), cbexperience.getValue()));
             JOptionPane.showMessageDialog(null, "Candidat ajouté !");
             triggerRefreshEvent();
+            primarystage.close();
+
         } else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }

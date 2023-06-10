@@ -30,6 +30,9 @@ public class Entreprise extends User {
         if (numero_telephone.toString().length() != 8) {
             throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
         }
+        if (motdepasse.length() < 8) {
+            throw new MailException("Le mot de passe ne doit pas être inferieur à 8 caractéres");
+        }
     }
 
     public Entreprise(String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) throws MailException {
@@ -45,6 +48,9 @@ public class Entreprise extends User {
 
         if (numero_telephone.toString().length() != 8) {
             throw new MailException("Le numéro de téléphone doit contenir 8 chiffres");
+        }
+        if (motdepasse.length() < 8) {
+            throw new MailException("Le mot de passe ne doit pas être inferieur à 8 caractéres");
         }
     }
 

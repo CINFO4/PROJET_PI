@@ -101,7 +101,7 @@ public class AjoutEntrepriseController implements Initializable {
     }
 
     @FXML
-    public void ajouterEntreprise(ActionEvent event) throws IOException {
+    public void ajouterEntreprise(ActionEvent event) throws IOException, MailException {
         if (!validateFields()) {
             return;
         }

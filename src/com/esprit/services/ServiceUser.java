@@ -353,7 +353,7 @@ public class ServiceUser {
                 String prenom = rs.getString("prenom");
                 String mail = rs.getString("mail");
                 int numeroTelephone = rs.getInt("numero_telephone");
-                String motdepasse = " ";
+                String motdepasse = rs.getString("motdepasse");
                 String description = rs.getString("description");
                 String role = rs.getString("role");
                 if (role.equals("Candidat")) {
@@ -425,11 +425,12 @@ public class ServiceUser {
 
     public boolean login(String login, String password) {
         String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
+        Candidat c = new Candidat();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, login);
             pst.setString(2, login);
-            pst.setString(3, password);
+            pst.setString(3, String.valueOf(c.Codepasse(password)));
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return true;
@@ -462,9 +463,10 @@ public class ServiceUser {
 
     public void modifiermotdepasse(String motdepasse, String login) {
         String req = "UPDATE User SET motdepasse=? where (mail=? or CAST(numero_telephone AS CHAR)=?);";
+        Candidat c = new Candidat();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, motdepasse);
+            pst.setString(1, String.valueOf(c.Codepasse(motdepasse)));
             pst.setString(2, login);
             pst.setString(3, login);
             pst.executeUpdate();

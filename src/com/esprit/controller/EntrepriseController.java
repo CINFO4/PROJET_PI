@@ -127,7 +127,12 @@ public class EntrepriseController implements Initializable, Refresh {
         linkedin.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Linkedin"));
         taille.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("TailleEntreprise"));
         secteur.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom_domaine"));
-        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList(su.afficherentreprise());
+        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList();
+        try{
+            lu.addAll(su.afficherentreprise());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         table.setItems(lu);
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -207,7 +212,12 @@ public class EntrepriseController implements Initializable, Refresh {
         linkedin.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Linkedin"));
         taille.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Taille"));
         secteur.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom_domaine"));
-        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList(su.afficherentreprise());
+        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList();
+        try{
+            lu.addAll(su.afficherentreprise());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         table.setItems(lu);
 }
      

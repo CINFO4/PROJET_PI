@@ -108,7 +108,7 @@ public class ModifierCandidatController implements Initializable {
         return true;
     }
      @FXML
-    public void ModifierCandidat(ActionEvent event) throws IOException {
+    public void ModifierCandidat(ActionEvent event) throws IOException, MailException {
         if(!validateFields()){
             return;
         }

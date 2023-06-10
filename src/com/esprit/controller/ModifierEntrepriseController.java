@@ -8,6 +8,7 @@ import com.esprit.entities.Candidat;
 import com.esprit.entities.Domaine;
 import com.esprit.entities.Entreprise;
 import com.esprit.entities.Experience;
+import com.esprit.entities.MailException;
 import com.esprit.entities.Taille;
 import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceUser;
@@ -115,7 +116,7 @@ public class ModifierEntrepriseController implements Initializable {
         return true;
     }
     @FXML
-    public void ModifierEntreprise(ActionEvent event) throws IOException {
+    public void ModifierEntreprise(ActionEvent event) throws IOException, MailException {
         if(!validateFields()){
             return;
         }
