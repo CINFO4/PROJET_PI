@@ -64,9 +64,10 @@ public class UpdateOffreController implements Initializable {
     @FXML
     private void updateOffre(ActionEvent event) {
         
-        if (ChoiseBoxDomaine.getValue() == null) {
-            JOptionPane.showMessageDialog(null, "selectionner un Domaine ! ");
-        } else {
+        if (txtTitre.getText().equals("") || txtDescription.getText().equals("") || datePickerPub.getValue()== null || datePickerExp.getValue()== null || ChoiseBoxDomaine.getValue() == null ) {
+            JOptionPane.showMessageDialog(null,"Champ Manquant !");
+            return ;
+        }
             
             
             
@@ -81,7 +82,7 @@ public class UpdateOffreController implements Initializable {
                 return ;
             }
             
-        }
+        
         offreController.table();
         
 
@@ -94,6 +95,7 @@ public class UpdateOffreController implements Initializable {
     public void setChoiseBoxDomaine() {
         this.ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
     }
+
     
 
     public void setDatePickerExp(Date date) {

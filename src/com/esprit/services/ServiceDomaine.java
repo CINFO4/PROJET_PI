@@ -132,4 +132,26 @@ public class ServiceDomaine implements IServices<Domaine>{
         return name ;
     };
     
+    
+    public boolean chercherNomDomaine(String nom){
+        String req = "SELECT * FROM domaine WHERE  lower(nom_domaine)= lower(?) ";
+        Domaine d = null;
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1,nom);
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                d = new Domaine(res.getInt("id_domaine"), res.getString("nom_domaine"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if(d==null){
+            return false;
+        }else{
+            return true;
+        }
+        
+    };
+    
 }

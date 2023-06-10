@@ -6,6 +6,8 @@ package com.esprit.controller;
 
 import com.esprit.entities.Domaine;
 import com.esprit.services.ServiceDomaine;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,7 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -22,6 +26,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,16 +38,15 @@ public class CrudDomaineController implements Initializable {
 
     @FXML
     private TableView<Domaine> tableDomaine;
-    
     @FXML
     private TableColumn<Domaine, String> domaineCol;
     @FXML
     private TextField TFnomDomaine;
     ServiceDomaine sd = new ServiceDomaine();
     @FXML
-    private Button btnAjout;
+    private TableColumn deleteCol;
     @FXML
-    private Button btnSupp;
+    private FontAwesomeIconView addIcon;
     /**
      * Initializes the controller class.
      * @param url
@@ -50,67 +54,81 @@ public class CrudDomaineController implements Initializable {
      */
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
+    public void initialize(URL url, ResourceBundle rb) { 
         tableDomaine.setEditable(true);
         domaineCol.setCellFactory(TextFieldTableCell.forTableColumn());
         domaineCol.setOnEditCommit(this::OnEditDomaineName);
         Refreshtable();
     }    
-
-    
-
-    @FXML
-    private void ajouterDomaine(ActionEvent event) {
-        
-        if(TFnomDomaine.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "donner le nom du domaine  !");
-        }else{
-            int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION){
-                sd.ajouter(new Domaine(TFnomDomaine.getText()));
-                JOptionPane.showMessageDialog(null, "Domaine Ajouter !");
-                Refreshtable();
-            }else{
-                return ;
-            }
-        }
-   
-    }
-
-    
-
-    @FXML
-    private void supprimerDomaine(ActionEvent event) {
-        int index = tableDomaine.getSelectionModel().getSelectedIndex();
-        
-        if(index <= 0){
-            JOptionPane.showMessageDialog(null, "selectionner un domaine  !");
-        }else{
-            int result = JOptionPane.showConfirmDialog(null, "vouler vous supprimer un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION){
-                int id = tableDomaine.getItems().get(index).getId_domaine();
-                String nom = tableDomaine.getItems().get(index).getNom_domaine();
-                sd.supprimer(new Domaine(id, nom));
-                JOptionPane.showMessageDialog(null, "Domaine Supprimer !");
-                Refreshtable();
-            }else{
-                return ;
-            }
-        }
-
-    }
-    
+  
     public void Refreshtable(){
         ObservableList<Domaine> listDomaine = FXCollections.observableArrayList(sd.afficher());
-        tableDomaine.setItems(listDomaine);
+        
         domaineCol.setCellValueFactory(new PropertyValueFactory<>("nom_domaine"));
-    }
+        Callback<TableColumn<Domaine,String>,TableCell<Domaine,String>> cellFactory=(param) -> {
+            final TableCell<Domaine,String> cell = new TableCell<Domaine,String>(){
+                @Override
+                public void updateItem(String item,boolean empty){
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+                        deleteIcon.setStyle(
+                                "-fx-cursor:hand;"
+                                + "-glyph-size:35px;"
+                                + "-fx-fill:#ff1744;"
+                                
+                        );
+                        deleteIcon.setOnMouseClicked((MouseEvent event) ->{
+                        Domaine d = getTableView().getItems().get(getIndex());
+                        
+                        
+                        int result = JOptionPane.showConfirmDialog(null, "vouler vous supprimer un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION){
+                            sd.supprimer(d);
+                            JOptionPane.showMessageDialog(null, "Domaine Supprimer !");
+                            Refreshtable();
+                        }else{
+                            return ;
+                        }
 
+                        });
+                        setGraphic(deleteIcon);
+                        setText(null);
+                    }
+                }
+            };
+            
+            
+            return cell; 
+        };
+        
+        
+        deleteCol.setCellFactory(cellFactory);
+        
+        tableDomaine.setItems(listDomaine);
+    }
 
     @FXML
     private void OnEditDomaineName(CellEditEvent event) {
         Domaine d = tableDomaine.getSelectionModel().getSelectedItem();
+        if(event.getNewValue().toString().equals("")){
+            JOptionPane.showMessageDialog(null, "donner le nom du domaine  !");
+            d.setNom_domaine(event.getOldValue().toString());
+            Refreshtable();
+            return ;
+        }
+        if(sd.chercherNomDomaine(event.getNewValue().toString())){
+            JOptionPane.showMessageDialog(null, "Domaine Existe Deja !");
+            d.setNom_domaine(event.getOldValue().toString());
+            Refreshtable();
+            return ;
+        }
+        
+        
+        
         int result = JOptionPane.showConfirmDialog(null, "vouler vous modifier un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION){
                 d.setNom_domaine(event.getNewValue().toString());
@@ -121,6 +139,31 @@ public class CrudDomaineController implements Initializable {
             }
         
         
+        
+    }
+
+    @FXML
+    private void addDomaine(MouseEvent event) {
+        
+        if(TFnomDomaine.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "donner le nom du domaine  !");
+            return ;
+        }
+        if(sd.chercherNomDomaine(TFnomDomaine.getText())){
+            JOptionPane.showMessageDialog(null, "Domaine Existe Deja !");
+            return ;
+        }
+        
+        
+            int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION){
+                sd.ajouter(new Domaine(TFnomDomaine.getText()));
+                JOptionPane.showMessageDialog(null, "Domaine Ajouter !");
+                TFnomDomaine.clear();
+                Refreshtable();
+            }else{
+                return ;
+            }
         
     }
     

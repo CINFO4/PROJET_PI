@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/CrudDomaine.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudDomaineController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="318.0" stylesheets="@../style/CrudDomaine.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudDomaineController">
    <children>
-      <TableView fx:id="tableDomaine" editable="true" layoutX="359.0" layoutY="81.0" prefHeight="272.0" prefWidth="210.0">
+      <TableView fx:id="tableDomaine" editable="true" layoutX="35.0" layoutY="76.0" prefHeight="272.0" prefWidth="247.0" style="-fx-alignment: center;">
         <columns>
-          <TableColumn fx:id="domaineCol" onEditCommit="#OnEditDomaineName" prefWidth="209.0" text="Domaines" />
+          <TableColumn fx:id="domaineCol" onEditCommit="#OnEditDomaineName" prefWidth="192.0" style="-fx-alignment: center;" text="Domaines" />
+            <TableColumn fx:id="deleteCol" prefWidth="52.0" style="-fx-alignment: center;" />
         </columns>
       </TableView>
-      <Pane layoutX="43.0" layoutY="81.0" prefHeight="176.0" prefWidth="247.0" style="-fx-background-color: #DCDCDC;">
+      <Pane layoutX="26.0" layoutY="20.0" prefHeight="49.0" prefWidth="265.0" style="-fx-background-color: #DCDCDC;">
          <children>
-            <Label id="title" layoutX="43.0" layoutY="21.0" text="Nom Domaine ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="TFnomDomaine" layoutX="31.0" layoutY="81.0" />
+            <TextField fx:id="TFnomDomaine" layoutX="5.0" layoutY="5.0" prefHeight="38.0" prefWidth="215.0" promptText="Nom Domaine " />
+            <FontAwesomeIconView fx:id="addIcon" fill="#16da78" glyphName="PLUS_SQUARE" layoutX="226.0" layoutY="39.0" onMouseClicked="#addDomaine" size="42" style="-fx-cursor: hand;" />
          </children>
       </Pane>
-      <Button fx:id="btnAjout" layoutX="36.0" layoutY="281.0" mnemonicParsing="false" onAction="#ajouterDomaine" text="ajouter">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnSupp" layoutX="210.0" layoutY="281.0" mnemonicParsing="false" onAction="#supprimerDomaine" text="supprimer">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
