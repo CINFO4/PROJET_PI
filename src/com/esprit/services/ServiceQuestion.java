@@ -172,7 +172,7 @@ public class ServiceQuestion {
     public List<QuestionView> afficherQuestionViewByCom(String comp) {
         List<QuestionView> list = new ArrayList<>();
         
-        String req = "SELECT id_question, libelle,etat_question,id_c,(select c.nom from Competence c where c.id_c=q.id_c) as nomc FROM Question q WHERE c.nomc = ?";
+        String req = "SELECT id_question, libelle, etat_question, id_c, (SELECT c.nom FROM Competence c WHERE c.id_c = q.id_c) AS nomc FROM Question q WHERE (SELECT c.nom FROM Competence c WHERE c.id_c = q.id_c) = ?";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, comp);

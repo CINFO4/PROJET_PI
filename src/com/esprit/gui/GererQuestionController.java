@@ -10,7 +10,7 @@ import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
 import com.esprit.services.ServiceCompetence;
 import com.esprit.services.ServiceQuestion.QuestionView;
-//import java.awt.Insets;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -113,6 +113,7 @@ public void initialize(URL url, ResourceBundle rb) {
     ServiceCompetence sc = new ServiceCompetence();
     filterbox.getItems().add("All");
     filterbox.getItems().addAll(FXCollections.observableArrayList(sc.affichercompetencebynom()));
+    filterbox.setOnAction(this::filterQuestions);
     AfficherQuestion();
 
     information.setOnMouseClicked(event -> {
@@ -126,7 +127,19 @@ public void initialize(URL url, ResourceBundle rb) {
 }
       
      
+    private void filterQuestions(ActionEvent event) {
+       ServiceQuestion serviceQuestion = new ServiceQuestion();
+    String selectedCompetence = filterbox.getValue();
     
+    if (selectedCompetence.equals("All")) {
+        AfficherQuestion();
+    } else {
+        
+        List<QuestionView> filteredQuestions = serviceQuestion.afficherQuestionViewByCom(selectedCompetence);
+        ObservableList<QuestionView> questionList = FXCollections.observableArrayList(filteredQuestions);
+        information.setItems(questionList);
+    }
+}
     
     public void AfficherQuestion() {
     ServiceQuestion serviceQuestion = new ServiceQuestion();
@@ -205,6 +218,14 @@ public void initialize(URL url, ResourceBundle rb) {
         tfpro2.clear();
         tfpro3.clear();
         tfpro4.clear();
+        rdV1.setSelected(false);
+        rdV2.setSelected(false);
+        rdV3.setSelected(false);
+        rdV4.setSelected(false);
+        rdF1.setSelected(false);
+        rdF2.setSelected(false);
+        rdF3.setSelected(false);
+        rdF4.setSelected(false);
         refresh();
     }
 
@@ -244,7 +265,7 @@ public void initialize(URL url, ResourceBundle rb) {
         }
        if (rdV3.isSelected()) {
     newEtatProposition3 = "vrai";
-        } else if (rdF1.isSelected()) {
+        } else if (rdF3.isSelected()) {
     newEtatProposition3 = "faux";
         } else {
     
@@ -259,7 +280,7 @@ public void initialize(URL url, ResourceBundle rb) {
     
     return;
         }
-      String n = listcompetence.getItems().get(index).toString(); 
+      String n = listcompetence.getSelectionModel().getSelectedItem().toString(); 
       Question q = new Question(selectedQuestion.getId_question(), newLibelle, "Active", sc.Getidcompetencebynom(n));  
         sq.modifier(q);
       List prop = sp.afficherByIDquestion(information.getItems().get(index).getId_question());
