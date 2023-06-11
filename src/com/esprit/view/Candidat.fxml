@@ -26,14 +26,14 @@
                         <Blend />
                      </effect>
                   </TextField>
-                  <Button layoutX="137.0" layoutY="44.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="97.0" styleClass="button1" text="Button" />
-                  <Button layoutX="558.0" layoutY="41.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="99.0" rotate="180.0" styleClass="button1" text="Button" />
-                  <ImageView fitHeight="66.0" fitWidth="80.0" layoutX="153.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+                  <Button fx:id="retour" layoutX="137.0" layoutY="44.0" mnemonicParsing="false" onAction="#Retour" prefHeight="71.0" prefWidth="97.0" styleClass="button1" />
+                  <Button fx:id="search" layoutX="558.0" layoutY="41.0" mnemonicParsing="false" onAction="#Search" prefHeight="71.0" prefWidth="99.0" rotate="180.0" styleClass="button1" />
+                  <ImageView fitHeight="66.0" fitWidth="80.0" layoutX="153.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons8-back-64.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="66.0" fitWidth="70.0" layoutX="566.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="66.0" fitWidth="70.0" layoutX="567.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/icons8-search-64.png" />
                      </image>

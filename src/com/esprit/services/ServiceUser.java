@@ -52,12 +52,10 @@ public class ServiceUser {
                         break;
                     }
                 }
-                    if(candidatexiste){
-                        throw new MailException("candidat existe deja");
-                    }
-                    pst.executeUpdate();
-
-                
+                if (candidatexiste) {
+                    throw new MailException("candidat existe deja");
+                }
+                pst.executeUpdate();
 
                 ResultSet rs = pst2.executeQuery();
                 while (rs.next()) {
@@ -98,9 +96,9 @@ public class ServiceUser {
                         break;
                     }
                 }
-                    if(entreprisetexiste){
-                        throw new MailException("Entreprise existe deja");
-                    }
+                if (entreprisetexiste) {
+                    throw new MailException("Entreprise existe deja");
+                }
                 pst.executeUpdate();
                 System.out.println("Entreprise ajoutée");
             } catch (SQLException e) {
@@ -152,9 +150,9 @@ public class ServiceUser {
                         break;
                     }
                 }
-                    if(candidatexiste){
-                        throw new MailException("candidat existe deja");
-                    }
+                if (candidatexiste) {
+                    throw new MailException("candidat existe deja");
+                }
                 pst.executeUpdate();
                 System.out.println("Candidat modifiée !");
             } catch (SQLException ex) {
@@ -473,6 +471,45 @@ public class ServiceUser {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public List<Candidat> searchcandidat(String login) {
+        String req = "select * from user where (nom=? or prenom=?);";
+        List<Candidat> list = new ArrayList<>();
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, login);
+            pst.setString(2, login);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                String role = rs.getString("role");
+                if (role.equals("Candidat")) {
+                    Diplome education = Diplome.valueOf(rs.getString("education"));
+                    String Github = rs.getString("Github");
+                    Experience experience = Experience.valueOf(rs.getString("experience"));
+                    Candidat candidat = new Candidat(id, nom, prenom, mail, numeroTelephone, motdepasse, description, education, Github, experience);
+                    list.add(candidat);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        }
+        return list;
+    }
+    public ObservableList<Candidat> getsearchcandidat(String candidat) throws MailException {
+        List l = searchcandidat(candidat);
+        ObservableList<Candidat> list = FXCollections.observableArrayList();
+        list.addAll(l);
+        return list;
+
     }
 
 }

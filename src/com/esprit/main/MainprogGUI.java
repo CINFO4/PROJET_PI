@@ -4,8 +4,6 @@ package com.esprit.main;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
-
-
 import com.esprit.controller.AjoutCandidatController;
 import com.esprit.controller.AjoutEntrepriseController;
 import java.io.IOException;
@@ -19,39 +17,35 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author Anis
  */
 public class MainprogGUI extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException {
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
-        
-        
-     //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/motdepasse.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
+
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/motdepasse.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        
+
         primaryStage.setTitle("FindJob");
-        
+
         primaryStage.show();
 //        AjoutCandidatController candidatcontroller = loader.getController();
 //        candidatcontroller.setPrimarystage(primaryStage);
 //        AjoutEntrepriseController entreprisecontroller = loader.getController();
 //        entreprisecontroller.setPrimarystage(primaryStage);
-      
-       
-       
+
     }
 
     /**
@@ -60,5 +54,5 @@ public class MainprogGUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
