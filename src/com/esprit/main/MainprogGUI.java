@@ -7,6 +7,7 @@ package com.esprit.main;
 
 
 import com.esprit.controller.AjoutCandidatController;
+import com.esprit.controller.AjoutEntrepriseController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -44,8 +45,10 @@ public class MainprogGUI extends Application {
         primaryStage.setTitle("FindJob");
         
         primaryStage.show();
-        AjoutCandidatController candidatcontroller = loader.getController();
-        candidatcontroller.setPrimarystage(primaryStage);
+//        AjoutCandidatController candidatcontroller = loader.getController();
+//        candidatcontroller.setPrimarystage(primaryStage);
+//        AjoutEntrepriseController entreprisecontroller = loader.getController();
+//        entreprisecontroller.setPrimarystage(primaryStage);
       
        
        

@@ -95,11 +95,25 @@ public class AjoutCandidatController implements Initializable {
         }
         Candidat c = new Candidat();
         ServiceUser sp = new ServiceUser();
-        if (!c.emailvalidator(tfadresse.getText()) || tftelephone.getText().length() != 8 || tfmotdepasse.getText().length() < 8) {
+        if (!c.emailvalidator(tfadresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("Champs invalide");
+            alert.setContentText("Mail invalide");
+            alert.showAndWait();
+            return;
+        } else if (tftelephone.getText().length() != 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le numero de téléphone doit être composé de 8 chiffres");
+            alert.showAndWait();
+            return;
+        } else if (tfmotdepasse.getText().length() < 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le mot de passe ne doit pas être inferieur à 8 caractéres");
             alert.showAndWait();
             return;
         }

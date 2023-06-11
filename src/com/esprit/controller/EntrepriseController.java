@@ -149,6 +149,7 @@ public class EntrepriseController implements Initializable, Refresh {
                     ModifierEntrepriseController controller = loader.getController();
                     controller.initData(selectedUser);
                     controller.setRefreshEvent(this);
+                    controller.setPrimarystage(stage);
                 }catch(Exception e){
                     e.getMessage();
                 }
@@ -169,6 +170,7 @@ public class EntrepriseController implements Initializable, Refresh {
 
             AjoutEntrepriseController controller = loader.getController();
             controller.setRefreshEvent(this);
+            controller.setPrimarystage(stage);
       
 }
     @FXML

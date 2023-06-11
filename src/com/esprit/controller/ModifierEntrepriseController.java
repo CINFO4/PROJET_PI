@@ -15,6 +15,7 @@ import com.esprit.services.ServiceUser;
 import com.esprit.services.ServiceUser.Entreprisedomaine;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -27,6 +28,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -65,6 +67,11 @@ public class ModifierEntrepriseController implements Initializable {
     @FXML
     private ComboBox<Taille> cbTailleEntreprise;
     private Refresh refreshEvent;
+     private Stage primarystage;
+
+    public void setPrimarystage(Stage primarystage) {
+        this.primarystage = primarystage;
+    }
     private Integer id =0;
     public void setRefreshEvent(Refresh refreshListener) {
     this.refreshEvent = refreshListener;
@@ -120,12 +127,52 @@ public class ModifierEntrepriseController implements Initializable {
         if(!validateFields()){
             return;
         }
+        Candidat c = new Candidat();
+        ServiceUser sp = new ServiceUser();
+        if (!c.emailvalidator(tfAdresse.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Mail invalide");
+            alert.showAndWait();
+            return;
+        } else if (tfnumero.getText().length() != 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le numero de téléphone doit être composé de 8 chiffres");
+            alert.showAndWait();
+            return;
+        } else if (tfPassword.getText().length() < 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le mot de passe ne doit pas être inferieur à 8 caractéres");
+            alert.showAndWait();
+            return;
+        }
+        List<ServiceUser.Entreprisedomaine> list = sp.afficherentreprise();
+        Boolean entreprisetexiste = false;
+        for (ServiceUser.Entreprisedomaine u : list) {
+            if (u.getMail().equals(tfAdresse.getText()) || u.getNumero_telephone() == Integer.parseInt(tfnumero.getText()) || u.getNomEntreprise().equals(tfNomEntreprise.getText())) {
+                entreprisetexiste = true;
+                break;
+            }
+        }
+        if (entreprisetexiste) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Entreprise existe déja");
+            alert.showAndWait();
+            return;
+        }
         ServiceDomaine sd = new ServiceDomaine();
         if(tfPassword.getText().equals(tfPassword2.getText())){
-        ServiceUser sp = new ServiceUser();
         sp.modifier(new Entreprise(id,tfNom.getText(), tfPrenom.getText(), tfAdresse.getText(), Integer.parseInt(tfnumero.getText()), tfPassword.getText(), taDescription.getText(),tfNomEntreprise.getText(),cbTailleEntreprise.getValue(),tfSIteWeb.getText(),tfLinkedin.getText(),sd.getIdDomaineByName(cbSecteurActivite.getValue())));
         JOptionPane.showMessageDialog(null, "Entreprise modifiée !");
         triggerRefreshEvent();
+        primarystage.close();
         }
         else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");

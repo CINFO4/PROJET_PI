@@ -152,6 +152,7 @@ public class CandidatController implements Initializable, Refresh {
                         ModifierCandidatController controller = loader.getController();
                         controller.initData(selectedUser);
                         controller.setRefreshEvent(this);
+                        controller.setPrimarystage(stage);
                     } catch (Exception e) {
                         e.getMessage();
                     }
@@ -172,7 +173,7 @@ public class CandidatController implements Initializable, Refresh {
 
         AjoutCandidatController controller = loader.getController();
         controller.setRefreshEvent(this);
-
+        controller.setPrimarystage(stage);
     }
 
     @FXML

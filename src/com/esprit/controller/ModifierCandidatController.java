@@ -24,7 +24,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 import com.esprit.controller.Refresh;
+import java.util.List;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -61,6 +63,11 @@ public class ModifierCandidatController implements Initializable {
      private ListView<String> listcompetence; 
     @FXML
     private Button envoye;
+     private Stage primarystage;
+
+    public void setPrimarystage(Stage primarystage) {
+        this.primarystage = primarystage;
+    }
     
     
     
@@ -112,11 +119,52 @@ public class ModifierCandidatController implements Initializable {
         if(!validateFields()){
             return;
         }
-        if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
+        Candidat c = new Candidat();
         ServiceUser sp = new ServiceUser();
+        if (!c.emailvalidator(tfadresse.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Mail invalide");
+            alert.showAndWait();
+            return;
+        } else if (tftelephone.getText().length() != 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le numero de téléphone doit être composé de 8 chiffres");
+            alert.showAndWait();
+            return;
+        } else if (tfmotdepasse.getText().length() < 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le mot de passe ne doit pas être inferieur à 8 caractéres");
+            alert.showAndWait();
+            return;
+        }
+        List<Candidat> list = sp.afficherCandidat();
+        Boolean candidatexiste = false;
+        for (Candidat u : list) {
+            if (u.getMail().equals(tfadresse.getText()) || u.getNumero_telephone() == Integer.parseInt(tftelephone.getText())) {
+                candidatexiste = true;
+                break;
+            }
+        }
+        if (candidatexiste) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Candidat existe déja");
+            alert.showAndWait();
+            return;
+
+        }
+        if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
         sp.modifier(new Candidat(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
         JOptionPane.showMessageDialog(null, "Candidat modifié !");
         triggerRefreshEvent();
+        primarystage.close();
         }
         else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");

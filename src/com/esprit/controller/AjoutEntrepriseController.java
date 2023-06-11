@@ -24,6 +24,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,7 +59,11 @@ public class AjoutEntrepriseController implements Initializable {
     private ComboBox<String> cbTailleEntreprise;
     @FXML
     private ComboBox<String> cbSecteurActivite;
+    private Stage primarystage;
 
+    public void setPrimarystage(Stage primarystage) {
+        this.primarystage = primarystage;
+    }
     private Refresh refreshEvent;
 
     public void setRefreshEvent(Refresh refreshListener) {
@@ -105,6 +110,46 @@ public class AjoutEntrepriseController implements Initializable {
         if (!validateFields()) {
             return;
         }
+        Candidat c = new Candidat();
+        ServiceUser sp = new ServiceUser();
+        if (!c.emailvalidator(tfAdresse.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Mail invalide");
+            alert.showAndWait();
+            return;
+        } else if (tfnumero.getText().length() != 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le numero de téléphone doit être composé de 8 chiffres");
+            alert.showAndWait();
+            return;
+        } else if (tfPassword.getText().length() < 8) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("le mot de passe ne doit pas être inferieur à 8 caractéres");
+            alert.showAndWait();
+            return;
+        }
+        List<ServiceUser.Entreprisedomaine> list = sp.afficherentreprise();
+        Boolean entreprisetexiste = false;
+        for (ServiceUser.Entreprisedomaine u : list) {
+            if (u.getMail().equals(tfAdresse.getText()) || u.getNumero_telephone() == Integer.parseInt(tfnumero.getText()) || u.getNomEntreprise().equals(tfNomEntreprise.getText())) {
+                entreprisetexiste = true;
+                break;
+            }
+        }
+        if (entreprisetexiste) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Entreprise existe déja");
+            alert.showAndWait();
+            return;
+        }
         if (tfPassword.getText().equals(tfPassword2.getText())) {
             String tailleSelectionneeString = cbTailleEntreprise.getValue(); // Récupérer la valeur sélectionnée en tant que chaîne de caractères
             Taille tailleSelectionnee = null; // Variable pour stocker la valeur convertie
@@ -114,11 +159,12 @@ public class AjoutEntrepriseController implements Initializable {
                 tailleSelectionneeString = tailleSelectionneeString.replace(" ", "_"); // Remettre les underscores si nécessaire
                 tailleSelectionnee = Taille.valueOf(tailleSelectionneeString);
             }
-            ServiceUser sp = new ServiceUser();
+
             ServiceDomaine sd = new ServiceDomaine();
-            sp.ajouter(new Entreprise(tfNom.getText(), tfPrenom.getText(), tfAdresse.getText(), Integer.parseInt(tfnumero.getText()), tfPassword.getText(), taDescription.getText(), tfNomEntreprise.getText(), tailleSelectionnee , tfSIteWeb.getText(), tfLinkedin.getText(), sd.getIdDomaineByName(cbSecteurActivite.getValue())));
+            sp.ajouter(new Entreprise(tfNom.getText(), tfPrenom.getText(), tfAdresse.getText(), Integer.parseInt(tfnumero.getText()), tfPassword.getText(), taDescription.getText(), tfNomEntreprise.getText(), tailleSelectionnee, tfSIteWeb.getText(), tfLinkedin.getText(), sd.getIdDomaineByName(cbSecteurActivite.getValue())));
             JOptionPane.showMessageDialog(null, "Entreprise ajoutée !");
             triggerRefreshEvent();
+            primarystage.close();
         } else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
