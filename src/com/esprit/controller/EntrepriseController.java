@@ -42,6 +42,10 @@ public class EntrepriseController implements Initializable, Refresh {
     @FXML
     private Button add;
     @FXML
+    private Button search;
+    @FXML
+    private Button retour;
+    @FXML
     private TableView<Entreprisedomaine> table;
     @FXML
     private TableColumn<Entreprisedomaine, String> nomentreprise;
@@ -222,6 +226,45 @@ public class EntrepriseController implements Initializable, Refresh {
         }
         table.setItems(lu);
 }
+    public void Retour(ActionEvent e){
+        id.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,Integer>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom"));
+        nomentreprise.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("NomEntreprise"));
+        prenom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("prenom"));
+        siteweb.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("SiteWeb"));
+        mail.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("mail"));
+        description.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("description"));
+        linkedin.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Linkedin"));
+        taille.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Taille"));
+        secteur.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom_domaine"));
+        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList();
+        try{
+            lu.addAll(su.afficherentreprise());
+        }catch(Exception a){
+            a.printStackTrace();
+        }
+        table.setItems(lu);
+    }
+    
+    public void Search(ActionEvent a){
+        id.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,Integer>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom"));
+        nomentreprise.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("NomEntreprise"));
+        prenom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("prenom"));
+        siteweb.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("SiteWeb"));
+        mail.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("mail"));
+        description.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("description"));
+        linkedin.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Linkedin"));
+        taille.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("Taille"));
+        secteur.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom_domaine"));
+        ObservableList<Entreprisedomaine> lu = FXCollections.observableArrayList();
+        try{
+            lu.addAll(su.searchentreprise(txtSearch.getText()));
+        }catch(Exception n){
+            n.printStackTrace();
+        }
+        table.setItems(lu);
+    }
      
     
 }

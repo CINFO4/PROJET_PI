@@ -110,9 +110,8 @@ public class AjoutEntrepriseController implements Initializable {
         if (!validateFields()) {
             return;
         }
-        Candidat c = new Candidat();
         ServiceUser sp = new ServiceUser();
-        if (!c.emailvalidator(tfAdresse.getText())) {
+        if (!Candidat.emailvalidator(tfAdresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);

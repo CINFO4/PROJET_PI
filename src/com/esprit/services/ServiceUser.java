@@ -423,12 +423,11 @@ public class ServiceUser {
 
     public boolean login(String login, String password) {
         String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
-        Candidat c = new Candidat();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, login);
             pst.setString(2, login);
-            pst.setString(3, String.valueOf(c.Codepasse(password)));
+            pst.setString(3, String.valueOf(Candidat.Codepasse(password)));
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return true;
@@ -461,10 +460,9 @@ public class ServiceUser {
 
     public void modifiermotdepasse(String motdepasse, String login) {
         String req = "UPDATE User SET motdepasse=? where (mail=? or CAST(numero_telephone AS CHAR)=?);";
-        Candidat c = new Candidat();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, String.valueOf(c.Codepasse(motdepasse)));
+            pst.setString(1, String.valueOf(User.Codepasse(motdepasse)));
             pst.setString(2, login);
             pst.setString(3, login);
             pst.executeUpdate();
@@ -507,6 +505,44 @@ public class ServiceUser {
     public ObservableList<Candidat> getsearchcandidat(String candidat) throws MailException {
         List l = searchcandidat(candidat);
         ObservableList<Candidat> list = FXCollections.observableArrayList();
+        list.addAll(l);
+        return list;
+
+    }
+    
+    public List<Entreprisedomaine> searchentreprise(String login) throws MailException {
+        String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine where NomEntreprise=?;";
+        List<Entreprisedomaine> list = new ArrayList<>();
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, login);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                Taille TailleEntreprise = Taille.valueOf(rs.getString("TailleEntreprise"));
+                String NomEntreprise = rs.getString("NomEntreprise");
+                String SiteWeb = rs.getString("SiteWeb");
+                String Linkedin = rs.getString("Linkedin");
+                int id_domaine = rs.getInt("id_domaine");
+                String nom_domaine = rs.getString("nom_domaine");
+                Entreprisedomaine ed = new Entreprisedomaine(id, nom, prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine, nom_domaine);
+                list.add(ed);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+
+    }
+    public ObservableList<Entreprisedomaine> getsearchentreprise(String entreprise) throws MailException {
+        List l = searchentreprise(entreprise);
+        ObservableList<Entreprisedomaine> list = FXCollections.observableArrayList();
         list.addAll(l);
         return list;
 

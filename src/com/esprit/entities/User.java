@@ -23,7 +23,7 @@ public abstract class User {
     private String description;
 
     
-    public int Codepasse(String motdepasse) {
+    public static int Codepasse(String motdepasse) {
         int hash = 7;
         hash = 83 * hash + Objects.hashCode(motdepasse);
         return hash;
@@ -49,7 +49,7 @@ public abstract class User {
     
     
     
-   public boolean emailvalidator(String mail) {
+   public static boolean emailvalidator(String mail) {
     String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
     Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
     Matcher matcher = pattern.matcher(mail);

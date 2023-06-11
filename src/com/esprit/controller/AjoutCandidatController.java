@@ -93,9 +93,9 @@ public class AjoutCandidatController implements Initializable {
         if (!validateFields()) {
             return;
         }
-        Candidat c = new Candidat();
+        
         ServiceUser sp = new ServiceUser();
-        if (!c.emailvalidator(tfadresse.getText())) {
+        if (!Candidat.emailvalidator(tfadresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
