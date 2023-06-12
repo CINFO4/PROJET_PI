@@ -199,4 +199,19 @@ public class ServiceForum implements IService<Forum> {
         return null;
     }
 
+    public boolean sujetExists(String sujet) {
+        String query = "SELECT * FROM forum WHERE sujet = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setString(1, sujet);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
 }

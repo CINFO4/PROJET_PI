@@ -61,8 +61,6 @@ public class ForumController {
     @FXML
     private VBox commentContainer;
     @FXML
-    private Button saveButton1;
-    @FXML
     private TextField chercherTextField;
 
     public ForumController() {
@@ -89,6 +87,9 @@ public class ForumController {
                     }
                 }
         );
+        
+            chercherTextField.textProperty().addListener((observable, oldValue, newValue) -> chercher());
+
     }
 
     @FXML
@@ -102,6 +103,15 @@ public class ForumController {
             alert.setTitle("Attention");
             alert.setHeaderText(null);
             alert.setContentText("Veuillez remplir tous les champs !");
+            alert.showAndWait();
+            return;
+        }
+
+        if (serviceForum.sujetExists(sujet)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText(null);
+            alert.setContentText("Ce Sujet est déja crée !");
             alert.showAndWait();
             return;
         }
@@ -157,6 +167,15 @@ public class ForumController {
                 alert.setTitle("Attention");
                 alert.setHeaderText(null);
                 alert.setContentText("Veuillez remplir tous les champs !");
+                alert.showAndWait();
+                return;
+            }
+
+            if (serviceForum.sujetExists(sujet)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attention");
+                alert.setHeaderText(null);
+                alert.setContentText("Ce Sujet est déja crée !");
                 alert.showAndWait();
                 return;
             }
@@ -278,7 +297,13 @@ public class ForumController {
     }
 
     @FXML
-    private void chercher(ActionEvent event) {
+    private void clear(ActionEvent event) {
+        chercherTextField.setText("");
+        loadForums();
+    }
+
+
+    private void chercher() {
         forumListView.getItems().clear();
         List<Forum> forums = serviceForum.rechercher(chercherTextField.getText());
         for (Forum forum : forums) {
@@ -298,11 +323,4 @@ public class ForumController {
             }
         });
     }
-
-    @FXML
-    private void clear(ActionEvent event) {
-        chercherTextField.setText("");
-        loadForums();
-    }
-
 }
