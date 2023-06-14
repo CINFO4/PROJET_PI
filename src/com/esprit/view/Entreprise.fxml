@@ -16,7 +16,7 @@
    <children>
       <BorderPane layoutY="2.0" prefHeight="792.0" prefWidth="900.0">
          <top>
-            <Pane prefHeight="155.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="155.0" prefWidth="800.0" style="-fx-background-color: #EAEDED;" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="txtSearch" focusTraversable="false" layoutX="261.0" layoutY="44.0" opacity="0.8" prefHeight="68.0" prefWidth="278.0" promptText="Entre Name ....">
                      <font>

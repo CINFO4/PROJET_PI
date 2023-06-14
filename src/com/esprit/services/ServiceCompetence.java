@@ -22,7 +22,7 @@ public class ServiceCompetence {
     
     public void ajouter(Competence competence) {
         try {
-            String req = "INSERT INTO competence(id_c, nom, description) VALUES (?, ?, ?);";
+            String req = "INSERT INTO competences(id_c, nom, description) VALUES (?, ?, ?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, competence.getId_c());
             pst.setString(2, competence.getNom());
@@ -37,7 +37,7 @@ public class ServiceCompetence {
 
     public void modifier(Competence competence) {
         try {
-            String req = "UPDATE competence SET nom=?, description=? WHERE id_c=?";
+            String req = "UPDATE competences SET nom=?, description=? WHERE id_c=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, competence.getNom());
             pst.setString(2, competence.getDescription());
@@ -52,7 +52,7 @@ public class ServiceCompetence {
 
     public void supprimer(Competence competence) {
         try {
-            String req = "DELETE FROM competence WHERE id_c=?";
+            String req = "DELETE FROM competences WHERE id_c=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, competence.getId_c());
             pst.executeUpdate();
@@ -65,7 +65,7 @@ public class ServiceCompetence {
     public List<Competence> afficher() {
     List<Competence> list = new ArrayList<>();
 
-    String req = "SELECT id_c, nom, description FROM competence";
+    String req = "SELECT id_c, nom, description FROM competences";
     try {
         PreparedStatement pst = cnx.prepareStatement(req);
         ResultSet rs = pst.executeQuery();
@@ -85,7 +85,7 @@ public class ServiceCompetence {
     public List<String> affichercompetencebynom() {
     List<String> list = new ArrayList<>();
 
-    String req = "SELECT nom FROM competence";
+    String req = "SELECT nom FROM competences";
     try {
         PreparedStatement pst = cnx.prepareStatement(req);
         ResultSet rs = pst.executeQuery();

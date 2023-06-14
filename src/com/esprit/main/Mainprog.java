@@ -44,13 +44,14 @@ public class Mainprog {
 
         // code api : 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
         //sv.modifiermotdepasse("goalooot", "2562")
-        try {
+        //try {
             //sv.ajouter(new Candidat("isam", "laabidi", "lamine@gmail.com", 25623768, "Motface@2026?", "admin", Diplome.Autre, "git", Experience.Confirme));
-            System.out.println(sv.afficherCandidat());
+            //System.out.println(sv.afficherCandidat());
+            System.out.println(sv.idutilisateur("ahmed@iplabel.com"));
             //sv.ajouter(new Entreprise("mounir", "chamem", "mounir@gmail.com",25142258,"anis25623@libel", "admin", "focus", Taille.DE_1_A_10_EMPLOYES, "foxus.com", "focus.linkedin", 1));
-        } catch (MailException e) {
-            System.out.println(e.getMessage());
-        }
+//        } catch (MailException e) {
+//            System.out.println(e.getMessage());
+//        }
         
     }
 

@@ -84,10 +84,13 @@ public class CandidatController implements Initializable, Refresh {
         // TODO
         deleteColumn.setCellFactory(column -> {
             TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
+                //La cellule contient un bouton de suppression déclaré et initialisé en tant que Button avec le texte "Supprimer".
                 private final Button deleteButton = new Button("Supprimer");
 
                 {
+                    //Un gestionnaire d'événements est défini sur le bouton en utilisant setOnAction. Lorsque le bouton est cliqué, le code à l'intérieur du bloc est exécuté.
                     deleteButton.setOnAction(event -> {
+                        //Cette ligne récupère l'élément (Entreprisedomaine) correspondant à la ligne de la cellule actuelle. getTableView() renvoie la référence de la table associée à la cellule, et getItems() renvoie la liste des éléments affichés dans la table. getIndex() renvoie l'index de la ligne de la cellule actuelle.
                         Candidat candidat = getTableView().getItems().get(getIndex());
                         if (candidat != null) {
                             // Afficher la fenêtre contextuelle de confirmation
@@ -95,8 +98,11 @@ public class CandidatController implements Initializable, Refresh {
                             confirmation.setTitle("Confirmation");
                             confirmation.setHeaderText("Supprimer le candidat ?");
                             confirmation.setContentText("Êtes-vous sûr de vouloir supprimer ce candidat ?");
-
+                            //Cette ligne affiche la boîte de dialogue de confirmation et attend que l'utilisateur fasse un choix. La méthode showAndWait() suspend l'exécution jusqu'à ce que l'utilisateur ferme la boîte de dialogue.
+                            //L'interface Optional<T> est une fonctionnalité introduite à partir de Java 8 qui permet de représenter une valeur optionnelle qui peut être présente ou absente. Dans le contexte du code que vous avez partagé, Optional<ButtonType> est utilisé pour représenter le résultat de la boîte de dialogue de confirmation.
+                            //La méthode showAndWait() de la classe Alert renvoie un objet Optional<ButtonType>. Cet objet Optional contient le résultat de la boîte de dialogue (le bouton sur lequel l'utilisateur a cliqué) s'il est présent, sinon il est vide.
                             Optional<ButtonType> result = confirmation.showAndWait();
+                            //Cette partie du code vérifie si l'utilisateur a fait un choix et si le choix est égal à ButtonType.OK (le bouton OK de la boîte de dialogue de confirmation)
                             if (result.isPresent() && result.get() == ButtonType.OK) {
                                 // Supprimer le candidat de la liste
                                 table.getItems().remove(candidat);
@@ -105,7 +111,7 @@ public class CandidatController implements Initializable, Refresh {
                         }
                     });
                 }
-
+                // Cette méthode updateItem est une méthode de la classe TableCell qui est appelée chaque fois que la cellule doit être mise à jour. Elle permet de mettre à jour l'apparence de la cellule en fonction de son contenu. Si la cellule est vide, le contenu graphique de la cellule est défini sur null, sinon le bouton de suppression est affiché.
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);

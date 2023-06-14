@@ -29,7 +29,7 @@ public class ServiceUser {
             try {
                 int id_user = 0;
                 String req = "insert into user (nom,prenom,mail,numero_telephone,motdepasse,description,education,role, Github, experience) values (?,?,?,?,?,?,?,?,?,?);";
-                String req1 = "insert into profil (id_user,id_competence) values (?,?);";
+                String req1 = "insert into profil (id_user,id_c) values (?,?);";
                 String req2 = "select last_insert_id() from user;";
                 PreparedStatement pst = cnx.prepareStatement(req);
                 PreparedStatement pst1 = cnx.prepareStatement(req1);
@@ -421,6 +421,42 @@ public class ServiceUser {
 
     }
 
+    public List<Administrateur> afficherAdmin() throws MailException {
+        List<Administrateur> list = new ArrayList<>();
+        String req = "select * from User;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                String role = rs.getString("role");
+                if (role.equals("Administrateur")) {
+                    Administrateur admin = new Administrateur(id, nom, prenom, mail, numeroTelephone, motdepasse, description);
+
+                    list.add(admin);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+
+    }
+
+    public ObservableList<Administrateur> getalladmint() throws MailException {
+        List l = afficherAdmin();
+        ObservableList<Administrateur> list = FXCollections.observableArrayList();
+        list.addAll(l);
+        return list;
+
+    }
+
     public boolean login(String login, String password) {
         String req = "select * from user where (mail=? or numero_telephone=?) and motdepasse=?;";
         try {
@@ -502,6 +538,7 @@ public class ServiceUser {
         }
         return list;
     }
+
     public ObservableList<Candidat> getsearchcandidat(String candidat) throws MailException {
         List l = searchcandidat(candidat);
         ObservableList<Candidat> list = FXCollections.observableArrayList();
@@ -509,7 +546,7 @@ public class ServiceUser {
         return list;
 
     }
-    
+
     public List<Entreprisedomaine> searchentreprise(String login) throws MailException {
         String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine where NomEntreprise=?;";
         List<Entreprisedomaine> list = new ArrayList<>();
@@ -540,6 +577,7 @@ public class ServiceUser {
         return list;
 
     }
+
     public ObservableList<Entreprisedomaine> getsearchentreprise(String entreprise) throws MailException {
         List l = searchentreprise(entreprise);
         ObservableList<Entreprisedomaine> list = FXCollections.observableArrayList();
@@ -548,4 +586,29 @@ public class ServiceUser {
 
     }
 
+    public String idutilisateur(String login) {
+        String req = "select role from user where (mail=? or numero_telephone=?);";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, login);
+            pst.setString(2, login);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String role = rs.getString("role");
+                if (role.equals("Candidat")) {
+                    return "Candidat";
+                } else if (role.equals("Entreprise")) {
+                    return "Entreprise";
+                } else {
+                    return "Admin";
+                }
+                
+            }
+            return "not found";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "not found";
+        }
+        
+    }
 }

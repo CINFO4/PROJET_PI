@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Anis
  */
-public class EspaceInscriptionController implements Initializable {
+public class GestionUtilisateurController implements Initializable {
 
 @FXML
 private Button candidat;
@@ -39,7 +39,7 @@ private Button entreprise;
     
 @FXML
    public void espaceentreprise(ActionEvent a) throws IOException{
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) candidat.getScene().getWindow(); // Récupère la fenêtre actuelle
@@ -49,7 +49,7 @@ private Button entreprise;
    
 @FXML
    public void espacecandidat(ActionEvent e) throws IOException{
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) candidat.getScene().getWindow(); // Récupère la fenêtre actuelle
