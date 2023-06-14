@@ -28,7 +28,8 @@ public class MainprogGUI extends Application {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutCandidat.fxml"));
 
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutEntreprise.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutAdmin.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Admin.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));

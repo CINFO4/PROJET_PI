@@ -28,7 +28,8 @@ public class AdminController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private TableView table;
+    private TableView<Administrateur> table;
+    @FXML
     private TableColumn<Administrateur, String> nom;
     @FXML
     private TableColumn<Administrateur, String> prenom;
