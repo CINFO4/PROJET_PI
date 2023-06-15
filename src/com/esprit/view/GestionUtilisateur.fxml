@@ -13,11 +13,6 @@
       <Pane layoutY="1.0" prefHeight="400.0" prefWidth="299.0" style="-fx-background-color: #FDF8F3;">
          <children>
             <Button fx:id="entreprise" layoutX="39.0" layoutY="141.0" mnemonicParsing="false" onAction="#espaceentreprise" prefHeight="81.0" prefWidth="198.0" text="Espace Entreprise" />
-            <ImageView fitHeight="81.0" fitWidth="154.0" layoutX="237.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/findjob.PNG" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
       <Pane layoutX="299.0" layoutY="1.0" prefHeight="400.0" prefWidth="299.0" style="-fx-background-color: #f2b980;">
@@ -28,6 +23,11 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+            <ImageView fitHeight="81.0" fitWidth="154.0" layoutX="-41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/findjob.PNG" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

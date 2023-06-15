@@ -39,10 +39,11 @@ private Button entreprise;
     
 @FXML
    public void espaceentreprise(ActionEvent a) throws IOException{
+       System.out.println("cc");
        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) candidat.getScene().getWindow(); // Récupère la fenêtre actuelle
+            Stage stage = (Stage) entreprise.getScene().getWindow(); // Récupère la fenêtre actuelle
             stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
             stage.show();
    }

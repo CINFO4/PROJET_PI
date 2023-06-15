@@ -82,6 +82,9 @@ public class CandidatController implements Initializable, Refresh {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //interface fonctionnelle
+        
+        
         deleteColumn.setCellFactory(column -> {
             TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
                 //La cellule contient un bouton de suppression déclaré et initialisé en tant que Button avec le texte "Supprimer".

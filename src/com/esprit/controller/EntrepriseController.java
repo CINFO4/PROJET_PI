@@ -58,7 +58,7 @@ public class EntrepriseController implements Initializable, Refresh {
     @FXML
     private TableColumn<Entreprisedomaine, String> description;
     @FXML
-    private TableColumn<Entreprisedomaine, String> telephone;
+    private TableColumn<Entreprisedomaine, Integer> telephone;
     @FXML
     private TableColumn<Entreprisedomaine, String> taille;
     @FXML
@@ -124,6 +124,7 @@ public class EntrepriseController implements Initializable, Refresh {
         id.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,Integer>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom"));
         nomentreprise.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("NomEntreprise"));
+        telephone.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,Integer>("numero_telephone"));
         prenom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("prenom"));
         siteweb.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("SiteWeb"));
         mail.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("mail"));

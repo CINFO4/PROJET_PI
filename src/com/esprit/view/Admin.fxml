@@ -20,6 +20,7 @@
                   <TableColumn fx:id="telephone" prefWidth="117.0" text="Téléphhone" />
                   <TableColumn fx:id="description" prefWidth="117.0" text="Description" />
                   <TableColumn fx:id="supprimer" prefWidth="117.0" text="Supprimer" />
+                  <TableColumn fx:id="id" prefWidth="117.0" text="id" />
               </columns>
             </TableView>
          </bottom>

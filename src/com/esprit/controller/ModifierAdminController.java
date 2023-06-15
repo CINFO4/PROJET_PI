@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  *
  * @author Anis
  */
-public class AjoutAdminController implements Initializable {
+public class ModifierAdminController implements Initializable {
 
     @FXML
     private TextField tfnom;
@@ -46,7 +46,8 @@ public class AjoutAdminController implements Initializable {
     @FXML
     private Button submit;
     private Refresh refreshEvent;
-    private Stage primarystage;
+     private Integer id =0;
+     private Stage primarystage;
 
     public void setPrimarystage(Stage primarystage) {
         this.primarystage = primarystage;
@@ -79,9 +80,19 @@ public class AjoutAdminController implements Initializable {
         }
         return true;
     }
+    public void initData(Administrateur admin) {
+        id = admin.getId();
+        tfnom.setText(admin.getNom());
+        tfprenom.setText(admin.getPrenom());
+        tfadresse.setText(admin.getMail());
+        tftelephone.setText(String.valueOf(admin.getNumero_telephone()));
+        tadescription.setText(admin.getDescription());
+        
+        
+    }
     
     @FXML
-    public void ajouteradmin(ActionEvent event) throws IOException, MailException {
+    public void Modifieradmin(ActionEvent event) throws IOException, MailException {
         if (!validateFields()) {
             return;
         }
@@ -127,8 +138,8 @@ public class AjoutAdminController implements Initializable {
 
         }
         if (tfmp.getText().equals(tfmp2.getText())) {
-            sp.ajouter(new Administrateur(tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmp.getText(), tadescription.getText()));
-            JOptionPane.showMessageDialog(null, "Admin ajouté !");
+            sp.modifier(new Administrateur(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmp.getText(), tadescription.getText()));
+            JOptionPane.showMessageDialog(null, "Admin modifié !");
             triggerRefreshEvent();
             primarystage.close();
 
