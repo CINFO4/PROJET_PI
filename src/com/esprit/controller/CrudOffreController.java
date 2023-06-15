@@ -213,8 +213,8 @@ public class CrudOffreController implements Initializable {
                                 uoc.setDatePickerPub(Date.valueOf(offre.getDate_pub().toString()));
                                 uoc.setDatePickerExp(Date.valueOf(offre.getDate_Exp().toString()));
                                 
-                            uoc.setOffreController(CrudOffreController.this);
-uoc.setStage(stage);
+                                uoc.setOffreController(CrudOffreController.this);
+                                uoc.setStage(stage);
                             } catch (IOException ex) {
                                 Logger.getLogger(CrudOffreController.class.getName()).log(Level.SEVERE, null, ex);
                             }
