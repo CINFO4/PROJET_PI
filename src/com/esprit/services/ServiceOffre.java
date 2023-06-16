@@ -254,16 +254,6 @@ public class ServiceOffre implements IServices<Offre>{
 
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public Offre chercherOffreByID(int id ) {
         Offre off = null ;
         String req ="SELECT * FROM offre WHERE id_offre = ?";

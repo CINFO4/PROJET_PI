@@ -6,6 +6,7 @@ package com.esprit.controller;
 
 import com.esprit.controller.CrudOffreController;
 import com.esprit.entities.Offre;
+import com.esprit.gui.InterfaceOffreEntrepriseController;
 import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceOffre;
 import com.sun.java.swing.plaf.windows.resources.windows;
@@ -48,6 +49,8 @@ public class UpdateOffreController implements Initializable {
     private Stage stage;
     private CrudOffreController offreController;
     
+    
+    private InterfaceOffreEntrepriseController IEntController;
 
     /**
      * Initializes the controller class.
@@ -81,10 +84,13 @@ public class UpdateOffreController implements Initializable {
                 
                 return ;
             }
-            
         
-        offreController.table();
-        
+        if (!(offreController == null)) {
+            offreController.table();
+        }
+        if (!(IEntController == null)) {
+            IEntController.table();
+        }
 
     }
 
@@ -135,8 +141,12 @@ public class UpdateOffreController implements Initializable {
         return stage;
     }
 
-    void setOffreController(CrudOffreController offreController) {
+    public void setOffreController(CrudOffreController offreController) {
         this.offreController = offreController;
+    }
+    
+    public void setOffreEntrController(InterfaceOffreEntrepriseController IEntController) {
+        this.IEntController = IEntController;
     }
 
 }

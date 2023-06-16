@@ -18,10 +18,19 @@ import javafx.stage.Stage;
 public class MainGUI extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-//       FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudOffre.fxml"));
-  //  FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudDomaine.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudCandidature.fxml"));
-        Parent root = loader.load();
+//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudOffre.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudDomaine.fxml"));
+//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudCandidature.fxml"));
+        
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreUser.fxml"));
+//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreEntreprise.fxml"));
+      
+      
+      
+      
+      
+      
+      Parent root = loader.load();
         Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
