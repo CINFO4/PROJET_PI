@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.CompetenceController">
+    <Label layoutX="50.0" layoutY="50.0" text="Competence Management" style="-fx-font-size: 24px; -fx-text-fill: #333333;" />
+    <TextField fx:id="txtSearch" layoutX="475.0" layoutY="50.0" prefHeight="21.0" prefWidth="200.0" promptText="Search by name" />
+        <Button fx:id="btnSearch" layoutX="685.0" layoutY="50.0" mnemonicParsing="false" onAction="#search" text="Search" />
+    <TableView fx:id="competenceTable" layoutX="50.0" layoutY="100.0" prefWidth="700.0" prefHeight="300.0" style="-fx-background-color: #ffffff;">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="300.0" />
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="400.0" />
+        </columns>
+    </TableView>
+    
+    <Label layoutX="50.0" layoutY="425.0" text="Name:" style="-fx-font-size: 18px; -fx-text-fill: #333333;" />
+    <TextField fx:id="nameField" layoutX="200.0" layoutY="425.0" prefWidth="300.0" promptText="Enter the competence name" style="-fx-background-color: #ffffff;" />
+    
+    <Label layoutX="50.0" layoutY="475.0" text="Description:" style="-fx-font-size: 18px; -fx-text-fill: #333333;" />
+    <TextArea fx:id="descriptionArea" layoutX="200.0" layoutY="475.0" prefWidth="300.0" prefHeight="100.0" promptText="Enter the competence description" style="-fx-background-color: #ffffff;" />
+    
+    <Button fx:id="addButton" layoutX="250.0" layoutY="600.0" minWidth="100.0" text="Add" style="-fx-background-color: #4caf50; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 40px;" />
+    <Button fx:id="updateButton" layoutX="400.0" layoutY="600.0" minWidth="100.0" text="Update" style="-fx-background-color: #2196f3; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 40px;" />
+    <Button fx:id="deleteButton" layoutX="550.0" layoutY="600.0" minWidth="100.0" text="Delete" style="-fx-background-color: #f44336; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 40px;" />
+</AnchorPane>
