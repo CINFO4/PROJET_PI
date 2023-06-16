@@ -10,7 +10,8 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.CompetenceController">
     <Label layoutX="50.0" layoutY="50.0" text="Competence Management" style="-fx-font-size: 24px; -fx-text-fill: #333333;" />
-    
+    <TextField fx:id="txtSearch" layoutX="475.0" layoutY="50.0" prefHeight="21.0" prefWidth="200.0" promptText="Search by name" />
+        <Button fx:id="btnSearch" layoutX="685.0" layoutY="50.0" mnemonicParsing="false" onAction="#search" text="Search" />
     <TableView fx:id="competenceTable" layoutX="50.0" layoutY="100.0" prefWidth="700.0" prefHeight="300.0" style="-fx-background-color: #ffffff;">
         <columns>
             <TableColumn fx:id="nameColumn" text="Name" prefWidth="300.0" />

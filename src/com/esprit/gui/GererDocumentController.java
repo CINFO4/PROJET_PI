@@ -2,6 +2,8 @@ package com.esprit.gui;
 
 import com.esprit.entities.Document;
 import com.esprit.services.ServiceGererDocument;
+import java.io.File;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,14 +14,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javax.swing.JOptionPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+
+
 
 public class GererDocumentController implements Initializable {
 
     @FXML
     private TextField txtTitre;
 
-    @FXML
     private TextField txtUserId;
 
     @FXML
@@ -33,9 +43,11 @@ public class GererDocumentController implements Initializable {
 
     @FXML
     private TableColumn<Document, String> colTitre;
+@FXML
+    private TextField txtSearch;
 
     @FXML
-    private TableColumn<Document, String> colUserId;
+    private Button btnSearch;
 
     @FXML
     private TableColumn<Document, String> colType;
@@ -54,7 +66,12 @@ public class GererDocumentController implements Initializable {
     private Button btnAjouter;
     @FXML
     private Button btnModifier;
-
+    @FXML
+    private Button btnChooseFile;
+@FXML
+private TextField txtFilePath;
+    @FXML
+    private Button btnUpload;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadChoiceBox();
@@ -64,42 +81,44 @@ public class GererDocumentController implements Initializable {
             if (newSelection != null) {
                 Document selectedDocument = tblDocuments.getSelectionModel().getSelectedItem();
                 txtTitre.setText(selectedDocument.getTitre_document());
-                txtUserId.setText(String.valueOf(selectedDocument.getId_user()));
                 choiceType.getSelectionModel().select(selectedDocument.getType());
                 txtLien.setText(selectedDocument.getLien());
             }
         });
     }
 
-    @FXML
-    void ajouter(ActionEvent event) {
-        String titre = txtTitre.getText();
-        String description = "";
-        String type = choiceType.getValue();
-        String lien = txtLien.getText();
-        int userId = Integer.parseInt(txtUserId.getText());
+  @FXML
+void ajouter(ActionEvent event) {
+    String titre = txtTitre.getText();
+    String description = "";
+    String type = choiceType.getValue();
+    String lien = txtLien.getText();
 
-//        if (titre.isEmpty() || type.isEmpty() || lien.isEmpty()) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Warning");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Please fill in all the fields");
-//            alert.showAndWait();
-//            return;
-//        }
-
-       // Create a new Document instance
-Document document = new Document();
-document.setTitre_document(titre);
-document.setDescription_document(description);
-document.setType(type);
-document.setLien(lien);
-document.setId_user(userId);
-ServiceGererDocument sd= new ServiceGererDocument();
-
-sd.ajouter(document);
-refresh();
+    // Check if the title already exists
+    if (isTitleExists(titre)) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Title already exists");
+        alert.showAndWait();
+        return;
     }
+   
+
+    // Create a new Document instance
+    Document document = new Document();
+    document.setTitre_document(titre);
+    document.setDescription_document(description);
+    document.setType(type);
+    document.setLien(lien);
+    document.setId_user(1);
+    ServiceGererDocument sd = new ServiceGererDocument();
+
+    sd.ajouter(document);
+    refresh();
+    JOptionPane.showMessageDialog(null, "Document ajouté !");
+}
+
     
   
     
@@ -113,7 +132,7 @@ refresh();
             String description = "";
             String type = choiceType.getValue();
             String lien = txtLien.getText();
-            int userId = Integer.parseInt(txtUserId.getText());
+
 
             if (titre.isEmpty() || type.isEmpty() || lien.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -128,7 +147,7 @@ refresh();
             selectedDocument.setDescription_document(description);
             selectedDocument.setType(type);
             selectedDocument.setLien(lien);
-            selectedDocument.setId_user(userId);
+            selectedDocument.setId_user(1);
 
             serviceGererDocument.modifier(selectedDocument);
             tblDocuments.refresh();
@@ -140,6 +159,8 @@ refresh();
             alert.setContentText("Please select a document to edit");
             alert.showAndWait();
         }
+        
+        JOptionPane.showMessageDialog(null, "Document Modifié !");
     }
 
     @FXML
@@ -156,7 +177,26 @@ refresh();
             alert.setContentText("Please select a document to delete");
             alert.showAndWait();
         }
+        
+         JOptionPane.showMessageDialog(null, "Document Supprimé !");
     }
+
+    
+@FXML
+void search(ActionEvent event) {
+    String searchTerm = txtSearch.getText();
+
+    ObservableList<Document> searchResults = FXCollections.observableArrayList();
+
+    for (Document document : documentsList) {
+        if (document.getTitre_document().toLowerCase().contains(searchTerm.toLowerCase())) {
+            searchResults.add(document);
+        }
+    }
+
+    tblDocuments.setItems(searchResults);
+}
+
 
     private void loadChoiceBox() {
         ObservableList<String> types = FXCollections.observableArrayList("Type 1", "Type 2", "Type 3");
@@ -165,7 +205,6 @@ refresh();
 
     private void clearFields() {
         txtTitre.clear();
-        txtUserId.clear();
         choiceType.getSelectionModel().clearSelection();
         txtLien.clear();
     }
@@ -175,11 +214,64 @@ refresh();
        serviceGererDocument = new ServiceGererDocument();
        
         colTitre.setCellValueFactory(new PropertyValueFactory<>("titre_document"));
-        colUserId.setCellValueFactory(new PropertyValueFactory<>("id_user"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colLien.setCellValueFactory(new PropertyValueFactory<>("lien"));
 
         documentsList = FXCollections.observableArrayList(serviceGererDocument.afficher());
         tblDocuments.setItems(documentsList);
     }
+
+    @FXML
+    private void chooseFile(ActionEvent event) {
+         FileChooser fileChooser = new FileChooser();
+    Stage stage = (Stage) tblDocuments.getScene().getWindow(); // Get the current stage
+    File file = fileChooser.showOpenDialog(stage); // Show the file chooser dialog
+    if (file != null) {
+        // Set the chosen file path to the text field
+        txtFilePath.setText(file.getAbsolutePath());
+    }
 }
+
+    private boolean isTitleExists(String titre) {
+        for (Document document : documentsList) {
+        if (document.getTitre_document().equalsIgnoreCase(titre)) {
+            return true;
+        }
+    }
+    return false;
+    }
+
+    @FXML
+void uploadFile(ActionEvent event) {
+    String filePath = txtFilePath.getText();
+    if (!filePath.isEmpty()) {
+        // Perform the file upload logic here
+        // For demonstration purposes, let's show a success message
+        JOptionPane.showMessageDialog(null, "File uploaded successfully. It will be reviewed by the administrator.");
+
+        // Clear the file chooser field
+        txtFilePath.clear();
+    } else {
+        JOptionPane.showMessageDialog(null, "Please choose a file to upload.");
+    }
+}
+@FXML
+private void loadStatistics() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Statistics.fxml"));
+        Parent statisticsRoot = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Statistics");
+        stage.setScene(new Scene(statisticsRoot));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    }
+
+
+    
+

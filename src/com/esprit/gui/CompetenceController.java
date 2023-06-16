@@ -5,6 +5,7 @@ package com.esprit.gui;
 import com.esprit.entities.Competence;
 import com.esprit.services.ServiceCompetence;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -40,6 +42,10 @@ public class CompetenceController implements Initializable {
     
     private ServiceCompetence serviceCompetence;
     private ObservableList<Competence> competenceList;
+    @FXML
+    private TextField txtSearch;
+    @FXML
+    private Button btnSearch;
 
     // Controller methods
     
@@ -74,51 +80,81 @@ public class CompetenceController implements Initializable {
     }
     
     private void addButtonClicked(ActionEvent event) {
+    String name = nameField.getText();
+    String description = descriptionArea.getText();
+
+    if (name.isEmpty() || description.isEmpty()) {
+        showAlert(Alert.AlertType.ERROR, "Error", "Please enter a name and description.");
+        return;
+    }
+
+    if (isNameExists(name)) {
+        showAlert(Alert.AlertType.WARNING, "Warning", "Name already exists");
+        return;
+    }
+
+    Competence competence = new Competence(name, description);
+    serviceCompetence.ajouter(competence);
+    loadCompetences();
+    clearFields();
+    showAlert(Alert.AlertType.INFORMATION, "Success", "Competence added successfully.");
+}
+
+
+private boolean isNameExists(String name) {
+    for (Competence competence : competenceList) {
+        if (competence.getNom().equalsIgnoreCase(name)) {
+            return true;
+        }
+    }
+    return false;
+        
+    }
+    
+    private void updateButtonClicked(ActionEvent event) {
+    Competence selectedCompetence = competenceTable.getSelectionModel().getSelectedItem();
+    
+    if (selectedCompetence != null) {
         String name = nameField.getText();
         String description = descriptionArea.getText();
         
         if (!name.isEmpty() && !description.isEmpty()) {
-            Competence competence = new Competence(name, description);
-            serviceCompetence.ajouter(competence);
+            selectedCompetence.setNom(name);
+            selectedCompetence.setDescription(description);
+            serviceCompetence.modifier(selectedCompetence);
             loadCompetences();
             clearFields();
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Competence updated successfully.");
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a name and description.");
         }
+    } else {
+        showAlert(Alert.AlertType.ERROR, "Error", "No competence selected.");
     }
+}
+
     
-    private void updateButtonClicked(ActionEvent event) {
-        Competence selectedCompetence = competenceTable.getSelectionModel().getSelectedItem();
-        
-        if (selectedCompetence != null) {
-            String name = nameField.getText();
-            String description = descriptionArea.getText();
-            
-            if (!name.isEmpty() && !description.isEmpty()) {
-                selectedCompetence.setNom(name);
-                selectedCompetence.setDescription(description);
-                serviceCompetence.modifier(selectedCompetence);
-                loadCompetences();
-                clearFields();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a name and description.");
-            }
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "No competence selected.");
-        }
-    }
+  private void deleteButtonClicked(ActionEvent event) {
+    Competence selectedCompetence = competenceTable.getSelectionModel().getSelectedItem();
     
-    private void deleteButtonClicked(ActionEvent event) {
-        Competence selectedCompetence = competenceTable.getSelectionModel().getSelectedItem();
+    if (selectedCompetence != null) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Are you sure you want to delete the competence?");
         
-        if (selectedCompetence != null) {
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             serviceCompetence.supprimer(selectedCompetence);
             loadCompetences();
             clearFields();
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "No competence selected.");
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Competence deleted successfully.");
         }
+    } else {
+        showAlert(Alert.AlertType.ERROR, "Error", "No competence selected.");
     }
+}
+
     
     private void clearFields() {
         nameField.clear();
@@ -132,4 +168,27 @@ public class CompetenceController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+@FXML
+private void search(ActionEvent event) {
+    String searchTerm = txtSearch.getText().toLowerCase();
+
+    ObservableList<Competence> searchResults = FXCollections.observableArrayList();
+
+    if (searchTerm == null || searchTerm.isEmpty()) {
+        // Load all competences if search term is null or empty
+        competenceTable.setItems(competenceList);
+    } else {
+        // Filter competences based on the search term
+        for (Competence competence : competenceList) {
+            if (competence.getNom().toLowerCase().equals(searchTerm)) {
+                searchResults.add(competence);
+            }
+        }
+        competenceTable.setItems(searchResults);
+    }
+}
+
+
+
 }

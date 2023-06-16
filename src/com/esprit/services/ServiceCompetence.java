@@ -84,4 +84,8 @@ public class ServiceCompetence {
 
     return list;
 }
+
+    public Competence getCompetenceById(int id_competence) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
