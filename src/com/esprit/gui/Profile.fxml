@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.ProfileController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@profile.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.ProfileController">
     <children>
-        <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-            <Label text="Profile" style="-fx-font-size: 18px;" />
-            <HBox spacing="10.0">
+        <VBox id="profileContainer" alignment="CENTER" spacing="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+            <Label id="profileTitle" text="Profile" />
+            <HBox spacing="20.0">
                 <Label text="User Name:" />
                 <ComboBox fx:id="userNameComboBox" />
             </HBox>
-            <HBox spacing="10.0">
+            <HBox spacing="20.0">
                 <Label text="Competence Name:" />
                 <ComboBox fx:id="competenceComboBox" />
             </HBox>
-            <HBox spacing="10.0">
+            <HBox spacing="20.0">
                 <Label text="Niveau:" />
                 <ComboBox fx:id="niveauComboBox" />
             </HBox>

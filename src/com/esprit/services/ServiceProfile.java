@@ -16,7 +16,7 @@ public class ServiceProfile {
 
     public void ajouter(Profile profile) {
         try {
-            String req = "INSERT INTO profile(id_user, id_competence, niveau) VALUES (?, ?, ?);";
+            String req = "INSERT INTO profiles(id_user, id_competence, niveau) VALUES (?, ?, ?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, profile.getId_user());
             pst.setInt(2, profile.getId_competence());
@@ -30,7 +30,7 @@ public class ServiceProfile {
 
     public void modifier(Profile profile) {
         try {
-            String req = "UPDATE profile SET id_user=?, id_competence=?, niveau=? WHERE id_profile=?";
+            String req = "UPDATE profiles SET id_user=?, id_competence=?, niveau=? WHERE id_profile=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, profile.getId_user());
             pst.setInt(2, profile.getId_competence());
@@ -45,7 +45,7 @@ public class ServiceProfile {
 
     public void supprimer(Profile profile) {
         try {
-            String req = "DELETE FROM profile WHERE id_profile=?";
+            String req = "DELETE FROM profiles WHERE id_profile=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, profile.getId_profile());
             pst.executeUpdate();
@@ -58,7 +58,7 @@ public class ServiceProfile {
     public List<Profile> afficher() {
         List<Profile> list = new ArrayList<>();
 
-        String req = "SELECT * FROM profile";
+        String req = "SELECT * FROM profiles";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
