@@ -22,12 +22,12 @@ public class main {
      */
     public static void main(String[] args) {
         
-        ServiceQuestion p1 = new ServiceQuestion();
+        ServiceProposition p1 = new ServiceProposition();
         //ServiceCompetence p2 = new ServiceCompetence();
         //p1.ajouter(new proposition("tunis","valid",1));
 //        System.out.println(p1.afficherQuestionView());
-ServiceQuestion s = new ServiceQuestion();
-        System.out.println(s.afficherQuestionViewByCom("java"));
+//ServiceQuestion s = new ServiceQuestion();
+        System.out.println(p1.afficherByIDquestion(18));
     }
     
 }

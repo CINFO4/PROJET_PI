@@ -89,12 +89,12 @@ public class ServiceProposition {
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
                 list.add(new proposition(rs.getInt("id_proposition"), rs.getString("description"), rs.getString("etat"), rs.getInt("id_question")));
+
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        
+               
         return list;
     }
 }

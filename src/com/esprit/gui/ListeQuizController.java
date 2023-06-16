@@ -11,6 +11,8 @@ import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
 import com.esprit.services.ServiceCompetence;
 import com.esprit.services.ServiceQuestion.QuestionView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;

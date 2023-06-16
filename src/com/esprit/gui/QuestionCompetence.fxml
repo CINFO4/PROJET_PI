@@ -1,33 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.QuestionCompetenceController">
    <children>
-      <Label fx:id="lbCompetence" layoutX="293.0" layoutY="14.0" prefHeight="26.0" prefWidth="190.0" text="Competence" />
-      <Label fx:id="lbQ1" layoutX="39.0" layoutY="84.0" prefHeight="17.0" prefWidth="120.0" text="Question1" />
-      <RadioButton fx:id="rdQ11" layoutX="82.0" layoutY="122.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rdQ12" layoutX="82.0" layoutY="150.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ13" layoutX="338.0" layoutY="122.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ14" layoutX="338.0" layoutY="150.0" mnemonicParsing="false" text="RadioButton" />
-      <Label fx:id="lbQ2" layoutX="39.0" layoutY="194.0" text="Question2" />
-      <RadioButton fx:id="rdQ21" layoutX="82.0" layoutY="232.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ22" layoutX="82.0" layoutY="260.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ23" layoutX="338.0" layoutY="232.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ24" layoutX="344.0" layoutY="269.0" mnemonicParsing="false" text="RadioButton" />
-      <Label fx:id="lbQ3" layoutX="39.0" layoutY="324.0" text="Question" />
-      <RadioButton fx:id="rdQ31" layoutX="82.0" layoutY="362.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ32" layoutX="82.0" layoutY="390.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ33" layoutX="338.0" layoutY="362.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ34" layoutX="330.0" layoutY="399.0" mnemonicParsing="false" text="RadioButton" />
-      <Label fx:id="lbQ4" layoutX="45.0" layoutY="456.0" text="Question4" />
-      <RadioButton fx:id="rdQ41" layoutX="88.0" layoutY="494.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ42" layoutX="88.0" layoutY="522.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ43" layoutX="338.0" layoutY="503.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton fx:id="rdQ44" layoutX="336.0" layoutY="531.0" mnemonicParsing="false" text="RadioButton" />
-      <Button fx:id="btValider" layoutX="581.0" layoutY="519.0" mnemonicParsing="false" text="Valider" />
+      <Button fx:id="btValider" layoutX="331.0" layoutY="544.0" mnemonicParsing="false">
+         <graphic>
+            <de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView  glyphName="CHECK" size="30" />
+         </graphic></Button>
+      <Pane layoutX="21.0" layoutY="3.0" prefHeight="58.0" prefWidth="712.0" style="-fx-background-color: #00FFFF;">
+         <children>
+            <Label fx:id="lbCompetence" layoutX="271.0" layoutY="9.0" prefHeight="26.0" prefWidth="190.0" text="Competence" textFill="#1707eb">
+               <font>
+                  <Font name="Times New Roman Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="21.0" layoutY="71.0" prefHeight="103.0" prefWidth="712.0" style="-fx-background-color: #C0C0C0;" />
+      <Label fx:id="lbQ1" layoutX="309.0" layoutY="78.0" prefHeight="17.0" prefWidth="120.0" text="Question1" textFill="#2d05f5">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rdQ11" layoutX="92.0" layoutY="116.0" mnemonicParsing="false" text="1" textFill="#2d05f5">
+         <toggleGroup>
+            <ToggleGroup fx:id="Q1" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rdQ12" layoutX="92.0" layoutY="144.0" mnemonicParsing="false" text="RadioButton" textFill="#2d05f5" toggleGroup="$Q1" >
+         
+      </RadioButton>
+      <RadioButton fx:id="rdQ13" layoutX="559.0" layoutY="116.0" mnemonicParsing="false" text="RadioButton" textFill="#2d05f5" toggleGroup="$Q1">
+         
+      </RadioButton>
+      <RadioButton fx:id="rdQ14" layoutX="559.0" layoutY="144.0" mnemonicParsing="false" text="RadioButton" textFill="#2d05f5" toggleGroup="$Q1">
+         
+      </RadioButton>
+      <Pane layoutX="21.0" layoutY="187.0" prefHeight="103.0" prefWidth="712.0" style="-fx-background-color: #C0C0C0;">
+         <children>
+            <RadioButton fx:id="rdQ24" layoutX="537.0" layoutY="76.0" mnemonicParsing="false" text="RadioButton" textFill="#160beb">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Q2" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rdQ23" layoutX="537.0" layoutY="46.0" mnemonicParsing="false" text="RadioButton" textFill="#160beb" toggleGroup="$Q2">
+            
+            </RadioButton>
+         </children>
+      </Pane>
+      <Label fx:id="lbQ2" layoutX="307.0" layoutY="192.0" text="Question2" textFill="#160beb">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rdQ21" layoutX="92.0" layoutY="232.0" mnemonicParsing="false" text="RadioButton" textFill="#160beb" toggleGroup="$Q2">
+         
+      </RadioButton>
+      <RadioButton fx:id="rdQ22" layoutX="92.0" layoutY="263.0" mnemonicParsing="false" text="RadioButton" textFill="#160beb" toggleGroup="$Q2">
+         
+      </RadioButton>
+      <Pane layoutX="19.0" layoutY="304.0" prefHeight="103.0" prefWidth="712.0" style="-fx-background-color: #C0C0C0;" />
+      <Label fx:id="lbQ3" layoutX="307.0" layoutY="310.0" text="Question" textFill="#0906ee">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rdQ31" layoutX="92.0" layoutY="348.0" mnemonicParsing="false" text="RadioButton" textFill="#0906ee">
+         <toggleGroup>
+            <ToggleGroup fx:id="Q3" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rdQ32" layoutX="92.0" layoutY="376.0" mnemonicParsing="false" text="RadioButton" textFill="#0906ee" toggleGroup="$Q3">
+        
+      </RadioButton>
+      <RadioButton fx:id="rdQ33" layoutX="556.0" layoutY="348.0" mnemonicParsing="false" text="RadioButton" textFill="#0906ee" toggleGroup="$Q3">
+         
+      </RadioButton>
+      <RadioButton fx:id="rdQ34" layoutX="555.0" layoutY="379.0" mnemonicParsing="false" text="RadioButton" textFill="#0906ee" toggleGroup="$Q3">
+         
+      </RadioButton>
+      <Pane layoutX="19.0" layoutY="422.0" prefHeight="103.0" prefWidth="712.0" style="-fx-background-color: #C0C0C0;">
+         <children>
+            <Label fx:id="lbQ4" layoutX="278.0" layoutY="9.0" text="Question4" textFill="#0418ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="rdQ41" layoutX="79.0" layoutY="47.0" mnemonicParsing="false" text="RadioButton" textFill="#0418ff">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Q4" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rdQ42" layoutX="79.0" layoutY="75.0" mnemonicParsing="false" text="RadioButton" textFill="#0418ff" toggleGroup="$Q4">
+              
+            </RadioButton>
+            <RadioButton fx:id="rdQ43" layoutX="536.0" layoutY="46.0" mnemonicParsing="false" text="RadioButton" textFill="#0418ff" toggleGroup="$Q4">
+              
+            </RadioButton>
+            <RadioButton fx:id="rdQ44" layoutX="535.0" layoutY="75.0" mnemonicParsing="false" text="RadioButton" textFill="#0418ff" toggleGroup="$Q4">
+               
+            </RadioButton>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
