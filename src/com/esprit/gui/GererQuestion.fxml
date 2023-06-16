@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -13,26 +14,30 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="719.0" prefWidth="1192.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.GererQuestionController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.GererQuestionController">
    <children>
-      <Button fx:id="btModifier" layoutX="741.0" layoutY="477.0" mnemonicParsing="false" onAction="#modifierQuestion" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: orange;" text="Modifier" textFill="WHITE">
+      <Button fx:id="btModifier" layoutX="760.0" layoutY="675.0" mnemonicParsing="false" onAction="#modifierQuestion" prefHeight="45.0" prefWidth="59.0" style="-fx-background-color: orange;" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <graphic>
+            <de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView glyphName="PENCIL" size="35" wrappingWidth="24.0" />
+         </graphic>
       </Button>
-      <Button fx:id="btSupprimer" layoutX="857.0" layoutY="477.0" mnemonicParsing="false" onAction="#supprimerQuestion" style="-fx-background-color: red;" text="Supprimer" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <TableView fx:id="information" layoutX="415.0" layoutY="35.0" onMouseClicked="#ActiverFormulaire" prefHeight="324.0" prefWidth="777.0">
+     
+      <TableView fx:id="information" layoutX="415.0" layoutY="35.0" prefHeight="616.0" prefWidth="777.0">
          <columns>
-            <TableColumn fx:id="collibelle" prefWidth="489.0" text="Libelle" />
-            <TableColumn fx:id="coletat" minWidth="0.0" prefWidth="157.0" text="Etat" />
-            <TableColumn fx:id="colnomc" minWidth="0.0" prefWidth="130.0" text="Competence" />
+            <TableColumn fx:id="collibelle" prefWidth="523.0" text="Libelle" />
+            <TableColumn fx:id="coletat" minWidth="0.0" prefWidth="101.0" text="Etat" />
+            <TableColumn fx:id="colnomc" minWidth="0.0" prefWidth="106.0" text="Competence" />
+            <TableColumn fx:id="colSupprimer" prefWidth="46.0" text="Action">
+    <!-- <graphic>
+        <FontAwesomeIconView glyphName="TRASH" size="20" />
+    </graphic> -->
+</TableColumn>
          </columns>
       </TableView>
-      <Pane layoutX="3.0" layoutY="35.0" prefHeight="676.0" prefWidth="402.0" style="-fx-background-color: #c5c5c5;">
+      <Pane layoutX="3.0" layoutY="35.0" prefHeight="693.0" prefWidth="402.0" style="-fx-background-color: #c5c5c5;">
          <children>
             <Label layoutX="4.0" layoutY="288.0" text="Proposition 1  ">
                <font>
@@ -65,18 +70,18 @@
                </font>
             </Label>
             <TextField fx:id="tfpro4" layoutX="112.0" layoutY="565.0" prefHeight="77.0" prefWidth="276.0" />
-            <RadioButton fx:id="rdV1" layoutX="7.0" layoutY="313.0" mnemonicParsing="false" text="Vrai">
+            <RadioButton fx:id="rdV1" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" text="Vrai">
                <toggleGroup>
                   <ToggleGroup fx:id="etat1" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rdF1" layoutX="7.0" layoutY="338.0" mnemonicParsing="false" text="Faux" toggleGroup="$etat1" />
-            <RadioButton fx:id="rdV2" layoutX="14.0" layoutY="401.0" mnemonicParsing="false" text="Vrai">
+            <RadioButton fx:id="rdF1" layoutX="13.0" layoutY="338.0" mnemonicParsing="false" text="Faux" toggleGroup="$etat1" />
+            <RadioButton fx:id="rdV2" layoutX="15.0" layoutY="404.0" mnemonicParsing="false" text="Vrai">
                <toggleGroup>
                   <ToggleGroup fx:id="etat2" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rdF2" layoutX="7.0" layoutY="431.0" mnemonicParsing="false" text="Faux" toggleGroup="$etat2" />
+            <RadioButton fx:id="rdF2" layoutX="15.0" layoutY="427.0" mnemonicParsing="false" text="Faux" toggleGroup="$etat2" />
             <RadioButton fx:id="rdV3" layoutX="14.0" layoutY="504.0" mnemonicParsing="false" text="Vrai">
                <toggleGroup>
                   <ToggleGroup fx:id="etat3" />
@@ -89,10 +94,13 @@
                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="rdF4" layoutX="14.0" layoutY="612.0" mnemonicParsing="false" text="Faux" toggleGroup="$etat4" />
-            <Button fx:id="btAjouter" layoutX="191.0" layoutY="650.0" mnemonicParsing="false" onAction="#ajouterQuestion" style="-fx-background-color: green;" text="Ajouter" textFill="WHITE">
+            <Button fx:id="btAjouter" layoutX="191.0" layoutY="650.0" mnemonicParsing="false" onAction="#ajouterQuestion" prefHeight="19.0" prefWidth="36.0" style="-fx-background-color: green;" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
-               </font></Button>
+               </font>
+               <graphic>
+                  <de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="25" />
+               </graphic></Button>
          </children>
       </Pane>
       <TextField fx:id="tfLibelle" layoutX="102.0" layoutY="42.0" prefHeight="91.0" prefWidth="276.0" />
@@ -102,4 +110,5 @@
       <ListView fx:id="listcompetence" layoutX="104.0" layoutY="141.0" prefHeight="125.0" prefWidth="276.0" />
       <ComboBox fx:id="filterbox" layoutX="1012.0" layoutY="2.0" prefHeight="25.0" prefWidth="166.0" promptText="Filtrer Par Competence" />
    </children>
+   
 </AnchorPane>

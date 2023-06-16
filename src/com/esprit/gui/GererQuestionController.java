@@ -10,7 +10,11 @@ import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
 import com.esprit.services.ServiceCompetence;
 import com.esprit.services.ServiceQuestion.QuestionView;
-
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.util.Callback;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +43,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 
@@ -91,15 +96,15 @@ public class GererQuestionController implements Initializable {
     @FXML
     private Button btModifier;
     @FXML
-    private Button btSupprimer;
-    @FXML
     private ListView<String> listcompetence;
     @FXML
     private ComboBox<String> filterbox;
     @FXML
     private ToggleGroup etat2;
+    @FXML
+    private TableColumn<QuestionView, Void> colSupprimer;
    
-    
+   
    
     /**
      * Initializes the controller class.
@@ -122,11 +127,42 @@ public void initialize(URL url, ResourceBundle rb) {
             Details(event);
         }
     });
-
+ initializeTableCellFactory();
     refresh();
 }
-      
-     
+    
+          
+         private void initializeTableCellFactory() {
+    colSupprimer.setCellFactory(column -> {
+    return new TableCell<QuestionView, Void>() {
+        private final Button deleteButton = new Button();
+
+        {
+            deleteButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
+            Tooltip tooltip = new Tooltip("Supprimer"); 
+            Tooltip.install(deleteButton, tooltip);
+            deleteButton.setOnAction(event -> {
+                
+                QuestionView question = getTableView().getItems().get(getIndex());
+                supprimerQuestion(event);
+            });
+        }
+
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(deleteButton);
+            }
+        }
+    };
+});
+
+         }
+                    
     private void filterQuestions(ActionEvent event) {
        ServiceQuestion serviceQuestion = new ServiceQuestion();
     String selectedCompetence = filterbox.getValue();
@@ -164,8 +200,25 @@ public void initialize(URL url, ResourceBundle rb) {
     private void ajouterQuestion(ActionEvent event) {
         ServiceQuestion sq = new ServiceQuestion();
         ServiceProposition sp = new ServiceProposition();
-        
-        String etatProposition1;
+        String etatProposition1 ="vrai";
+        String etatProposition2 ="vrai";
+        String etatProposition3 ="vrai";
+        String etatProposition4 ="vrai";
+        if (tfLibelle.getText().isEmpty() || listcompetence.getSelectionModel().isEmpty() || tfpro1.getText().isEmpty() || tfpro2.getText().isEmpty() || tfpro3.getText().isEmpty() || tfpro4.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs requis !");
+        return;
+    }
+
+    
+    if (!rdV1.isSelected() && !rdV2.isSelected() && !rdV3.isSelected() && !rdV4.isSelected()) {
+        JOptionPane.showMessageDialog(null, "Veuillez sélectionner au moins une proposition vraie !");
+        return;
+    }
+    if (sq.questionExists(tfLibelle.getText())) {
+    JOptionPane.showMessageDialog(null, "Le libellé de la question existe déjà !");
+    return;
+    }    
+    
     if (rdV1.isSelected()) {
         etatProposition1 = "vrai";
     } else if (rdF1.isSelected()) {
@@ -174,7 +227,7 @@ public void initialize(URL url, ResourceBundle rb) {
         return;
     }
     
-     String etatProposition2;
+    
     if (rdV2.isSelected()) {
         etatProposition2 = "vrai";
     } else if (rdF2.isSelected()) {
@@ -183,7 +236,7 @@ public void initialize(URL url, ResourceBundle rb) {
         return;
     }
     
-     String etatProposition3;
+     
     if (rdV3.isSelected()) {
         etatProposition3 = "vrai";
     } else if (rdF3.isSelected()) {
@@ -192,10 +245,10 @@ public void initialize(URL url, ResourceBundle rb) {
         return;
     }
     
-     String etatProposition4;
+     
     if (rdV4.isSelected()) {
         etatProposition4 = "vrai";
-    } else if (rdF1.isSelected()) {
+    } else if (rdF4.isSelected()) {
         etatProposition4 = "faux";
     } else {
         return;
@@ -308,8 +361,6 @@ public void initialize(URL url, ResourceBundle rb) {
         rdF4.setSelected(false);
         refresh();
     }
-          
-    @FXML
     private void supprimerQuestion(ActionEvent event) {
         
          QuestionView selectedQuestion = information.getSelectionModel().getSelectedItem();
@@ -327,6 +378,7 @@ public void initialize(URL url, ResourceBundle rb) {
         Question q = new Question(selectedQuestion.getId_question(), selectedQuestion.getLibelle(), selectedQuestion.getEtat_question(), selectedQuestion.getId_c());
         serviceProposition.supprimer(selectedQuestion.getId_question());
         serviceQuestion.supprimer(q);
+         JOptionPane.showMessageDialog(null, "Question Supprimée !");
         refresh();
         tfLibelle.clear();
         tfpro1.clear();
@@ -410,9 +462,6 @@ public void initialize(URL url, ResourceBundle rb) {
 
     }
 
-    @FXML
-    private void ActiverFormulaire(MouseEvent event) {
-    }
 
    
 }

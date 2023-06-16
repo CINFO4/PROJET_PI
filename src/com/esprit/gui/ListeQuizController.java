@@ -4,22 +4,32 @@
  */
 package com.esprit.gui;
 import com.esprit.entities.Question;
+import com.esprit.gui.GererQuestionController;
 import com.esprit.entities.proposition;
 import com.esprit.entities.Competence;
 import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
 import com.esprit.services.ServiceCompetence;
 import com.esprit.services.ServiceQuestion.QuestionView;
+import java.io.IOException;
+import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -27,7 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ListeQuizController implements Initializable {
 
-
+private Competence selectedCompetence;
     @FXML
     private TableView<Competence> infocompetence;
     @FXML
@@ -38,9 +48,14 @@ public class ListeQuizController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ServiceCompetence sc = new ServiceCompetence();
-        
         AfficherCompetence();
-        // TODO
+        infocompetence.setOnMouseClicked(event -> {
+    if (event.getClickCount() == 2) {
+        System.out.println("zz, "+infocompetence.getSelectionModel().getSelectedItem());
+        afficherQuestionsCompetence(infocompetence.getSelectionModel().getSelectedItem(),event);
+        
+    }
+});
     }   
     
     public void AfficherCompetence() {
@@ -50,5 +65,22 @@ public class ListeQuizController implements Initializable {
     infocompetence.setItems(competenceList);
     colcompetence.setCellValueFactory(new PropertyValueFactory<>("nom"));
     
+}
+    private void afficherQuestionsCompetence(Competence competence,MouseEvent event) {
+      selectedCompetence = competence;
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionCompetence.fxml"));
+        Parent root = loader.load();
+        
+       QuestionCompetenceController questionsController = loader.getController();
+        
+        questionsController.setCompetence(selectedCompetence);
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 }
 }

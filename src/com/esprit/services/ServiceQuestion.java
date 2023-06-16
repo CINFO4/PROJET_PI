@@ -234,4 +234,30 @@ public class ServiceQuestion {
 
     return relatedQuestions;
     }
+       
+       
+       
+       public boolean questionExists(String libelle) {
+    
+   
+ String req = "SELECT COUNT(*) FROM question WHERE libelle = ?";
+    try {
+        
+       PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setString(1, libelle);
+        ResultSet rs = pst.executeQuery();
+
+       if (rs.next()) {
+            int count = rs.getInt(1);
+            return count > 0;
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    } finally {
+       
+    }
+
+    return false; 
+}
+
 }
