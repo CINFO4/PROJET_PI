@@ -83,7 +83,7 @@
       
       <Button fx:id="btnChooseFile" layoutX="16.0" layoutY="590.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose File" />
 <Button fx:id="btnUpload" layoutX="197.0" layoutY="660.0" mnemonicParsing="false" onAction="#uploadFile" prefHeight="31.0" prefWidth="91.0" text="Upload" />
-<Button text="Statistics" onAction="#loadStatistics"/>
+<Button layoutX="475.0" layoutY="714.0" onAction="#loadStatistics" prefHeight="32.0" prefWidth="128.0" text="Statistics" />
 
     </children>
 </AnchorPane>

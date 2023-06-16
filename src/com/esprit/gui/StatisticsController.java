@@ -18,8 +18,6 @@ public class StatisticsController implements Initializable {
     @FXML
     private PieChart chart;
 
-    @FXML
-    private Button backButton;
     private ObservableList<String> selectedTypes;
 
     @Override
@@ -44,7 +42,6 @@ public class StatisticsController implements Initializable {
         this.selectedTypes = FXCollections.observableArrayList(selectedTypes);
     }
 
-    @FXML
     private void goBack() {
         // Handle the "Back" button click
         // You can redirect to the previous interface or perform any other action

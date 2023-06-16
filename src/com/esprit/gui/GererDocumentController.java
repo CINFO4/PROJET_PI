@@ -264,11 +264,20 @@ private void loadStatistics() {
         Stage stage = new Stage();
         stage.setTitle("Statistics");
         stage.setScene(new Scene(statisticsRoot));
+
+        // Get the current stage
+        Stage currentStage = (Stage) tblDocuments.getScene().getWindow();
+        currentStage.hide(); // Hide the current stage
+
+        // Set the onHidden event for the statistics stage
+        stage.setOnHidden(event -> currentStage.show()); // Show the previous stage when statistics stage is closed
+
         stage.show();
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
 
     }
 

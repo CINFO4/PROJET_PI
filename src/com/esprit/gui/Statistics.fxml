@@ -9,5 +9,5 @@
 <VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.StatisticsController">
     <Label text="Statistics" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     <PieChart fx:id="chart" prefHeight="400.0" prefWidth="600.0" VBox.vgrow="ALWAYS"/>
-    <Button text="Back" onAction="#goBack"/>
+   
 </VBox>

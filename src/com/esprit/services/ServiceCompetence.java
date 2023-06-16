@@ -1,13 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.esprit.services;
-
-/**
- *
- * author 2023
- */
 
 import com.esprit.entities.Competence;
 import com.esprit.utils.DataSource;
@@ -24,12 +15,11 @@ public class ServiceCompetence {
 
     public void ajouter(Competence competence) {
         try {
-            String req = "INSERT INTO competences(id_c, nom, description) VALUES (?, ?, ?);";
+            String req = "INSERT INTO competences(nom, description) VALUES (?, ?)";
             PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1, competence.getId_c());
-            pst.setString(2, competence.getNom());
-            pst.setString(3, competence.getDescription());
-            
+            pst.setString(1, competence.getNom());
+            pst.setString(2, competence.getDescription());
+
             pst.executeUpdate();
             System.out.println("Compétence ajoutée !");
         } catch (SQLException ex) {
@@ -43,8 +33,8 @@ public class ServiceCompetence {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, competence.getNom());
             pst.setString(2, competence.getDescription());
-           
             pst.setInt(3, competence.getId_c());
+
             pst.executeUpdate();
             System.out.println("Compétence modifiée !");
         } catch (SQLException ex) {
@@ -65,27 +55,59 @@ public class ServiceCompetence {
     }
 
     public List<Competence> afficher() {
-    List<Competence> list = new ArrayList<>();
+        List<Competence> list = new ArrayList<>();
 
-    String req = "SELECT id_c, nom, description FROM competences";
-    try {
-        PreparedStatement pst = cnx.prepareStatement(req);
-        ResultSet rs = pst.executeQuery();
-        while (rs.next()) {
-            int id_c = rs.getInt("id_c");
-            String nom = rs.getString("nom");
-            String description = rs.getString("description");
-            Competence competence = new Competence(id_c, nom, description);
-            list.add(competence);
+        String req = "SELECT id_c, nom, description FROM competences";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id_c = rs.getInt("id_c");
+                String nom = rs.getString("nom");
+                String description = rs.getString("description");
+                Competence competence = new Competence(id_c, nom, description);
+                list.add(competence);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+
+        return list;
     }
 
-    return list;
-}
+    public int getCompetenceIdByName(String competenceName) {
+        try {
+            String req = "SELECT id_c FROM competences WHERE nom = ?";
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, competenceName);
+            ResultSet rs = pst.executeQuery();
 
-    public Competence getCompetenceById(int id_competence) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            if (rs.next()) {
+                return rs.getInt("id_c");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return 0;
+    }
+
+    public List<String> getCompetenceNamesByUserName(String userName) {
+        List<String> competenceNames = new ArrayList<>();
+        try {
+            String req = "SELECT c.nom FROM competences c INNER JOIN profiles p ON c.id_c = p.id_competence INNER JOIN user u ON u.id_user = p.id_user WHERE u.nom = ?";
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, userName);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String competenceName = rs.getString("nom");
+                competenceNames.add(competenceName);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return competenceNames;
     }
 }
