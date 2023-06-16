@@ -1,0 +1,133 @@
+/* Add Document Label */
+Label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+/* Document Management Title */
+#AnchorPane Label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-text-fill: #000000;
+}
+
+/* TextFields */
+TextField {
+    -fx-prompt-text-fill: #999999;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+}
+
+/* ChoiceBox */
+ChoiceBox {
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-pref-width: 150px;
+    -fx-min-height: 25px;
+    -fx-max-height: 25px;
+}
+
+/* Buttons */
+Button {
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-background-color: #007bff;
+    -fx-pref-width: 120px;
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-background-radius: 20px;
+}
+
+Button:hover {
+    -fx-background-color: #007bff;
+}
+
+/* TableView */
+TableView {
+    -fx-pref-height: 394px;
+    -fx-pref-width: 665px;
+}
+
+/* TableColumns */
+TableColumn {
+    -fx-alignment: CENTER;
+}
+
+/* Document List Label */
+#AnchorPane Label:nth-child(9) {
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+}
+
+/* ImageView */
+ImageView {
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+
+/* Search Button */
+#btnSearch {
+    -fx-background-color: #007bff;
+}
+
+#btnSearch:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Add Button */
+#btnAjouter {
+    -fx-background-color: #007bff;
+}
+
+#btnAjouter:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Delete Button */
+#btnSupprimer {
+    -fx-background-color: #007bff;
+}
+
+#btnSupprimer:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Save Button */
+#btnModifier {
+    -fx-background-color: #007bff;
+}
+
+#btnModifier:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Choose File Button */
+.button-choose-file {
+    -fx-background-color: #007bff;
+   
+}
+
+.button-choose-file:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Upload Button */
+#btnUpload {
+    -fx-background-color: #007bff;
+}
+
+#btnUpload:hover {
+    -fx-background-color: #007bff;
+}
+
+/* Statistics Button */
+Button:last-child {
+    -fx-background-color: #007bff;
+}
+
+Button:last-child:hover {
+    -fx-background-color: #007bff;
+}
