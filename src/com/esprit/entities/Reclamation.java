@@ -16,6 +16,7 @@ public class Reclamation {
     private int id_user;
     private EtatReclamation etat;
     private int id_offre;
+    private String output;
 
     public Reclamation(int id_reclamation, String reclamation, int id_user, EtatReclamation etat, int id_offre) {
         this.id_reclamation = id_reclamation;
@@ -65,8 +66,16 @@ public class Reclamation {
         this.id_offre = id_offre;
     }
 
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+    }
+
     @Override
     public String toString() {
-        return "Reclamation{" + "id_reclamation=" + id_reclamation + ", reclamation=" + reclamation + ", id_user=" + id_user + ", etat=" + etat + ", id_offre=" + id_offre + '}';
+        return output;
     }
 }

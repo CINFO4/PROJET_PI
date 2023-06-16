@@ -19,88 +19,105 @@ public class ServiceReclamation {
         cnx = DataSource.getInstance().getCnx();
     }
 
-    public void ajouter(Reclamation reclamation) {
-        try {
-            String req = "INSERT INTO reclamation(reclamation, id_user, etat, id_offre) VALUES (?, ?, ?, ?);";
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, reclamation.getReclamation());
-            pst.setInt(2, reclamation.getId_user());
-            pst.setString(3, reclamation.getEtat().name());
-            pst.setInt(4, reclamation.getId_offre());
-            pst.executeUpdate();
-            System.out.println("Reclamation ajoutée !");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void ajouter(Reclamation reclamation) throws SQLException {
+        String req = "INSERT INTO reclamation(reclamation, id_user, etat, id_offre) VALUES (?, ?, ?, ?);";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setString(1, reclamation.getReclamation());
+        pst.setInt(2, reclamation.getId_user());
+        pst.setString(3, reclamation.getEtat().name());
+        pst.setInt(4, reclamation.getId_offre());
+        pst.executeUpdate();
+        System.out.println("Reclamation ajoutée !");
     }
 
-    public void modifier(Reclamation reclamation) {
-        try {
-            String req = "UPDATE reclamation SET reclamation=?, etat=? WHERE id_reclamation=?";
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setString(1, reclamation.getReclamation());
-            pst.setString(2, reclamation.getEtat().name());
-            pst.setInt(3, reclamation.getId_reclamation());
-            pst.executeUpdate();
-            System.out.println("Reclamation modifiée !");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void modifier(Reclamation reclamation) throws SQLException {
+        String req = "UPDATE reclamation SET reclamation=?, etat=? WHERE id_reclamation=?";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setString(1, reclamation.getReclamation());
+        pst.setString(2, reclamation.getEtat().name());
+        pst.setInt(3, reclamation.getId_reclamation());
+        pst.executeUpdate();
+        System.out.println("Reclamation modifiée !");
     }
 
-    public void supprimer(int idReclamation) {
-        try {
-            String req = "DELETE FROM reclamation WHERE id_reclamation=?";
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1, idReclamation);
-            pst.executeUpdate();
-            System.out.println("Reclamation supprimée !");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void supprimer(int idReclamation) throws SQLException {
+        String req = "DELETE FROM reclamation WHERE id_reclamation=?";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setInt(1, idReclamation);
+        pst.executeUpdate();
+        System.out.println("Reclamation supprimée !");
     }
 
-    public List<Reclamation> afficher() {
+    public List<Reclamation> afficher() throws SQLException {
         List<Reclamation> list = new ArrayList<>();
 
         String req = "SELECT * FROM reclamation";
-        try {
-            PreparedStatement pst = cnx.prepareStatement(req);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                int idReclamation = rs.getInt("id_reclamation");
-                String reclamation = rs.getString("reclamation");
-                int idUser = rs.getInt("id_user");
-                String etat = rs.getString("etat");
-                int idOffre = rs.getInt("id_offre");
+        PreparedStatement pst = cnx.prepareStatement(req);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            int idReclamation = rs.getInt("id_reclamation");
+            String reclamation = rs.getString("reclamation");
+            int idUser = rs.getInt("id_user");
+            String etat = rs.getString("etat");
+            int idOffre = rs.getInt("id_offre");
 
-
-                Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat),idOffre);
-                list.add(rec);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat),idOffre);
+            list.add(rec);
         }
 
         return list;
     }
-    
-    public String getTitreOffre(int id_offre) {
-        String titre = null;
-        
-        String req = "SELECT titre FROM offre WHERE id_offre = ?";
-        try {
-            PreparedStatement pst = cnx.prepareStatement(req);
-            pst.setInt(1,id_offre);
-            
-            ResultSet rs = pst.executeQuery();
-            while(rs.next()) {
-                titre = rs.getString("titre");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+
+    public List<Reclamation> getReclamationEnCours() throws SQLException {
+        List<Reclamation> list = new ArrayList<>();
+
+        String req = "SELECT * FROM reclamation where etat = 'En_cours'";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            int idReclamation = rs.getInt("id_reclamation");
+            String reclamation = rs.getString("reclamation");
+            int idUser = rs.getInt("id_user");
+            String etat = rs.getString("etat");
+            int idOffre = rs.getInt("id_offre");
+
+            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat),idOffre);
+            list.add(rec);
         }
-        
+
+        return list;
+    }
+
+    public String getTitreOffre(int id_offre) throws SQLException {
+        String titre = null;
+
+        String req = "SELECT titre FROM offre WHERE id_offre = ?";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setInt(1, id_offre);
+
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()) {
+            titre = rs.getString("titre");
+        }
+
+        return titre;
+    }
+
+    public String getNomUser(int id_user) throws SQLException {
+        String titre = null;
+
+        String req = "SELECT prenom, nom FROM user WHERE id = ?";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setInt(1, id_user);
+
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()) {
+            String prenom = rs.getString("prenom");
+            String nom = rs.getString("nom");
+
+            titre = prenom + " " + nom;
+        }
+
         return titre;
     }
 }

@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/gui/reclamation/AjoutReclamationController.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/entities/Reclamation.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/gui/AjoutReviewController.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/tests/MainGui.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/services/ServiceReview.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/gui/ModifierReviewsController.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/tests/MainProg.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/services/ServiceReclamation.java</file>
-            <file>file:/C:/Users/Mehdi/Documents/NetBeansProjects/ReviewRec/src/com/esprit/entities/Review.java</file>
+            <file>file:/F:/PROJET_PI/src/com/esprit/reclamation/AdminReclamationController.java</file>
+            <file>file:/F:/PROJET_PI/src/com/esprit/reclamation/AdminReclamation.fxml</file>
+            <file>file:/F:/PROJET_PI/src/com/esprit/review/ModifierReviewsController.java</file>
+            <file>file:/F:/PROJET_PI/src/com/esprit/reclamation/styleREC.css</file>
         </group>
     </open-files>
 </project-private>

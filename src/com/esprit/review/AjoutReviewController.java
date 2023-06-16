@@ -1,12 +1,9 @@
-package com.esprit.gui;
+package com.esprit.review;
 
 import com.esprit.entities.Review;
 import com.esprit.services.ServiceReview;
 import javafx.scene.input.MouseEvent;
-import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javax.swing.JOptionPane;
 import javafx.scene.paint.Color;
@@ -16,9 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.shape.SVGPath;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 
 public class AjoutReviewController implements Initializable {
     @FXML
@@ -35,30 +32,23 @@ public class AjoutReviewController implements Initializable {
 
     @FXML
     private SVGPath star5;
-    
+
     @FXML
     private Button b1;
-    
+
     @FXML
     private TextArea tf_commentaire;
-    
-    private int user_id;
-    
-    private int entreprise_id;
-    
+
+    private int user_id = 1;
+
+    private int entreprise_id = 5;
+
     private final Color filledColor = Color.YELLOW;
     private final Color unfilledColor = Color.BLACK;
-        
-    
-    public AjoutReviewController(int user_id, int entreprise_id) {
-        this.user_id = user_id;
-        this.entreprise_id = entreprise_id;
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-      
+
     }
 
     @FXML
@@ -69,40 +59,45 @@ public class AjoutReviewController implements Initializable {
         for (SVGPath star : stars) {
             star.setFill(unfilledColor);
         }
-        
+
         int i = -1;
-        do{
+        do {
             i++;
             stars[i].setFill(filledColor);
-        }while(!selectedStar.equals(stars[i]));
-        
-        if(countStars()>0){
+        } while (!selectedStar.equals(stars[i]));
+
+        if (countStars() > 0) {
             b1.setDisable(false);
-        }else{
+        } else {
             b1.setDisable(true);
         }
     }
-    
-    private int countStars(){
+
+    private int countStars() {
         int result = 0;
         for (SVGPath star : new SVGPath[]{star1, star2, star3, star4, star5}) {
             if (star.getFill().equals(filledColor)) {
                 result++;
             }
         }
-        
+
         return result;
     }
-     
+
     @FXML
-    private void ajouterReview(ActionEvent event) throws IOException {
+    private void ajouterReview(ActionEvent event) {
         ServiceReview sr = new ServiceReview();
-       
-        String commentaire = tf_commentaire.getText();/*est utilisé pour convertir le texte en un entier (int).*/ 
+
+        String commentaire = tf_commentaire.getText();
         Review review = new Review(countStars(), user_id, commentaire, entreprise_id);
-        sr.ajouter(review);
-        JOptionPane.showMessageDialog(null, "Review ajoutée !");
-        
-        System.out.println(sr.afficher());
+
+        try {
+            sr.ajouter(review);
+            JOptionPane.showMessageDialog(null, "Review ajoutée !");
+
+            System.out.println(sr.afficher());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de la review !");
+        }
     }
 }

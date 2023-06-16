@@ -7,7 +7,8 @@ public class Review {
     private int id_user;
     private String commentaire;
     private int id_entreprise;
-
+    private String output;
+    
     public Review(int id_review, int nbr_etoile, int id_user, String commentaire, int id_entreprise) {
         this.id_review = id_review;
         this.nbr_etoile = nbr_etoile;
@@ -64,8 +65,16 @@ public class Review {
         this.id_entreprise = id_entreprise;
     }
 
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+    }
+    
     @Override
     public String toString() {
-        return "Review{" + "id_review=" + id_review + ", nbr_etoile=" + nbr_etoile + ", id_user=" + id_user + ", commentaire=" + commentaire + ", id_entreprise=" + id_entreprise + '}';
+        return output;
     }
 }
