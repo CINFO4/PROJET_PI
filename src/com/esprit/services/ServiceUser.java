@@ -193,7 +193,7 @@ public class ServiceUser {
                 pst.setInt(4, p.getNumero_telephone());
                 pst.setString(5, p.getMotdepasse());
                 pst.setString(6, p.getDescription());
-                pst.setString(7, p.getClass().toString());
+                pst.setString(7, p.getClass().getSimpleName());
                 pst.executeUpdate();
                 System.out.println("Admin modifiée !");
             } catch (SQLException ex) {

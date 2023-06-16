@@ -5,7 +5,6 @@
 package com.esprit.controller;
 
 import com.esprit.entities.Administrateur;
-import com.esprit.entities.Candidat;
 import com.esprit.services.ServiceUser;
 import java.net.URL;
 import java.util.Optional;
@@ -58,6 +57,7 @@ public class AdminController implements Initializable, Refresh {
         // TODO
         ServiceUser su = new ServiceUser();
         id.setCellValueFactory(new PropertyValueFactory<Administrateur, Integer>("id"));
+        id.setVisible(false);
         nom.setCellValueFactory(new PropertyValueFactory<Administrateur, String>("nom"));
         telephone.setCellValueFactory(new PropertyValueFactory<Administrateur, Integer>("numero_telephone"));
         prenom.setCellValueFactory(new PropertyValueFactory<Administrateur, String>("prenom"));
@@ -116,6 +116,7 @@ public class AdminController implements Initializable, Refresh {
 
             return cell;
         });
+
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Administrateur selectedUser = table.getSelectionModel().getSelectedItem();
@@ -153,7 +154,7 @@ public class AdminController implements Initializable, Refresh {
         try {
             lu.addAll(su.getalladmint());
         } catch (Exception b) {
-             b.printStackTrace();
+            b.printStackTrace();
         }
         table.setItems(lu);
     }
