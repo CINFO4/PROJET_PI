@@ -23,6 +23,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import javafx.scene.control.Alert;
 
 /**
  * FXML Controller class
@@ -179,7 +187,7 @@ public class QuestionCompetenceController implements Initializable {
          }
          
          if (prop3.size() >= 4) {
-         proposition p34 = prop1.get(3);
+         proposition p34 = prop3.get(3);
         rdQ34.setText(p34.getDescription());
          }
          
@@ -204,6 +212,136 @@ public class QuestionCompetenceController implements Initializable {
          proposition p44 = prop4.get(3);
         rdQ44.setText(p44.getDescription());
          }
+         
+         
+          btValider.setOnAction(event -> {
+        boolean isQ1Correct = isPropositionCorrect(prop1, Q1);
+        boolean isQ2Correct = isPropositionCorrect(prop2, Q2);
+        boolean isQ3Correct = isPropositionCorrect(prop3, Q3);
+        boolean isQ4Correct = isPropositionCorrect(prop4, Q4);
+
+        int score = 0;
+    String R1 = "Votre réponse n'est pas Correcte";
+   String R2 = "Votre réponse n'est pas Correcte";
+   String R3 = "Votre réponse n'est pas Correcte";
+   String R4 = "Votre réponse n'est pas Correcte";
+   
+    if (isQ1Correct) {
+        score += 25;
+        R1 = "Votre réponse est correcte";
+    }  else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Question 1");
+        alert.setContentText("Veuillez sélectionner une proposition pour la question 1.");
+        alert.showAndWait();
+        return; 
     }
+
+    if (isQ2Correct) {
+        score += 25;
+         R2 = "Votre réponse est correcte";
+    }else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Question 2");
+        alert.setContentText("Veuillez sélectionner une proposition pour la question 2.");
+        alert.showAndWait();
+        return; 
+    }
+    if (isQ3Correct) {
+        score += 25;
+         R3 = "Votre réponse est correcte";
+    }else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Question 3");
+        alert.setContentText("Veuillez sélectionner une proposition pour la question 3.");
+        alert.showAndWait();
+        return; 
+    }
+
+    if (isQ4Correct) {
+        score += 25;
+         R4 = "Votre réponse est correcte";
+    }else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Question 4");
+        alert.setContentText("Veuillez sélectionner une proposition pour la question 4.");
+        alert.showAndWait();
+        return; 
+    }
+        
+        
+         
+         try {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("resultat_quiz_"+ lbCompetence.getText()+".pdf"));
+        document.open();
+        
+       Paragraph Titre = new Paragraph ("RESULTAT DU QUIZ " + lbCompetence.getText().toUpperCase());
+       Titre.setAlignment(Element.ALIGN_CENTER);
+       
+        document.add(Titre);
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("Question 1 : " + lbQ1.getText()+ "  " + R1));
+        document.add(new Paragraph("La bonne réponse est : " + sp.BonnereponseByIDquestion(sq.GetidQuestionbynom(lbQ1.getText()))));
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("Question 2 : " + lbQ2.getText()+ "  " + R2));
+        document.add(new Paragraph("La bonne réponse est : " + sp.BonnereponseByIDquestion(sq.GetidQuestionbynom(lbQ2.getText()))));
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("Question 3 : " + lbQ3.getText()+ "  " + R3));
+        document.add(new Paragraph("La bonne réponse est : " + sp.BonnereponseByIDquestion(sq.GetidQuestionbynom(lbQ3.getText()))));
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("Question 4 : " + lbQ4.getText()+ "  " + R4));
+        document.add(new Paragraph("La bonne réponse est : " + sp.BonnereponseByIDquestion(sq.GetidQuestionbynom(lbQ4.getText()))));
+        document.add(new Paragraph("                             "));
+        document.add(new Paragraph("Votre Score est : " + score + "/100"));
+        document.close();
+
+        System.out.println("Le fichier PDF a été généré avec succès.");
+    } catch (DocumentException e) {
+        e.printStackTrace();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    rdQ11.setSelected(false);
+    rdQ12.setSelected(false);
+    rdQ13.setSelected(false);
+    rdQ14.setSelected(false);
+      rdQ21.setSelected(false);
+    rdQ22.setSelected(false);
+    rdQ23.setSelected(false);
+    rdQ24.setSelected(false);  
+    rdQ31.setSelected(false);
+    rdQ32.setSelected(false);
+    rdQ33.setSelected(false);
+    rdQ34.setSelected(false);
+    rdQ41.setSelected(false);
+    rdQ42.setSelected(false);
+    rdQ43.setSelected(false);
+    rdQ44.setSelected(false);
+    });
+    }
+    
+    private boolean isPropositionCorrect(List<proposition> propositions, ToggleGroup toggleGroup) {
+    RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+    int score = 0;
+    if (selectedRadioButton != null) {
+        String selectedProposition = selectedRadioButton.getText();
+        for (proposition prop : propositions) {
+            if (prop.getDescription().equals(selectedProposition) && prop.getEtat().equals("vrai")) {
+                return true;
+                            }
+        }
+    }
+    return false;
+       
+}
+
+    
+   
 
 }

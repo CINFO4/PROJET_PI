@@ -97,4 +97,24 @@ public class ServiceProposition {
                
         return list;
     }
+    
+    
+    public String BonnereponseByIDquestion(int id) {
+       String BonneReponse = "";
+        
+        String req = "SELECT * FROM proposition where id_question = ? and etat = ? ";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, id);
+            pst.setString(2, "vrai");
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+             BonneReponse = rs.getString("description");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+               
+        return BonneReponse;
+    }
 }

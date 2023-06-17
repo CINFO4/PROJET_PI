@@ -27,7 +27,7 @@ public class main {
         //p1.ajouter(new proposition("tunis","valid",1));
 //        System.out.println(p1.afficherQuestionView());
 //ServiceQuestion s = new ServiceQuestion();
-        System.out.println(p1.afficherByIDquestion(18));
+        System.out.println(p1.BonnereponseByIDquestion(38));
     }
     
 }
