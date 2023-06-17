@@ -25,10 +25,10 @@ public class ProfileController implements Initializable {
     private ComboBox<String> userNameComboBox;
 
     @FXML
-    private Label competenceLabel;
+    private ComboBox<String> competenceComboBox;
 
     @FXML
-    private Label niveauLabel;
+    private ComboBox<Profile.Niveau> niveauComboBox;
 
     private final ServiceProfile serviceProfile;
     private final ServiceCompetence serviceCompetence;
@@ -43,22 +43,11 @@ public class ProfileController implements Initializable {
         // Populate the user name combo box
         populateUserNameComboBox();
 
-        // Listen for changes in the selected user name
-        userNameComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                // Fetch competence names and niveau for the selected user name
-                List<String> competenceNames = serviceCompetence.getCompetenceNamesByUserName(newValue);
-                Profile.Niveau niveau = serviceCompetence.getNiveauByUserName(newValue);
+        // Set up the competence combo box
+        setupCompetenceComboBox();
 
-                // Update the displayed labels
-                competenceLabel.setText(String.join(", ", competenceNames));
-                niveauLabel.setText(niveau.toString());
-            } else {
-                // Clear the displayed labels
-                competenceLabel.setText("");
-                niveauLabel.setText("");
-            }
-        });
+        // Populate the niveau combo box
+        populateNiveauComboBox();
     }
 
     private void populateUserNameComboBox() {
@@ -81,17 +70,72 @@ public class ProfileController implements Initializable {
         }
     }
 
+    private void setupCompetenceComboBox() {
+        // Disable the competence combo box initially
+        competenceComboBox.setDisable(true);
+
+        // Listen for changes in the selected user name
+        userNameComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Fetch competence names from the database based on the selected user name
+                List<String> competenceNames = serviceCompetence.getCompetenceNamesByUserName(newValue);
+
+                if (competenceNames.isEmpty()) {
+                    competenceComboBox.setItems(FXCollections.emptyObservableList());
+                    competenceComboBox.setDisable(true);
+                } else {
+                    competenceComboBox.setItems(FXCollections.observableArrayList(competenceNames));
+                    competenceComboBox.setDisable(false);
+                }
+            } else {
+                // Clear the competence combo box if no user name is selected
+                competenceComboBox.getItems().clear();
+                competenceComboBox.setDisable(true);
+            }
+        });
+    }
+
+    private void populateNiveauComboBox() {
+        // Populate the niveau combo box
+        niveauComboBox.getItems().addAll(Profile.Niveau.values());
+    }
+
     @FXML
     private void addProfile() {
-        // Get the selected user name
+        // Get the selected values from the combo boxes
         String userName = userNameComboBox.getValue();
+        String competenceName = competenceComboBox.getValue();
+        Profile.Niveau niveau = niveauComboBox.getValue();
 
-        // Fetch the competence names and niveau for the selected user name
-        List<String> competenceNames = serviceCompetence.getCompetenceNamesByUserName(userName);
-        Profile.Niveau niveau = serviceCompetence.getNiveauByUserName(userName);
+        // Fetch the competence ID based on the selected competence name
+        int competenceId = serviceCompetence.getCompetenceIdByName(competenceName);
 
-        // Update the displayed labels
-        competenceLabel.setText(String.join(", ", competenceNames));
-        niveauLabel.setText(niveau.toString());
+        // Create a new Profile object with the selected values
+        Profile profile = new Profile();
+        profile.setId_user(getUserIdFromUserName(userName));
+        profile.setId_competence(competenceId);
+        profile.setNiveau(niveau);
+
+        // Call the service to add the profile
+        serviceProfile.ajouter(profile);
+    }
+
+    private int getUserIdFromUserName(String userName) {
+        try {
+            // Retrieve the user ID from the database based on the user name
+            Connection cnx = DataSource.getInstance().getCnx();
+            String req = "SELECT id_user FROM user WHERE nom = ?";
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, userName);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id_user");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return 0;
     }
 }
