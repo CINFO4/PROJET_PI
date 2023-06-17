@@ -10,8 +10,6 @@ import com.esprit.services.ServiceForum;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -79,7 +77,7 @@ public class ForumController {
                         try {
                             displayForumDetails(newValue);
                         } catch (SQLException ex) {
-                            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(ex.getMessage());
                         }
                         forumInfoBox.setVisible(true);
                     } else {
@@ -87,9 +85,7 @@ public class ForumController {
                     }
                 }
         );
-        
-            chercherTextField.textProperty().addListener((observable, oldValue, newValue) -> chercher());
-
+        chercherTextField.textProperty().addListener((observable, oldValue, newValue) -> chercher());
     }
 
     @FXML
@@ -301,7 +297,6 @@ public class ForumController {
         chercherTextField.setText("");
         loadForums();
     }
-
 
     private void chercher() {
         forumListView.getItems().clear();

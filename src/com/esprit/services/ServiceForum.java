@@ -168,7 +168,7 @@ public class ServiceForum implements IService<Forum> {
     }
 
     public String getUserNameById(int id_user) {
-        String query = "SELECT nom,prenom FROM user WHERE id = ?;";
+        String query = "SELECT nom,prenom FROM user WHERE id_user = ?;";
         try {
             PreparedStatement pst = cnx.prepareStatement(query);
             pst.setInt(1, id_user);

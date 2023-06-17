@@ -37,8 +37,8 @@ public class ServiceCommentaire implements IService<Commentaire> {
             pst.executeUpdate();
             System.out.println("Commentaire ajoutée !");
 
-            String senderEmail = "rafikpidev@gmail.com";
-            String senderPassword = "jcugmepbjploduae";
+            String senderEmail = "findjobreply@gmail.com";
+            String senderPassword = "vwzjqneictcidlgm";
 
             serviceForum = new ServiceForum();
             String recipientEmail = serviceForum.getUserEmailByForumId(C.getId_forum());
