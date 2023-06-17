@@ -102,7 +102,7 @@ public class ModifierEntrepriseController implements Initializable {
         taDescription.setText(entreprise.getDescription());
         tfSIteWeb.setText(entreprise.getSiteWeb());
         cbTailleEntreprise.setValue(entreprise.getTailleEntreprise());
-        cbSecteurActivite.setValue(sd.getDomainenameByid(entreprise.getId_domaine()));
+        cbSecteurActivite.setValue(sd.getNameDomaineById(entreprise.getId_domaine()));
        
         
     }

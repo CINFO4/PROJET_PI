@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  *
  * @author Anis
  */
-public abstract class User {
+public class User {
 
     private int id;
     private String nom;

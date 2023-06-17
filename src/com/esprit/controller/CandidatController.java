@@ -171,6 +171,7 @@ public class CandidatController implements Initializable, Refresh {
                 }
             }
         });
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> Search());
     }
 
     @FXML
@@ -239,8 +240,8 @@ public class CandidatController implements Initializable, Refresh {
         table.setItems(lu);
     }
 
-    @FXML
-    public void Search(ActionEvent e) {
+    
+    public void Search() {
         ServiceUser su = new ServiceUser();
         nom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("nom"));
 

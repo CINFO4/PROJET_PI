@@ -8,11 +8,10 @@ package com.esprit.entities;
  *
  * @author Anis
  */
+public class Domaine {
 
-    
-    public class Domaine {
     private int id_domaine;
-    private String  nom_domaine;
+    private String nom_domaine;
 
     public Domaine(String nom_domaine) {
         this.nom_domaine = nom_domaine;
@@ -41,10 +40,7 @@ package com.esprit.entities;
 
     @Override
     public String toString() {
-        return nom_domaine ;
-    }
-    
+        return nom_domaine;
     }
 
-    
-
+}

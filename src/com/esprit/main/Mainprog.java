@@ -34,16 +34,7 @@ public class Mainprog {
 //        ServiceCompetence sc = new ServiceCompetence();
 //        sc.ajouter(new Competence("Reseau", "Définit les projets d'évolution du réseau"));
         ServiceUser sv = new ServiceUser();
-        //sv.ajouter(new Candidat("hazem", "landolsi", "hazem@gmail.com", 25412542, "admin", "azert", Diplome.Bacclauréat, "git", Experience.Confirme));
-        // System.out.println(sv.getallcandidat());
-        // sv.ajouter(new Entreprise("anis", "othman", "anis@ip-label.com", 25623767, "azerty", "it entreprise", "sofrecom", Taille.PLUS_DE_50_EMPLOYES, "sofrecom.com", "linkdin.fr",1));
-        //sv.ajouter(new Entreprise("khh", "klhh", "jghjig", 54654, "jgh", "ljkhg", "jhjh", Taille.DE_1_A_10_EMPLOYES, "khoh", "lkhh", 1));
-        //sv.ajouter(new Candidat("helmi", "amdouni", "hmd@ip.fr", 45216584, "admin", "un jeune etudiant", Diplome.Ingénierie, "helmi.github", Experience.Confirme));
-        //System.out.println(sv.login("anis@ip-label.com", "azerty"));
-        //System.out.println(CodeGenerator.generateCode());
-
-        // code api : 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
-        //sv.modifiermotdepasse("goalooot", "2562")
+        
         //try {
             //sv.ajouter(new Candidat("isam", "laabidi", "lamine@gmail.com", 25623768, "Motface@2026?", "admin", Diplome.Autre, "git", Experience.Confirme));
             //System.out.println(sv.afficherCandidat());

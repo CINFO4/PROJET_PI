@@ -161,6 +161,7 @@ public class EntrepriseController implements Initializable, Refresh {
             }   
             }
 });
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> Search());
     }    
     @FXML
     public void AjouterEntreprise(ActionEvent event) throws IOException {
@@ -247,7 +248,7 @@ public class EntrepriseController implements Initializable, Refresh {
         table.setItems(lu);
     }
     
-    public void Search(ActionEvent a){
+    public void Search(){
         id.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,Integer>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("nom"));
         nomentreprise.setCellValueFactory(new PropertyValueFactory<Entreprisedomaine,String>("NomEntreprise"));

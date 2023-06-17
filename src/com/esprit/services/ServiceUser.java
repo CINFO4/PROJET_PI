@@ -508,7 +508,7 @@ public class ServiceUser {
     }
 
     public List<Candidat> searchcandidat(String login) {
-        String req = "select * from user where (nom=? or prenom=?);";
+        String req = "select * from user where nom LIKE CONCAT('%', ?, '%') OR prenom LIKE CONCAT('%', ?, '%');";
         List<Candidat> list = new ArrayList<>();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -548,7 +548,7 @@ public class ServiceUser {
     }
 
     public List<Entreprisedomaine> searchentreprise(String login) throws MailException {
-        String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine where NomEntreprise=?;";
+        String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine where NomEntreprise LIKE CONCAT('%', ?, '%');";
         List<Entreprisedomaine> list = new ArrayList<>();
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -610,5 +610,21 @@ public class ServiceUser {
             return "not found";
         }
         
+    }
+    
+    public User getUserByID(int id) throws MailException {
+        User u = null;
+        String req = "SELECT * FROM user Where id = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, id);
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                u=new User(res.getInt("id"), res.getString("nom"), res.getString("prenom"), res.getString("mail"), res.getInt("numero_telephone"),res.getString("motdepasse") , res.getString("description"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return u;
     }
 }
