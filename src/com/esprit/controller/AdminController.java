@@ -153,7 +153,7 @@ public class AdminController implements Initializable, Refresh {
         stage.setScene(new Scene(root));
         stage.show();
 
-        AjoutCandidatController controller = loader.getController();
+        AjoutAdminController controller = loader.getController();
         controller.setRefreshEvent(this);
         controller.setPrimarystage(stage);
     }
