@@ -15,12 +15,15 @@ public class MainGui extends Application {
     
     @Override 
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../reclamation/AjoutReclamation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../reclamation/AdminReclamation.fxml"));
+        
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../review/style.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Ajouter Review");
+        primaryStage.setTitle(loader.getController().getClass().getSimpleName());
         primaryStage.show();
     }
 

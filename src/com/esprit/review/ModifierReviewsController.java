@@ -1,7 +1,9 @@
 package com.esprit.review;
 
 import com.esprit.entities.Review;
+import com.esprit.services.ServiceOffre;
 import com.esprit.services.ServiceReview;
+import com.esprit.services.ServiceUser;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -11,13 +13,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 public class ModifierReviewsController implements Initializable {
@@ -47,22 +54,33 @@ public class ModifierReviewsController implements Initializable {
 
     @FXML
     private TextArea tf_commentaire;
+    
+    private ServiceReview sr;
+    
+    private ServiceUser su;
+    
+    private ServiceOffre so;
 
     private final Color filledColor = Color.YELLOW;
     private final Color unfilledColor = Color.BLACK;
 
+    public ModifierReviewsController() {
+        sr = new ServiceReview();
+        su = new ServiceUser();
+        so = new ServiceOffre();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fillViewOptions();
     }
 
     private void fillViewOptions() {
-        ServiceReview sr = new ServiceReview();
         try {
             List<Review> reviews = sr.afficher();
 
             for (Review rev : reviews) {
-                String output = sr.getNomEntreprise(rev.getId_entreprise()) + "      " + rev.getNbr_etoile() + "/5";
+                String output = su.getNomEntreprise(rev.getId_entreprise()) + "      " + rev.getNbr_etoile() + "/5";
 
                 rev.setOutput(output);
             }
@@ -128,8 +146,6 @@ public class ModifierReviewsController implements Initializable {
 
     @FXML
     private void modifier(ActionEvent event) {
-        ServiceReview sr = new ServiceReview();
-
         Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
 
         String commentaire = tf_commentaire.getText();
@@ -140,8 +156,6 @@ public class ModifierReviewsController implements Initializable {
         try {
             sr.modifier(selectedOption);
             JOptionPane.showMessageDialog(null, "Review modifiée !");
-
-            System.out.println(sr.afficher());
 
             lv1.getSelectionModel().setSelectionMode(null);
             fillViewOptions();
@@ -165,16 +179,12 @@ public class ModifierReviewsController implements Initializable {
 
     @FXML
     private void supprimer(ActionEvent event) {
-        ServiceReview sr = new ServiceReview();
-
         Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
         
         try {
             sr.supprimer(selectedOption);
 
             JOptionPane.showMessageDialog(null, "Review supprimée !");
-
-            System.out.println(sr.afficher());
 
             lv1.getSelectionModel().setSelectionMode(null);
             fillViewOptions();
@@ -194,5 +204,19 @@ public class ModifierReviewsController implements Initializable {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erreur lors de la suppression de la review !");
         }
+    }
+    
+    @FXML
+    private void ajoutReviews(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+
+        stage.setTitle(loader.getController().getClass().getSimpleName());
+
+        stage.show();
     }
 }

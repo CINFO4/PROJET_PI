@@ -1,9 +1,11 @@
 package com.esprit.reclamation;
 
+import com.esprit.entities.Email;
 import com.esprit.entities.EtatReclamation;
 import com.esprit.entities.Reclamation;
-import com.esprit.services.Email;
+import com.esprit.services.ServiceOffre;
 import com.esprit.services.ServiceReclamation;
+import com.esprit.services.ServiceUser;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,9 +47,19 @@ public class AjoutReclamationController implements Initializable {
 
     @FXML
     private Button b1;
+    
+    private ServiceReclamation sr;
+    
+    private ServiceUser su;
+    
+    private ServiceOffre so;
 
-    private int id_user;
-
+    public AjoutReclamationController() {
+        sr = new ServiceReclamation();
+        su = new ServiceUser();
+        so = new ServiceOffre();
+    }
+    
     @FXML
     void selectViewOption(MouseEvent event) {
         Reclamation selectedOption = lv1.getSelectionModel().getSelectedItem();
@@ -70,8 +82,6 @@ public class AjoutReclamationController implements Initializable {
 
     @FXML
     private void ajouterReclamation(ActionEvent event) throws IOException {
-        ServiceReclamation sr = new ServiceReclamation();
-
         String message = tf_reclamation.getText();
         Reclamation reclamation = new Reclamation(0, message, 1, EtatReclamation.En_cours, 5);
 
@@ -81,9 +91,13 @@ public class AjoutReclamationController implements Initializable {
 
             List<Reclamation> reclamations = sr.afficher();
             JOptionPane.showMessageDialog(null, "Envoie du mail en cours");
-            int id = reclamations.get(reclamations.size() - 1).getId_reclamation();
+            Reclamation rec = reclamations.get(reclamations.size() - 1);
+            
+            int id = rec.getId_reclamation();
+            String mail = su.getUserMail(rec.getId_user());
 
-            Email.sendMail("molka953@gmail.com", "Reclamation " + id, "Nous avons bien reçu votre réclamation REF: " + id);
+
+            Email.sendMail(mail, "Cher(e) " + id, Email.envoiReclamationMessage());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erreur lors de la validation!");
         } catch (MessagingException ex) {
@@ -122,12 +136,11 @@ public class AjoutReclamationController implements Initializable {
     }
 
     private void fillViewOptions() {
-        ServiceReclamation sr = new ServiceReclamation();
         try {
             List<Reclamation> reclamations = sr.afficher();
 
             for (Reclamation rec : reclamations) {
-                String output = sr.getTitreOffre(rec.getId_offre()) + "      " + rec.getEtat();
+                String output = so.getTitreOffre(rec.getId_offre()) + "      " + rec.getEtat();
 
                 rec.setOutput(output);
             }

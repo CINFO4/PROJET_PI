@@ -24,5 +24,6 @@
             <SVGPath fx:id="star4" content="M20 36 L26 36 L30 42 L34 36 L40 36 L34 30 L36 24 L30 28 L24 24 L26 30 Z" onMouseClicked="#selectStar" />
             <SVGPath fx:id="star5" content="M20 36 L26 36 L30 42 L34 36 L40 36 L34 30 L36 24 L30 28 L24 24 L26 30 Z" onMouseClicked="#selectStar" />
         </HBox>
+      <Button layoutX="457.0" layoutY="23.0" mnemonicParsing="false" onAction="#mesReviews" styleClass="fx-beautiful-button" text="Mes Reviews" />
     </children>
 </AnchorPane>

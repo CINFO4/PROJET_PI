@@ -1,9 +1,11 @@
 package com.esprit.reclamation;
 
+import com.esprit.entities.Email;
 import com.esprit.entities.EtatReclamation;
 import com.esprit.entities.Reclamation;
-import com.esprit.services.Email;
+import com.esprit.services.ServiceOffre;
 import com.esprit.services.ServiceReclamation;
+import com.esprit.services.ServiceUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,10 +38,21 @@ public class AdminReclamationController implements Initializable {
     private TextArea tf_commentaire;
 
     private ServiceReclamation sr;
+    
+    private ServiceUser su;
+    
+    private ServiceOffre so;
+
+    public AdminReclamationController() {
+        sr = new ServiceReclamation();
+        su = new ServiceUser();
+        so = new ServiceOffre();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sr = new ServiceReclamation();
+        su = new ServiceUser();
         afficherReclamations();
     }
 
@@ -48,8 +61,8 @@ public class AdminReclamationController implements Initializable {
             List<Reclamation> reclamations = sr.getReclamationEnCours();
 
             for (Reclamation rec : reclamations) {
-                String output = sr.getTitreOffre(rec.getId_offre()) + " " +
-                        sr.getNomUser(rec.getId_user());
+                String output = so.getTitreOffre(rec.getId_offre()) + " " +
+                        su.getNomUser(rec.getId_user());
 
                 rec.setOutput(output);
             }
@@ -86,7 +99,9 @@ public class AdminReclamationController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Envoie du mail en cours ");
 
                 int id = selectedReclamation.getId_reclamation();
-                Email.sendMail("molka953@gmail.com", "Reclamation " + id, "Votre reclamation REF : " + id + " à été validé");
+                String mail = su.getUserMail(selectedReclamation.getId_user());
+
+                Email.sendMail(mail, "Reclamation [Ref: " + id+"]", Email.envoiValidMessage(su.getNomUser(selectedReclamation.getId_user()), id));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la validation! ");
 
@@ -113,8 +128,10 @@ public class AdminReclamationController implements Initializable {
 
                 JOptionPane.showMessageDialog(null, "Envoie du mail en cours ");
                 int id = selectedReclamation.getId_reclamation();
+                
+                String mail = su.getUserMail(selectedReclamation.getId_user());
 
-                Email.sendMail("molka953@gmail.com", "Reclamation " + id, "Votre reclamation REF : " + id + " à été rejeté");
+                Email.sendMail(mail, "Reclamation [Ref: " + id+"]", Email.envoiRejectMessage(su.getNomUser(selectedReclamation.getId_user()), id));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la validation! ");
 

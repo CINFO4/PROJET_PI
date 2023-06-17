@@ -2,6 +2,7 @@ package com.esprit.review;
 
 import com.esprit.entities.Review;
 import com.esprit.services.ServiceReview;
+import java.io.IOException;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -15,7 +16,12 @@ import javafx.scene.shape.SVGPath;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class AjoutReviewController implements Initializable {
     @FXML
@@ -94,10 +100,23 @@ public class AjoutReviewController implements Initializable {
         try {
             sr.ajouter(review);
             JOptionPane.showMessageDialog(null, "Review ajoutée !");
-
-            System.out.println(sr.afficher());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de la review !");
         }
+    }
+    
+    @FXML
+    private void mesReviews(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/ModifierReviews.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        stage.setTitle(loader.getController().getClass().getSimpleName());
+
+                
+        stage.setScene(scene);
+        stage.show();
     }
 }

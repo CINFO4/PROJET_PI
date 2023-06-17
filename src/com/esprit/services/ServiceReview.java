@@ -54,19 +54,4 @@ public class ServiceReview {
 
         return list;
     }
-
-    public String getNomEntreprise(int id_entreprise) throws SQLException {
-        String titre = null;
-
-        String req = "SELECT NomEntreprise FROM user WHERE id = ?";
-        PreparedStatement pst = cnx.prepareStatement(req);
-        pst.setInt(1, id_entreprise);
-
-        ResultSet rs = pst.executeQuery();
-        while (rs.next()) {
-            titre = rs.getString("NomEntreprise");
-        }
-
-        return titre;
-    }
 }

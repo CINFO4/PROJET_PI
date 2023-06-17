@@ -12,12 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceReclamation {
-
-    private final Connection cnx;
-
-    public ServiceReclamation() {
-        cnx = DataSource.getInstance().getCnx();
-    }
+    
+    private final Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouter(Reclamation reclamation) throws SQLException {
         String req = "INSERT INTO reclamation(reclamation, id_user, etat, id_offre) VALUES (?, ?, ?, ?);";
@@ -86,38 +82,5 @@ public class ServiceReclamation {
         }
 
         return list;
-    }
-
-    public String getTitreOffre(int id_offre) throws SQLException {
-        String titre = null;
-
-        String req = "SELECT titre FROM offre WHERE id_offre = ?";
-        PreparedStatement pst = cnx.prepareStatement(req);
-        pst.setInt(1, id_offre);
-
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()) {
-            titre = rs.getString("titre");
-        }
-
-        return titre;
-    }
-
-    public String getNomUser(int id_user) throws SQLException {
-        String titre = null;
-
-        String req = "SELECT prenom, nom FROM user WHERE id = ?";
-        PreparedStatement pst = cnx.prepareStatement(req);
-        pst.setInt(1, id_user);
-
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()) {
-            String prenom = rs.getString("prenom");
-            String nom = rs.getString("nom");
-
-            titre = prenom + " " + nom;
-        }
-
-        return titre;
     }
 }
