@@ -83,8 +83,11 @@ private TextField txtFilePath;
                 txtTitre.setText(selectedDocument.getTitre_document());
                 choiceType.getSelectionModel().select(selectedDocument.getType());
                 txtLien.setText(selectedDocument.getLien());
+                
             }
         });
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> search());
+
     }
 
   @FXML
@@ -182,8 +185,8 @@ void ajouter(ActionEvent event) {
     }
 
     
-@FXML
-void search(ActionEvent event) {
+
+void search() {
     String searchTerm = txtSearch.getText();
 
     ObservableList<Document> searchResults = FXCollections.observableArrayList();
@@ -192,6 +195,7 @@ void search(ActionEvent event) {
         if (document.getTitre_document().toLowerCase().contains(searchTerm.toLowerCase())) {
             searchResults.add(document);
         }
+        
     }
 
     tblDocuments.setItems(searchResults);

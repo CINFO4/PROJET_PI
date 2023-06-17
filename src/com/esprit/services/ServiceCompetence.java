@@ -1,6 +1,7 @@
 package com.esprit.services;
 
 import com.esprit.entities.Competence;
+import com.esprit.entities.Profile;
 import com.esprit.utils.DataSource;
 
 import java.sql.Connection;
@@ -110,4 +111,27 @@ public class ServiceCompetence {
 
         return competenceNames;
     }
+    public Profile.Niveau getNiveauByUserName(String userName) {
+    Profile.Niveau niveau = null;
+    try {
+        Connection cnx = DataSource.getInstance().getCnx();
+        String req = "SELECT DISTINCT niveau FROM profiles JOIN competences ON profiles.id_competence = competences.id_c JOIN user ON user.id_user = profiles.id_user WHERE user.nom =?";
+        PreparedStatement pst = cnx.prepareStatement(req);
+        pst.setString(1, userName);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            String niveauString = rs.getString("niveau");
+            niveau = Profile.Niveau.valueOf(niveauString);
+        }
+    } catch (SQLException ex) {
+        // Handle or log the exception appropriately
+        System.out.println(ex.getMessage());
+    }
+    return niveau;
 }
+
+
+
+    }
+
