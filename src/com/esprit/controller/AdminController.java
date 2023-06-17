@@ -6,11 +6,13 @@ package com.esprit.controller;
 
 import com.esprit.entities.Administrateur;
 import com.esprit.services.ServiceUser;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -139,6 +141,21 @@ public class AdminController implements Initializable, Refresh {
                 }
             }
         });
+    }
+    
+    @FXML
+    public void AjouterAdmin(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutAdmin.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        AjoutCandidatController controller = loader.getController();
+        controller.setRefreshEvent(this);
+        controller.setPrimarystage(stage);
     }
 
     public void onRefresh() {
