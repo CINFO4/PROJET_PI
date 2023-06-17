@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -229,7 +232,7 @@ public class QuestionCompetenceController implements Initializable {
     if (isQ1Correct) {
         score += 25;
         R1 = "Votre réponse est correcte";
-    }  else {
+    }  if (Q1.getSelectedToggle() == null) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erreur");
         alert.setHeaderText("Question 1");
@@ -241,7 +244,7 @@ public class QuestionCompetenceController implements Initializable {
     if (isQ2Correct) {
         score += 25;
          R2 = "Votre réponse est correcte";
-    }else {
+    }if (Q2.getSelectedToggle() == null) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erreur");
         alert.setHeaderText("Question 2");
@@ -252,7 +255,7 @@ public class QuestionCompetenceController implements Initializable {
     if (isQ3Correct) {
         score += 25;
          R3 = "Votre réponse est correcte";
-    }else {
+    }if (Q3.getSelectedToggle() == null) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erreur");
         alert.setHeaderText("Question 3");
@@ -264,7 +267,7 @@ public class QuestionCompetenceController implements Initializable {
     if (isQ4Correct) {
         score += 25;
          R4 = "Votre réponse est correcte";
-    }else {
+    }if (Q4.getSelectedToggle() == null) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erreur");
         alert.setHeaderText("Question 4");
@@ -279,7 +282,7 @@ public class QuestionCompetenceController implements Initializable {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream("resultat_quiz_"+ lbCompetence.getText()+".pdf"));
         document.open();
-        
+       
        Paragraph Titre = new Paragraph ("RESULTAT DU QUIZ " + lbCompetence.getText().toUpperCase());
        Titre.setAlignment(Element.ALIGN_CENTER);
        
@@ -307,6 +310,10 @@ public class QuestionCompetenceController implements Initializable {
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
+         String senderEmail = "kacemtaieb@gmail.com";
+   String senderPassword = "alqtmoozbqpbasvy";
+String recipientEmail = "kacem.taieb@esprit.tn";
+sendPDFByEmail("resultat_quiz_"+ lbCompetence.getText()+".pdf",senderEmail,senderPassword,recipientEmail);
     rdQ11.setSelected(false);
     rdQ12.setSelected(false);
     rdQ13.setSelected(false);
@@ -341,7 +348,57 @@ public class QuestionCompetenceController implements Initializable {
        
 }
 
+  private void sendPDFByEmail(String filePath, String senderEmail, String senderPassword, String recipientEmail) {
+    String host = "smtp.gmail.com";
+    int port = 587;
+
+   
+    Properties props = new Properties();
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.host", host);
+    props.put("mail.smtp.port", port);
+
     
+    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(senderEmail, senderPassword);
+        }
+    });
+
+    try {
+        
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(senderEmail));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+        message.setSubject("Resultat QUIZ");
+        
+       
+        MimeBodyPart attachmentPart = new MimeBodyPart();
+        attachmentPart.attachFile(filePath);
+
+        
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText("Veuillez trouver ci-joint le document PDF.");
+
+        
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+        multipart.addBodyPart(attachmentPart);
+
+        message.setContent(multipart);
+
+        
+        Transport.send(message);
+
+        System.out.println("Le document PDF a été envoyé par e-mail avec succès.");
+    } catch (MessagingException e) {
+        e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+  
    
 
 }
