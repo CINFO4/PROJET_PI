@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1395.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.InterfaceOffreEntrepriseController">
+<AnchorPane id="AnchorPane" prefHeight="619.0" prefWidth="1388.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.esprit.gui.InterfaceOffreAdminController">
     <children>
       <Pane layoutX="23.0" layoutY="145.0" prefHeight="432.0" prefWidth="440.0" style="-fx-background-color: #c5c5c5;">
          <children>
@@ -52,7 +52,7 @@
             <ComboBox fx:id="ChoiseBoxDomaine" layoutX="193.0" layoutY="259.0" prefWidth="150.0" promptText="Domaine" />
          </children>
       </Pane>
-      <TableView fx:id="tableOffre" editable="true" layoutX="476.0" layoutY="143.0" prefHeight="432.0" prefWidth="899.0">
+      <TableView fx:id="tableOffre" editable="true" layoutX="472.0" layoutY="143.0" prefHeight="432.0" prefWidth="899.0">
         <columns>
           <TableColumn fx:id="NomEntCol" prefWidth="116.0" style="-fx-alignment: center;" text="Nom Etreprise" />
           <TableColumn fx:id="titreCol" prefWidth="102.0" style="-fx-alignment: center;" text="Titre" />
@@ -64,12 +64,12 @@
         </columns>
       </TableView>
       <ComboBox fx:id="ComboChercher" layoutX="1034.0" layoutY="42.0" onAction="#changeRecherche" prefHeight="31.0" prefWidth="220.0" promptText="Filtrer Par Domaine" />
-      <Label layoutX="81.0" layoutY="28.0" prefHeight="55.0" prefWidth="513.0" text="Gerers les offres" textFill="#e02866">
+      <Label layoutX="81.0" layoutY="28.0" prefHeight="55.0" prefWidth="513.0" text="Gerers les offres" textFill="#3939cc">
          <font>
-            <Font name="Elephant" size="46.0" />
+            <Font name="Felix Titling" size="46.0" />
          </font>
       </Label>
       <Separator layoutX="74.0" layoutY="88.0" prefHeight="38.0" prefWidth="1209.0" />
-      <FontAwesomeIconView fill="#e02866" glyphName="SEARCH" layoutX="987.0" layoutY="68.0" size="30" />
+      <FontAwesomeIconView fill="#3939cc" glyphName="SEARCH" layoutX="987.0" layoutY="68.0" size="30" />
    </children>
 </AnchorPane>

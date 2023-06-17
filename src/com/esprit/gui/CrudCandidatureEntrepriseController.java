@@ -2,44 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.esprit.controller;
+package com.esprit.gui;
 
 import com.esprit.entities.Candidature;
-import com.esprit.entities.Domaine;
 import com.esprit.entities.EtatCandidature;
 import com.esprit.entities.User;
 import com.esprit.services.ServiceCandidature;
-import com.esprit.services.ServiceCandidature.CandidatureDetails;
 import com.esprit.services.ServiceMail;
-import com.esprit.services.ServiceOffre.OffreView;
-import java.net.URL;
 import com.esprit.services.ServiceUser;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import static javafx.scene.input.KeyCode.S;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import javafx.util.converter.DefaultStringConverter;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
@@ -48,27 +36,28 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class CrudCandidatureController implements Initializable {
+public class CrudCandidatureEntrepriseController implements Initializable {
 
+   @FXML
+    private TableView<ServiceCandidature.CandidatureDetails> tableCandidature;
     @FXML
-    private TableView<CandidatureDetails> tableCandidature;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String> dateCol;
     @FXML
-    private TableColumn<CandidatureDetails, String> dateCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String> nomCol;
     @FXML
-    private TableColumn<CandidatureDetails, String> nomCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String> prenomCol;
     @FXML
-    private TableColumn<CandidatureDetails, String> prenomCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String> entrepriseCol;
     @FXML
-    private TableColumn<CandidatureDetails, String> entrepriseCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String> posteCol;
     @FXML
-    private TableColumn<CandidatureDetails, String> posteCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, String>domaineCol;
     @FXML
-    private TableColumn<CandidatureDetails, String>domaineCol;
-    @FXML
-    private TableColumn<CandidatureDetails, EtatCandidature> etatCol;
+    private TableColumn<ServiceCandidature.CandidatureDetails, EtatCandidature> etatCol;
     ServiceCandidature sc = new ServiceCandidature();
     @FXML
     private TableColumn gererCandCol;
+    private int idEntreprise = 2;
     /**
      * Initializes the controller class.
      */
@@ -83,7 +72,7 @@ public class CrudCandidatureController implements Initializable {
     
     
     public void refreshTable(){
-        ObservableList<CandidatureDetails> listCandidature = (ObservableList<CandidatureDetails>) FXCollections.observableArrayList(sc.candidatureDetails());
+        ObservableList<ServiceCandidature.CandidatureDetails> listCandidature = (ObservableList<ServiceCandidature.CandidatureDetails>) FXCollections.observableArrayList(sc.candidatureDetailsParEntreprise(idEntreprise));
         
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date_condidature"));
         nomCol.setCellValueFactory(new PropertyValueFactory<>("nom_user"));
@@ -93,8 +82,8 @@ public class CrudCandidatureController implements Initializable {
         domaineCol.setCellValueFactory(new PropertyValueFactory<>("nom_domaine"));
         etatCol.setCellValueFactory(new PropertyValueFactory<>("etat"));
 
-        Callback<TableColumn<CandidatureDetails,String>,TableCell<CandidatureDetails,String>> cellFactory =(param) -> {
-            final TableCell<CandidatureDetails,String> cell = new TableCell<CandidatureDetails,String>(){
+        Callback<TableColumn<ServiceCandidature.CandidatureDetails,String>,TableCell<ServiceCandidature.CandidatureDetails,String>> cellFactory =(param) -> {
+            final TableCell<ServiceCandidature.CandidatureDetails,String> cell = new TableCell<ServiceCandidature.CandidatureDetails,String>(){
                 @Override
                 public void updateItem(String item,boolean empty){
                     super.updateItem(item, empty);
@@ -132,17 +121,17 @@ public class CrudCandidatureController implements Initializable {
                         
                         
                         deleteIcon.setOnMouseClicked((MouseEvent event) ->{
-                        CandidatureDetails cand = getTableView().getItems().get(getIndex());
+                        ServiceCandidature.CandidatureDetails cand = getTableView().getItems().get(getIndex());
                             supprimerCandidature(cand);
                         
                         });
                         acceptBtn.setOnAction((event) -> {
-                            CandidatureDetails cand = getTableView().getItems().get(getIndex());
+                            ServiceCandidature.CandidatureDetails cand = getTableView().getItems().get(getIndex());
                             accpeter(cand);
                         });
                         
                         refuserBtn.setOnAction((event) -> {
-                            CandidatureDetails cand = getTableView().getItems().get(getIndex());
+                            ServiceCandidature.CandidatureDetails cand = getTableView().getItems().get(getIndex());
                             refuser(cand);
                         });
                        
@@ -168,7 +157,7 @@ public class CrudCandidatureController implements Initializable {
 
 
     
-private void supprimerCandidature(CandidatureDetails cand) {
+private void supprimerCandidature(ServiceCandidature.CandidatureDetails cand) {
         int id_user = cand.getId_user();
         int id_can = cand.getId_candidature();
         int id_offre = cand.getId_offre();
@@ -186,7 +175,7 @@ private void supprimerCandidature(CandidatureDetails cand) {
         
     }
 
-private void accpeter(CandidatureDetails cand) {
+private void accpeter(ServiceCandidature.CandidatureDetails cand) {
 
         int id_user = cand.getId_user();
         int id_can = cand.getId_candidature();
@@ -220,7 +209,7 @@ private void accpeter(CandidatureDetails cand) {
         
     }
 
-private void refuser(CandidatureDetails cand) {
+private void refuser(ServiceCandidature.CandidatureDetails cand) {
         int id_user = cand.getId_user();
         int id_can = cand.getId_candidature();
         int id_offre = cand.getId_offre();

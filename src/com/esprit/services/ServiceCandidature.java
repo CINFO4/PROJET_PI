@@ -241,6 +241,46 @@ public class ServiceCandidature implements IServices<Candidature>{
         return list;
     }
     
+    
+    
+    
+    
+    public List<CandidatureDetails> candidatureDetailsParEntreprise(int ide) {
+        List<CandidatureDetails> list = new ArrayList<>();
+        try {  
+//            String req ="SELECT c.id_candidature ,c.date_candidature,c.etat,c.id_user ,(SELECT nom from user u WHERE u.id = c.id_user) as nom,(SELECT prenom from user u WHERE u.id = c.id_user) as prenom ,c.id_offre,(SELECT titre FROM offre o WHERE o.id_offre =c.id_offre ) AS titre,(SELECT nom from user where id = (SELECT id_entreprise from offre WHERE id_offre = c.id_offre)) as NomEntreprise,(SELECT nom_domaine from domaine d where d.id_domaine = (SELECT id_domaine from offre WHERE id_offre = c.id_offre)) AS nom_domaine from candidature c where c.id_user = ?;";
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, ide);
+            ResultSet res = pst.executeQuery();
+            
+            while (res.next()) {
+                list.add(new CandidatureDetails(res.getInt("id_candidature"), Date.valueOf(res.getString("date_candidature")), EtatCandidature.valueOf(res.getString("etat")),res.getInt("id_user"), res.getString("nom"), res.getString("prenom"), res.getInt("id_offre"), res.getString("titre"), res.getString("NomEntreprise"),res.getString("nom_domaine")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return list;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public boolean checkCandidature(int idu,int ido){
         Candidature can =null ;
         try {  

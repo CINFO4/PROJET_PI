@@ -36,7 +36,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -48,7 +47,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class InterfaceOffreEntrepriseController implements Initializable {
+public class InterfaceOffreAdminController implements Initializable {
     @FXML
     private TextField txtTitre;
     @FXML
@@ -130,9 +129,9 @@ public class InterfaceOffreEntrepriseController implements Initializable {
  
     public void table(){
         if(domaineRechercher.equals("") || domaineRechercher.equals("All")){
-        listOffres  = observableArrayList(sf.afficherOffresByEntreprise(idEntreprise));
+        listOffres  = observableArrayList(sf.afficherOffres());
         }else{
-            listOffres = observableArrayList(sf.afficherOffresByEntreprisefiltree(idEntreprise,domaineRechercher));
+            listOffres = observableArrayList(sf.afficherOffresByDomaine(domaineRechercher));
          }
 
         NomEntCol.setCellValueFactory(new PropertyValueFactory<ServiceOffre.OffreView,String>("nomEntreprise"));
@@ -202,7 +201,7 @@ public class InterfaceOffreEntrepriseController implements Initializable {
                                 uoc.setDatePickerPub(Date.valueOf(offre.getDate_pub().toString()));
                                 uoc.setDatePickerExp(Date.valueOf(offre.getDate_Exp().toString()));
                                 
-                                uoc.setOffreEntrController(InterfaceOffreEntrepriseController.this);
+                                uoc.setInterfaceOffreAdminController(InterfaceOffreAdminController.this);
                                 
                                 uoc.setStage(stage);
                             } catch (IOException ex) {
@@ -293,9 +292,8 @@ public class InterfaceOffreEntrepriseController implements Initializable {
         this.idEntreprise = idEntreprise;
     }
 
-   
-    
 
-    
    
+    
+    
 }

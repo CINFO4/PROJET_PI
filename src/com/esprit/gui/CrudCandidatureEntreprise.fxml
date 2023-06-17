@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="655.0" prefWidth="1327.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controller.CrudCandidatureController">
-   <children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.gui.CrudCandidatureEntrepriseController">
+    <children>
       <TableView fx:id="tableCandidature" layoutX="28.0" layoutY="110.0" prefHeight="518.0" prefWidth="1271.0" style="-fx-alignment: center;">
         <columns>
           <TableColumn fx:id="dateCol" prefWidth="116.0" style="-fx-alignment: center;" text="Date" />

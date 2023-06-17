@@ -234,6 +234,46 @@ public class ServiceOffre implements IServices<Offre>{
 
     }
     
+    public List<OffreView> afficherOffresByEntreprise(int idE) {
+        List<OffreView> list = new ArrayList<>();
+        String req ="SELECT f.id_offre ,f.titre,f.description,f.date_offre,f.date_expiration,d.id_domaine,d.nom_domaine,u.id,u.nom FROM domaine d join offre f join user u on d.id_domaine = f.id_domaine and f.id_entreprise = u.id Where f.id_entreprise = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1,idE);
+            ResultSet res = pst.executeQuery();
+            
+            while(res.next()){
+                list.add(new OffreView(res.getInt("id_offre"),res.getInt("id"),res.getString("nom"),res.getString("titre") ,res.getString("description"),res.getInt("id_domaine"), res.getString("nom_domaine"), Date.valueOf(res.getString("date_offre")), Date.valueOf(res.getString("date_expiration"))));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list ;
+
+    }
+    
+    public List<OffreView> afficherOffresByEntreprisefiltree(int idE , String domaine) {
+        List<OffreView> list = new ArrayList<>();
+        String req ="SELECT f.id_offre ,f.titre,f.description,f.date_offre,f.date_expiration,d.id_domaine,d.nom_domaine,u.id,u.nom FROM domaine d join offre f join user u on d.id_domaine = f.id_domaine and f.id_entreprise = u.id Where f.id_entreprise = ? and d.nom_domaine = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1,idE);
+            pst.setString(2, domaine);
+            ResultSet res = pst.executeQuery();
+            
+            while(res.next()){
+                list.add(new OffreView(res.getInt("id_offre"),res.getInt("id"),res.getString("nom"),res.getString("titre") ,res.getString("description"),res.getInt("id_domaine"), res.getString("nom_domaine"), Date.valueOf(res.getString("date_offre")), Date.valueOf(res.getString("date_expiration"))));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list ;
+
+    }
+    
+    
     
     public List<OffreView> afficherOffresByDomaine(String Domaine) {
         List<OffreView> list = new ArrayList<>();

@@ -6,6 +6,7 @@ package com.esprit.controller;
 
 import com.esprit.controller.CrudOffreController;
 import com.esprit.entities.Offre;
+import com.esprit.gui.InterfaceOffreAdminController;
 import com.esprit.gui.InterfaceOffreEntrepriseController;
 import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceOffre;
@@ -48,10 +49,8 @@ public class UpdateOffreController implements Initializable {
     ServiceDomaine sd = new ServiceDomaine();
     private Stage stage;
     private CrudOffreController offreController;
-    
-    
     private InterfaceOffreEntrepriseController IEntController;
-
+    private InterfaceOffreAdminController InterfaceOffreAdminController;
     /**
      * Initializes the controller class.
      */
@@ -90,6 +89,9 @@ public class UpdateOffreController implements Initializable {
         }
         if (!(IEntController == null)) {
             IEntController.table();
+        }
+        if (!(InterfaceOffreAdminController == null)) {
+            InterfaceOffreAdminController.table();
         }
 
     }
@@ -148,5 +150,11 @@ public class UpdateOffreController implements Initializable {
     public void setOffreEntrController(InterfaceOffreEntrepriseController IEntController) {
         this.IEntController = IEntController;
     }
+
+    public void setInterfaceOffreAdminController(InterfaceOffreAdminController InterfaceOffreAdminController) {
+        this.InterfaceOffreAdminController = InterfaceOffreAdminController;
+    }
+    
+    
 
 }

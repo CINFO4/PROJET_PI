@@ -18,15 +18,16 @@ import javafx.stage.Stage;
 public class MainGUI extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudOffre.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudDomaine.fxml"));
-//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudCandidature.fxml"));
+     //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudOffre.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudDomaine.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudCandidature.fxml"));
         
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreUser.fxml"));
-//      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreEntreprise.fxml"));
-      
-      
-      
+
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreUser.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreEntreprise.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/InterfaceOffreAdmin.fxml"));
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/CrudCandidatureEntreprise.fxml"));
       
       
       
