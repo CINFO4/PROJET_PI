@@ -4,11 +4,13 @@ public class Review {
 
     private int id_review;
     private int nbr_etoile;
-    private int id_user;
     private String commentaire;
-    private int id_entreprise;
     private String output;
     
+    private int id_entreprise;
+    private int id_user;
+
+
     public Review(int id_review, int nbr_etoile, int id_user, String commentaire, int id_entreprise) {
         this.id_review = id_review;
         this.nbr_etoile = nbr_etoile;

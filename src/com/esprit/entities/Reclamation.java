@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.esprit.entities;
 
-
-/**
- *
- * @author Mehdi
- */
 public class Reclamation {
 
     private int id_reclamation;
     private String reclamation;
-    private int id_user;
     private EtatReclamation etat;
-    private int id_offre;
     private String output;
+    
+    private int id_offre;
+    private int id_user;
 
     public Reclamation(int id_reclamation, String reclamation, int id_user, EtatReclamation etat, int id_offre) {
         this.id_reclamation = id_reclamation;

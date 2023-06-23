@@ -51,8 +51,6 @@ public class AdminReclamationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        sr = new ServiceReclamation();
-        su = new ServiceUser();
         afficherReclamations();
     }
 

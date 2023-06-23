@@ -15,6 +15,8 @@ import javafx.scene.shape.SVGPath;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -91,10 +93,14 @@ public class AjoutReviewController implements Initializable {
     }
 
     @FXML
-    private void ajouterReview(ActionEvent event) {
-        ServiceReview sr = new ServiceReview();
+  private void ajouterReview(ActionEvent event) {
+    ServiceReview sr = new ServiceReview();
 
-        String commentaire = tf_commentaire.getText();
+    String commentaire = tf_commentaire.getText();
+
+    if (containsBadWords(commentaire)) {
+        JOptionPane.showMessageDialog(null, "Impossible d'ajouter la review. Elle contient des mots interdits. Veuillez fournir une autre review.");
+    } else {
         Review review = new Review(countStars(), user_id, commentaire, entreprise_id);
 
         try {
@@ -104,6 +110,20 @@ public class AjoutReviewController implements Initializable {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de la review !");
         }
     }
+}
+
+private boolean containsBadWords(String input) {
+    List<String> badWords = Arrays.asList("molka", "mehdi", "focus");
+
+    for (String word : badWords) {
+        if (input.toLowerCase().contains(word.toLowerCase())) {
+            return true; 
+        }
+    }
+
+    return false; 
+}
+
     
     @FXML
     private void mesReviews(ActionEvent event) throws IOException {
