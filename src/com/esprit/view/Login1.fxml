@@ -47,7 +47,7 @@
                </font>
             </Button>
             <Button fx:id="motdepasseoublie" layoutX="199.0" layoutY="314.0" mnemonicParsing="false" onAction="#oublier" styleClass="chart" text="Mot de passe oublié ?" textFill="#0077b5" />
-            <FontAwesomeIconView fx:id="eyeIcon" fill="#0077b5" glyphName="EYE" layoutX="325.0" layoutY="281.0" size="30"  onMouseClicked="#togglePasswordVisibility"/>
+            <FontAwesomeIconView fx:id="eyeIcon" fill="#0077b5" glyphName="EYE" layoutX="325.0" layoutY="281.0" onMouseClicked="#togglePasswordVisibility" size="30" text="" />
             <FontAwesomeIconView fill="#0077b5" glyphName="USER" layoutX="328.0" layoutY="153.0" size="30" />
             <Label layoutX="151.0" layoutY="22.0" prefHeight="36.0" prefWidth="97.0" text="Sign In" textFill="#231290">
                <font>
@@ -55,7 +55,7 @@
                </font>
             </Label>
             <CheckBox fx:id="showpassword" layoutX="28.0" layoutY="324.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" />
-            <FontAwesomeIconView fx:id="eyeIcon1" fill="#0077b5" glyphName="EYE" layoutX="325.0" layoutY="282.0" size="35" text="" wrappingWidth="30.0"  onMouseClicked="#togglePasswordVisibility" />
+            <FontAwesomeIconView fx:id="eyeIcon1" fill="#0077b5" glyphName="EYE_SLASH" layoutX="325.0" layoutY="283.0" onMouseClicked="#togglePasswordVisibility" size="30" />
          </children>
       </Pane>
       <ImageView fitHeight="96.0" fitWidth="109.0" layoutX="425.0" pickOnBounds="true" preserveRatio="true">
