@@ -91,7 +91,7 @@ public class MotdepasseController implements Initializable {
 
     public void retour(Event e) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login1.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
