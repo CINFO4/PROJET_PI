@@ -166,16 +166,6 @@ public class ForumController {
                 alert.showAndWait();
                 return;
             }
-
-            if (serviceForum.sujetExists(sujet)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Attention");
-                alert.setHeaderText(null);
-                alert.setContentText("Ce Sujet est déja crée !");
-                alert.showAndWait();
-                return;
-            }
-
             selectedForum.setSujet(sujet);
             selectedForum.setContenu(contenu);
             selectedForum.setId_domaine(selectedDomaine.getId_domaine());
