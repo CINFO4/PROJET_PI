@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -93,38 +94,23 @@ public class AjoutReviewController implements Initializable {
     }
 
     @FXML
-  private void ajouterReview(ActionEvent event) {
+ private void ajouterReview(ActionEvent event) {
     ServiceReview sr = new ServiceReview();
 
     String commentaire = tf_commentaire.getText();
+    Review review = new Review(countStars(), user_id, commentaire, entreprise_id);
 
-    if (containsBadWords(commentaire)) {
-        JOptionPane.showMessageDialog(null, "Impossible d'ajouter la review. Elle contient des mots interdits. Veuillez fournir une autre review.");
-    } else {
-        Review review = new Review(countStars(), user_id, commentaire, entreprise_id);
-
-        try {
+    try {
+        if (sr.containsBadWords(commentaire)) {
+            JOptionPane.showMessageDialog(null, "Impossible d'ajouter la review. Elle contient des mots interdits. Veuillez fournir une autre review.");
+        } else {
             sr.ajouter(review);
             JOptionPane.showMessageDialog(null, "Review ajoutée !");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de la review !");
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de la review !");
     }
-}
-
-private boolean containsBadWords(String input) {
-    List<String> badWords = Arrays.asList("molka", "mehdi", "focus");
-
-    for (String word : badWords) {
-        if (input.toLowerCase().contains(word.toLowerCase())) {
-            return true; 
-        }
-    }
-
-    return false; 
-}
-
-    
+ }
     @FXML
     private void mesReviews(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/ModifierReviews.fxml"));

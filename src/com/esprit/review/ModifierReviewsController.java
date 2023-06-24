@@ -144,38 +144,45 @@ public class ModifierReviewsController implements Initializable {
         tf_commentaire.setDisable(false);
     }
 
-    @FXML
-    private void modifier(ActionEvent event) {
-        Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
+@FXML
+private void modifier(ActionEvent event) throws SQLException {
+    Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
 
-        String commentaire = tf_commentaire.getText();
+    String commentaire = tf_commentaire.getText();
 
-        selectedOption.setCommentaire(commentaire);
-        selectedOption.setNbr_etoile(countStars());
-
-        try {
-            sr.modifier(selectedOption);
-            JOptionPane.showMessageDialog(null, "Review modifiée !");
-
-            lv1.getSelectionModel().setSelectionMode(null);
-            fillViewOptions();
-
-            b1.setDisable(true);
-            b2.setDisable(true);
-
-            tf_commentaire.setText(null);
-            tf_commentaire.setDisable(true);
-
-            SVGPath[] stars = new SVGPath[]{star1, star2, star3, star4, star5};
-
-            for (SVGPath star : stars) {
-                star.setFill(unfilledColor);
-                star.setDisable(true);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erreur lors de la modification de la review !");
-        }
+    ServiceReview sr = new ServiceReview();
+    if (sr.containsBadWords(commentaire)) {
+        JOptionPane.showMessageDialog(null, "Le commentaire contient des mots interdits !");
+        return;
     }
+
+    selectedOption.setCommentaire(commentaire);
+    selectedOption.setNbr_etoile(countStars());
+
+    try {
+        sr.modifier(selectedOption);
+        JOptionPane.showMessageDialog(null, "Review modifiée !");
+
+        lv1.getSelectionModel().setSelectionMode(null);
+        fillViewOptions();
+
+        b1.setDisable(true);
+        b2.setDisable(true);
+
+        tf_commentaire.setText(null);
+        tf_commentaire.setDisable(true);
+
+        SVGPath[] stars = new SVGPath[]{star1, star2, star3, star4, star5};
+
+        for (SVGPath star : stars) {
+            star.setFill(unfilledColor);
+            star.setDisable(true);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Erreur lors de la modification de la review !");
+    }
+}
+
 
     @FXML
     private void supprimer(ActionEvent event) {

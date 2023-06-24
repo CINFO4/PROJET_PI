@@ -95,9 +95,11 @@ public class AjoutReclamationController implements Initializable {
             
             int id = rec.getId_reclamation();
             String mail = su.getUserMail(rec.getId_user());
+               
 
 
-            Email.sendMail(mail, "Cher(e) " + id, Email.envoiReclamationMessage());
+
+            Email.sendMail(mail, "REF " + id, Email.envoiReclamationMessage(su.getNomUser(rec.getId_user())));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erreur lors de la validation!");
         } catch (MessagingException ex) {

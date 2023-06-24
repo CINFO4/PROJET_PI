@@ -15,8 +15,8 @@ public class MainGui extends Application {
     
     @Override 
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../reclamation/AjoutReclamation.fxml"));
+       // FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../reclamation/AjoutReclamation.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../reclamation/AdminReclamation.fxml"));
         
         Parent root = loader.load();

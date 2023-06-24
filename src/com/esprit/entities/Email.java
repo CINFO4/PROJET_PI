@@ -60,8 +60,10 @@ public class Email{
         return null;
     }
     
-    public static String envoiReclamationMessage() {
-        return "Nous vous remercions d'avoir pris le temps de nous contacter concernant votre réclamation. Nous comprenons l'importance de votre demande et nous souhaitons vous informer que nous l'avons bien reçue.\n" +
+    public static String envoiReclamationMessage(String nomUtilisateur) {
+        return 
+                "Cher(e) " + nomUtilisateur + ",\n\n" +
+                "Nous vous remercions d'avoir pris le temps de nous contacter concernant votre réclamation. Nous comprenons l'importance de votre demande et nous souhaitons vous informer que nous l'avons bien reçue.\n" +
                 "\n" +
                 "Chez Find Job, la satisfaction de nos clients est notre priorité absolue. Nous tenons à vous assurer que nous traitons votre réclamation avec la plus grande attention. Notre équipe dédiée examine actuellement les détails de votre demande afin de vous apporter une solution adaptée dans les plus brefs délais.\n" +
                 "\n" +
