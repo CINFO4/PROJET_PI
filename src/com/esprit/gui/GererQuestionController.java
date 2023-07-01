@@ -4,7 +4,7 @@
  */
 package com.esprit.gui;
 import com.esprit.entities.Question;
-import com.esprit.entities.proposition;
+import com.esprit.entities.Proposition;
 import com.esprit.entities.Competence;
 import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
@@ -184,7 +184,7 @@ public void initialize(URL url, ResourceBundle rb) {
     listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
     listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     ObservableList<QuestionView> questionList = FXCollections.observableArrayList(serviceQuestion.afficherQuestionView()) ;
-    ObservableList<proposition> propositionList = FXCollections.observableArrayList(serviceProposition.afficher()) ;
+    ObservableList<Proposition> propositionList = FXCollections.observableArrayList(serviceProposition.afficher()) ;
     information.setItems(questionList);
     collibelle.setCellValueFactory(new PropertyValueFactory<>("libelle"));
     coletat.setCellValueFactory(new PropertyValueFactory<>("etat_question"));
@@ -194,8 +194,7 @@ public void initialize(URL url, ResourceBundle rb) {
 
     }
     
-    
-    
+      
     @FXML
     private void ajouterQuestion(ActionEvent event) {
         ServiceQuestion sq = new ServiceQuestion();
@@ -261,10 +260,10 @@ public void initialize(URL url, ResourceBundle rb) {
         sq.ajouter(q);
         
         int id_q = sq.GetidQuestionbynom(q.getLibelle());
-        sp.ajouter(new proposition(tfpro1.getText(), etatProposition1,id_q));
-        sp.ajouter(new proposition(tfpro2.getText(), etatProposition2,id_q));
-        sp.ajouter(new proposition(tfpro3.getText(), etatProposition3,id_q));
-        sp.ajouter(new proposition(tfpro4.getText(), etatProposition4,id_q));
+        sp.ajouter(new Proposition(tfpro1.getText(), etatProposition1,id_q));
+        sp.ajouter(new Proposition(tfpro2.getText(), etatProposition2,id_q));
+        sp.ajouter(new Proposition(tfpro3.getText(), etatProposition3,id_q));
+        sp.ajouter(new Proposition(tfpro4.getText(), etatProposition4,id_q));
         JOptionPane.showMessageDialog(null, "Question Ajoutée !");
         tfLibelle.clear();
         tfpro1.clear();
@@ -337,14 +336,14 @@ public void initialize(URL url, ResourceBundle rb) {
       Question q = new Question(selectedQuestion.getId_question(), newLibelle, "Active", sc.Getidcompetencebynom(n));  
         sq.modifier(q);
       List prop = sp.afficherByIDquestion(information.getItems().get(index).getId_question());
-      proposition p0 = (proposition) prop.get(0);
-      proposition p1 = (proposition) prop.get(1);
-      proposition p2 = (proposition) prop.get(2);
-      proposition p3 = (proposition) prop.get(3);
-      sp.modifier(new proposition(p0.getId_proposition(), newProposition1, newEtatProposition1, selectedQuestion.getId_question()));
-      sp.modifier(new proposition(p1.getId_proposition(), newProposition2, newEtatProposition2, selectedQuestion.getId_question()));
-      sp.modifier(new proposition(p2.getId_proposition(), newProposition3, newEtatProposition3, selectedQuestion.getId_question()));
-      sp.modifier(new proposition(p3.getId_proposition(), newProposition4, newEtatProposition4, selectedQuestion.getId_question()));
+      Proposition p0 = (Proposition) prop.get(0);
+      Proposition p1 = (Proposition) prop.get(1);
+      Proposition p2 = (Proposition) prop.get(2);
+      Proposition p3 = (Proposition) prop.get(3);
+      sp.modifier(new Proposition(p0.getId_proposition(), newProposition1, newEtatProposition1, selectedQuestion.getId_question()));
+      sp.modifier(new Proposition(p1.getId_proposition(), newProposition2, newEtatProposition2, selectedQuestion.getId_question()));
+      sp.modifier(new Proposition(p2.getId_proposition(), newProposition3, newEtatProposition3, selectedQuestion.getId_question()));
+      sp.modifier(new Proposition(p3.getId_proposition(), newProposition4, newEtatProposition4, selectedQuestion.getId_question()));
      JOptionPane.showMessageDialog(null, "Question Modifiée !");
         tfLibelle.clear();
         tfpro1.clear();
@@ -417,7 +416,7 @@ public void initialize(URL url, ResourceBundle rb) {
       List prop = sp.afficherByIDquestion(information.getItems().get(index).getId_question());
       
         if (prop.size() >= 1) {
-        proposition p = (proposition)prop.get(0);
+        Proposition p = (Proposition)prop.get(0);
         tfpro1.setText(p.getDescription());
         if (p.getEtat().equals("vrai")){
         rdV1.setSelected(true);
@@ -428,7 +427,7 @@ public void initialize(URL url, ResourceBundle rb) {
     }
     
     if (prop.size() >= 2) {
-        proposition p = (proposition) prop.get(1);
+        Proposition p = (Proposition) prop.get(1);
         tfpro2.setText(p.getDescription());
         if (p.getEtat().equals("vrai")){
         rdV2.setSelected(true);
@@ -439,7 +438,7 @@ public void initialize(URL url, ResourceBundle rb) {
     }
     
     if (prop.size() >= 3) {
-        proposition p = (proposition)prop.get(2);
+        Proposition p = (Proposition)prop.get(2);
         tfpro3.setText(p.getDescription());
         if (p.getEtat().equals("vrai")){
         rdV3.setSelected(true);
@@ -450,7 +449,7 @@ public void initialize(URL url, ResourceBundle rb) {
     }
     
     if (prop.size() >= 4) {
-        proposition p = (proposition)prop.get(3);
+        Proposition p = (Proposition)prop.get(3);
         tfpro4.setText(p.getDescription());
         if (p.getEtat().equals("vrai")){
         rdV4.setSelected(true);

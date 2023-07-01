@@ -4,7 +4,7 @@
  */
 package com.esprit.gui;
 import com.esprit.entities.Question;
-import com.esprit.entities.proposition;
+import com.esprit.entities.Proposition;
 import com.esprit.entities.Competence;
 import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
@@ -33,6 +33,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import javafx.scene.control.Alert;
 
 /**
@@ -120,99 +121,99 @@ public class QuestionCompetenceController implements Initializable {
             questions = FXCollections.observableArrayList(questions.subList(0, 4));
         }
         
-          lbCompetence.setText(sc.getNameCompetenceById(id));
+          lbCompetence.setText(sc.getNameCompetenceById(id).toUpperCase(Locale.ITALY));
        lbQ1.setText(questions.get(0).getLibelle());
         lbQ2.setText(questions.get(1).getLibelle());
         lbQ3.setText(questions.get(2).getLibelle());
         lbQ4.setText(questions.get(3).getLibelle());
-         List<proposition> prop1 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ1.getText()));
-         List<proposition> prop2 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ2.getText()));
-        List<proposition> prop3 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ3.getText()));
-       List<proposition> prop4 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ4.getText()));
+         List<Proposition> prop1 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ1.getText()));
+         List<Proposition> prop2 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ2.getText()));
+        List<Proposition> prop3 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ3.getText()));
+       List<Proposition> prop4 = sp.afficherByIDquestion(sq.GetidQuestionbynom(lbQ4.getText()));
          if (prop1.size() >= 1) {
-         proposition p11 = prop1.get(0);
+         Proposition p11 = prop1.get(0);
         rdQ11.setText(p11.getDescription());
        
          }
          
          if (prop1.size() >= 2) {
-         proposition p12 = prop1.get(1);
+         Proposition p12 = prop1.get(1);
         rdQ12.setText(p12.getDescription());
          }
          
          if (prop1.size() >= 3) {
-         proposition p13= prop1.get(2);
+         Proposition p13= prop1.get(2);
         rdQ13.setText(p13.getDescription());
          }
          
          if (prop1.size() >= 4) {
-         proposition p14 = prop1.get(3);
+         Proposition p14 = prop1.get(3);
         rdQ14.setText(p14.getDescription());
          }
          
          
          if (prop2.size() >= 1) {
-         proposition p21 = prop2.get(0);
+         Proposition p21 = prop2.get(0);
         rdQ21.setText(p21.getDescription());
         
          }
          
          if (prop2.size() >= 2) {
-         proposition p22 = prop2.get(1);
+         Proposition p22 = prop2.get(1);
         rdQ22.setText(p22.getDescription());
          }
          
          if (prop2.size() >= 3) {
-         proposition p23= prop2.get(2);
+         Proposition p23= prop2.get(2);
         rdQ23.setText(p23.getDescription());
          }
          
          if (prop2.size() >= 4) {
-         proposition p24 = prop2.get(3);
+         Proposition p24 = prop2.get(3);
         rdQ24.setText(p24.getDescription());
          }
          
          
          if (prop3.size() >= 1) {
-         proposition p31 = prop3.get(0);
+         Proposition p31 = prop3.get(0);
         rdQ31.setText(p31.getDescription());
        
          }
          
          if (prop3.size() >= 2) {
-         proposition p32 = prop3.get(1);
+         Proposition p32 = prop3.get(1);
         rdQ32.setText(p32.getDescription());
          }
          
          if (prop3.size() >= 3) {
-         proposition p33= prop3.get(2);
+         Proposition p33= prop3.get(2);
         rdQ33.setText(p33.getDescription());
          }
          
          if (prop3.size() >= 4) {
-         proposition p34 = prop3.get(3);
+         Proposition p34 = prop3.get(3);
         rdQ34.setText(p34.getDescription());
          }
          
          
          if (prop4.size() >= 1) {
-         proposition p41 = prop4.get(0);
+         Proposition p41 = prop4.get(0);
         rdQ41.setText(p41.getDescription());
        
          }
          
          if (prop4.size() >= 2) {
-         proposition p42 = prop4.get(1);
+         Proposition p42 = prop4.get(1);
         rdQ42.setText(p42.getDescription());
          }
          
          if (prop4.size() >= 3) {
-         proposition p43= prop4.get(2);
+         Proposition p43= prop4.get(2);
         rdQ43.setText(p43.getDescription());
          }
          
          if (prop4.size() >= 4) {
-         proposition p44 = prop4.get(3);
+         Proposition p44 = prop4.get(3);
         rdQ44.setText(p44.getDescription());
          }
          
@@ -279,14 +280,14 @@ public class QuestionCompetenceController implements Initializable {
         
          
          try {
+             
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("resultat_quiz_"+ lbCompetence.getText()+".pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("resultat_quiz_"+ lbCompetence.getText()+ ".pdf"));
         document.open();
        
        Paragraph Titre = new Paragraph ("RESULTAT DU QUIZ " + lbCompetence.getText().toUpperCase());
        Titre.setAlignment(Element.ALIGN_CENTER);
-       
-        document.add(Titre);
+       document.add(Titre);
         document.add(new Paragraph("                             "));
         document.add(new Paragraph("                             "));
         document.add(new Paragraph("Question 1 : " + lbQ1.getText()+ "  " + R1));
@@ -333,12 +334,12 @@ sendPDFByEmail("resultat_quiz_"+ lbCompetence.getText()+".pdf",senderEmail,sende
     });
     }
     
-    private boolean isPropositionCorrect(List<proposition> propositions, ToggleGroup toggleGroup) {
+    private boolean isPropositionCorrect(List<Proposition> propositions, ToggleGroup toggleGroup) {
     RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
     int score = 0;
     if (selectedRadioButton != null) {
         String selectedProposition = selectedRadioButton.getText();
-        for (proposition prop : propositions) {
+        for (Proposition prop : propositions) {
             if (prop.getDescription().equals(selectedProposition) && prop.getEtat().equals("vrai")) {
                 return true;
                             }

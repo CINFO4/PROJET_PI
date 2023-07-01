@@ -5,7 +5,7 @@
 package com.esprit.main;
 
 import com.esprit.entities.Question;
-import com.esprit.entities.proposition;
+import com.esprit.entities.Proposition;
 import com.esprit.entities.Competence;
 import com.esprit.services.ServiceProposition;
 import com.esprit.services.ServiceQuestion;
