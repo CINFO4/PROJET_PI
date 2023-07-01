@@ -22,7 +22,7 @@ public class ServiceProposition {
     
     public void ajouter(Proposition p) {
         try {
-            String req = "INSERT INTO proposition(description, etat, id_question) VALUES (?,?,?);";
+            String req = "INSERT INTO Proposition(description, etat, id_question) VALUES (?,?,?);";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, p.getDescription());
             pst.setString(2, p.getEtat());
@@ -36,7 +36,7 @@ public class ServiceProposition {
     
     public void modifier(Proposition p) {
         try {
-            String req = "UPDATE proposition SET description=?, etat=?, id_question=? WHERE id_proposition=?";
+            String req = "UPDATE Proposition SET description=?, etat=?, id_question=? WHERE id_proposition=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(4, p.getId_proposition());
             pst.setString(1, p.getDescription());
@@ -51,7 +51,7 @@ public class ServiceProposition {
     
     public void supprimer(int id_question) {
         try {
-            String req = "DELETE from proposition WHERE id_question=?";
+            String req = "DELETE from Proposition WHERE id_question=?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, id_question);
             pst.executeUpdate();
@@ -64,7 +64,7 @@ public class ServiceProposition {
     public List<Proposition> afficher() {
         List<Proposition> list = new ArrayList<>();
         
-        String req = "SELECT * FROM proposition";
+        String req = "SELECT * FROM Proposition";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
@@ -82,7 +82,7 @@ public class ServiceProposition {
     public List<Proposition> afficherByIDquestion(int id) {
         List<Proposition> list = new ArrayList<>();
         
-        String req = "SELECT * FROM proposition where id_question = ?";
+        String req = "SELECT * FROM Proposition where id_question = ?";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, id);
@@ -102,7 +102,7 @@ public class ServiceProposition {
     public String BonnereponseByIDquestion(int id) {
        String BonneReponse = "";
         
-        String req = "SELECT * FROM proposition where id_question = ? and etat = ? ";
+        String req = "SELECT * FROM Proposition where id_question = ? and etat = ? ";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setInt(1, id);
