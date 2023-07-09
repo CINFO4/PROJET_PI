@@ -587,6 +587,7 @@ public class ServiceUser {
     }
 
     public String idutilisateur(String login) {
+        String role = "not found";
         String req = "select role from user where (mail=? or numero_telephone=?);";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
@@ -594,21 +595,13 @@ public class ServiceUser {
             pst.setString(2, login);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                String role = rs.getString("role");
-                if (role.equals("Candidat")) {
-                    return "Candidat";
-                } else if (role.equals("Entreprise")) {
-                    return "Entreprise";
-                } else {
-                    return "Admin";
-                }
+                 role = rs.getString("role");
                 
-            }
-            return "not found";
-        } catch (Exception e) {
+        }} catch (Exception e) {
             System.out.println(e.getMessage());
-            return "not found";
+            return role;
         }
+        return role;
         
     }
     
@@ -626,5 +619,21 @@ public class ServiceUser {
             System.out.println(ex.getMessage());
         }
         return u;
+    }
+    
+    public int getIdBymail(String mail) throws MailException {
+        int id = 0 ;
+        String req = "SELECT id FROM user Where mail = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, mail);
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+               id= res.getInt("id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return id;
     }
 }
