@@ -34,11 +34,12 @@ public class Mainprog {
 //        ServiceCompetence sc = new ServiceCompetence();
 //        sc.ajouter(new Competence("Reseau", "Définit les projets d'évolution du réseau"));
         ServiceUser sv = new ServiceUser();
+        System.out.println(sv.afficherunentreprise(45));
         
         //try {
             //sv.ajouter(new Candidat("isam", "laabidi", "lamine@gmail.com", 25623768, "Motface@2026?", "admin", Diplome.Autre, "git", Experience.Confirme));
             //System.out.println(sv.afficherCandidat());
-            System.out.println(sv.idutilisateur("ahmed@iplabel.com"));
+            //System.out.println(sv.idutilisateur("ahmed@iplabel.com"));
             //sv.ajouter(new Entreprise("mounir", "chamem", "mounir@gmail.com",25142258,"anis25623@libel", "admin", "focus", Taille.DE_1_A_10_EMPLOYES, "foxus.com", "focus.linkedin", 1));
 //        } catch (MailException e) {
 //            System.out.println(e.getMessage());

@@ -318,6 +318,37 @@ public class ServiceUser {
         return list;
 
     }
+    
+    public Entreprisedomaine afficherunentreprise(int idi) throws MailException {
+        Entreprisedomaine ed = null;
+        String req = "select id, nom, prenom, mail, numero_telephone, motdepasse, description, NomEntreprise, role, TailleEntreprise, SiteWeb, Linkedin, e.id_domaine, d.nom_domaine from User e join Domaine d on e.id_domaine=d.id_domaine where id=?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, idi);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                Taille TailleEntreprise = Taille.valueOf(rs.getString("TailleEntreprise"));
+                String NomEntreprise = rs.getString("NomEntreprise");
+                String SiteWeb = rs.getString("SiteWeb");
+                String Linkedin = rs.getString("Linkedin");
+                int id_domaine = rs.getInt("id_domaine");
+                String nom_domaine = rs.getString("nom_domaine");
+                ed = new Entreprisedomaine(id, nom, prenom, mail, numeroTelephone, motdepasse, description, NomEntreprise, TailleEntreprise, SiteWeb, Linkedin, id_domaine, nom_domaine);
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return ed;
+
+    }
 
     public List<String> afficherDomainebynom() {
         List<String> list = new ArrayList<>();
@@ -366,6 +397,37 @@ public class ServiceUser {
             System.out.println(ex.getMessage());
         }
         return list;
+
+    }
+    
+    public Candidat afficherunCandidat(int idi) throws MailException {
+        Candidat candidat = null;
+        String req = "select * from User where id = ?;";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setInt(1, idi);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String mail = rs.getString("mail");
+                int numeroTelephone = rs.getInt("numero_telephone");
+                String motdepasse = rs.getString("motdepasse");
+                String description = rs.getString("description");
+                String role = rs.getString("role");
+                if (role.equals("Candidat")) {
+                    Diplome education = Diplome.valueOf(rs.getString("education"));
+                    String Github = rs.getString("Github");
+                    Experience experience = Experience.valueOf(rs.getString("experience"));
+                    candidat = new Candidat(id, nom, prenom, mail, numeroTelephone, motdepasse, description, education, Github, experience);
+                    
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return candidat;
 
     }
 
