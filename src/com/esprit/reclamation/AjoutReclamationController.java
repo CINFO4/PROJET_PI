@@ -82,7 +82,12 @@ public class AjoutReclamationController implements Initializable {
 
     @FXML
     private void ajouterReclamation(ActionEvent event) throws IOException {
-        String message = tf_reclamation.getText();
+        String message = tf_reclamation.getText().trim(); // Trim leading/trailing whitespace
+        if (message.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Commentaire ne peut pas être vide !");
+            return; // Stop execution if comment is empty
+        }
+        
         Reclamation reclamation = new Reclamation(0, message, 1, EtatReclamation.En_cours, 5);
 
         try {
