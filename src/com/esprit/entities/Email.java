@@ -32,7 +32,7 @@ public class Email{
         properties.put("mail.smtp.port", "587");
         
         String myAdr = "findjobreply@gmail.com";
-        String password = "vwzjqneictcidlgm";
+        String password = "pjwzsenustgioixb";
         
         Session session;
         session = Session.getInstance(properties, new Authenticator() {
