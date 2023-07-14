@@ -1,27 +1,28 @@
-package com.esprit.reclamation;
+package com.esprit.controllers;
 
 import com.esprit.entities.Email;
 import com.esprit.entities.EtatReclamation;
+import com.esprit.entities.MailException;
 import com.esprit.entities.Reclamation;
 import com.esprit.services.ServiceOffre;
 import com.esprit.services.ServiceReclamation;
 import com.esprit.services.ServiceUser;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 
+import javax.mail.MessagingException;
+import javax.swing.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
-import javax.mail.MessagingException;
-import javax.swing.JOptionPane;
 
 public class AdminReclamationController implements Initializable {
 
@@ -38,9 +39,9 @@ public class AdminReclamationController implements Initializable {
     private TextArea tf_commentaire;
 
     private ServiceReclamation sr;
-    
+
     private ServiceUser su;
-    
+
     private ServiceOffre so;
 
     public AdminReclamationController() {
@@ -59,8 +60,8 @@ public class AdminReclamationController implements Initializable {
             List<Reclamation> reclamations = sr.getReclamationEnCours();
 
             for (Reclamation rec : reclamations) {
-                String output = so.getTitreOffre(rec.getId_offre()) + " " +
-                        su.getNomUser(rec.getId_user());
+                String output = so.chercherOffreByID(rec.getId_offre()).getTitre() + " " +
+                        su.getUserByID(rec.getId_user()).getNom();
 
                 rec.setOutput(output);
             }
@@ -69,7 +70,7 @@ public class AdminReclamationController implements Initializable {
             data.addAll(reclamations);
 
             lv1.setItems(data);
-        } catch (SQLException ex) {
+        } catch (SQLException | MailException ex) {
             System.out.println(ex.getMessage());
         }
     }
@@ -93,14 +94,15 @@ public class AdminReclamationController implements Initializable {
             selectedReclamation.setEtat(EtatReclamation.Approuvee);
             try {
                 sr.modifier(selectedReclamation);
-                
+
                 JOptionPane.showMessageDialog(null, "Envoie du mail en cours ");
 
                 int id = selectedReclamation.getId_reclamation();
-                String mail = su.getUserMail(selectedReclamation.getId_user());
+                String mail = su.getUserByID(selectedReclamation.getId_user()).getMail();
 
-                Email.sendMail(mail, "Reclamation [Ref: " + id+"]", Email.envoiValidMessage(su.getNomUser(selectedReclamation.getId_user()), id));
-            } catch (SQLException ex) {
+                Email.sendMail(mail, "Reclamation [Ref: " + id + "]",
+                        Email.envoiValidMessage(su.getUserByID(selectedReclamation.getId_user()).getNom(), id));
+            } catch (SQLException | MailException ex) {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la validation! ");
 
             } catch (MessagingException ex) {
@@ -126,11 +128,12 @@ public class AdminReclamationController implements Initializable {
 
                 JOptionPane.showMessageDialog(null, "Envoie du mail en cours ");
                 int id = selectedReclamation.getId_reclamation();
-                
-                String mail = su.getUserMail(selectedReclamation.getId_user());
 
-                Email.sendMail(mail, "Reclamation [Ref: " + id+"]", Email.envoiRejectMessage(su.getNomUser(selectedReclamation.getId_user()), id));
-            } catch (SQLException ex) {
+                String mail = su.getUserByID(selectedReclamation.getId_user()).getMail();
+
+                Email.sendMail(mail, "Reclamation [Ref: " + id + "]",
+                        Email.envoiRejectMessage(su.getUserByID(selectedReclamation.getId_user()).getNom(), id));
+            } catch (SQLException | MailException ex) {
                 JOptionPane.showMessageDialog(null, "Erreur lors de la validation! ");
 
             } catch (MessagingException ex) {

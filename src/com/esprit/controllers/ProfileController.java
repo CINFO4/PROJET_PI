@@ -1,14 +1,13 @@
 package com.esprit.controllers;
 
 import com.esprit.entities.Profile;
-import com.esprit.services.ServiceProfile;
 import com.esprit.services.ServiceCompetence;
+import com.esprit.services.ServiceProfile;
 import com.esprit.utils.DataSource;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -53,7 +52,7 @@ public class ProfileController implements Initializable {
     private void populateUserNameComboBox() {
         try {
             // Fetch user names from the database and populate the combo box
-            Connection cnx = DataSource.GetInstance().getCnx();
+            Connection cnx = DataSource.getInstance().getCnx();
             String req = "SELECT nom FROM user";
             PreparedStatement pst = cnx.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
@@ -123,7 +122,7 @@ public class ProfileController implements Initializable {
     private int getUserIdFromUserName(String userName) {
         try {
             // Retrieve the user ID from the database based on the user name
-            Connection cnx = DataSource.GetInstance().getCnx();
+            Connection cnx = DataSource.getInstance().getCnx();
             String req = "SELECT id_user FROM user WHERE nom = ?";
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, userName);

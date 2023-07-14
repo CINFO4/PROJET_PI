@@ -6,17 +6,9 @@ package com.esprit.controllers;
 
 import com.esprit.entities.Offre;
 import com.esprit.services.ServiceDomaine;
-import com.esprit.services.ServiceDomaineO;
 import com.esprit.services.ServiceOffre;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Date;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,21 +17,22 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * FXML Controller class
@@ -91,7 +84,7 @@ public class InterfaceOffreEntrepriseController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ServiceDomaineO sd = new ServiceDomaineO();
+        ServiceDomaine sd = new ServiceDomaine();
         ComboChercher.getItems().add("All");
         ComboChercher.getItems().addAll(sd.getDomainesName());
         ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
@@ -118,7 +111,7 @@ public class InterfaceOffreEntrepriseController implements Initializable {
             JOptionPane.showMessageDialog(null, "Champ Manquant !");
             return;
         }
-        ServiceDomaineO sd = new ServiceDomaineO();
+        ServiceDomaine sd = new ServiceDomaine();
         int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter ce offre ?", "Confirmation", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             sf.ajouter(new Offre(txtTitre.getText(), txtDescription.getText(), sd.getIdDomaineByName(ChoiseBoxDomaine.getValue()), idEntreprise, Date.valueOf(datePicker.getValue())));
@@ -157,13 +150,13 @@ public class InterfaceOffreEntrepriseController implements Initializable {
                         FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE_ALT);
                         deleteIcon.setStyle(
                                 "-fx-cursor:hand;"
-                                + "-glyph-size:35px;"
-                                + "-fx-fill:#ff1744;"
+                                        + "-glyph-size:35px;"
+                                        + "-fx-fill:#ff1744;"
                         );
                         editIcon.setStyle(
                                 "-fx-cursor:hand;"
-                                + "-glyph-size:35px;"
-                                + "-fx-fill:#02B875;"
+                                        + "-glyph-size:35px;"
+                                        + "-fx-fill:#02B875;"
                         );
 
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
@@ -182,7 +175,7 @@ public class InterfaceOffreEntrepriseController implements Initializable {
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                             try {
                                 ServiceOffre.OffreView offre = getTableView().getItems().get(getIndex());
-                                ServiceDomaineO sd = new ServiceDomaineO();
+                                ServiceDomaine sd = new ServiceDomaine();
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/UpdateOffre.fxml"));
                                 Parent root = loader.load();
                                 UpdateOffreController uoc = loader.getController();

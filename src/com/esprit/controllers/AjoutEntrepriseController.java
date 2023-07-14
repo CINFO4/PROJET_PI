@@ -4,28 +4,27 @@
  */
 package com.esprit.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import com.esprit.entities.*;
-import com.esprit.services.*;
-import java.io.IOException;
-import java.util.List;
-import java.util.Observable;
+import com.esprit.entities.Candidat;
+import com.esprit.entities.Entreprise;
+import com.esprit.entities.MailException;
+import com.esprit.entities.Taille;
+import com.esprit.services.ServiceDomaine;
+import com.esprit.services.ServiceUser;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -64,6 +63,7 @@ public class AjoutEntrepriseController implements Initializable {
     public void setPrimarystage(Stage primarystage) {
         this.primarystage = primarystage;
     }
+
     private Refresh refreshEvent;
 
     public void setRefreshEvent(Refresh refreshListener) {
@@ -80,7 +80,7 @@ public class AjoutEntrepriseController implements Initializable {
         for (int i = 0; i < t.length; i++) {
             t2[i] = t[i].toString().replace('_', ' ');
         }
-        ServiceDomaineO sd = new ServiceDomaineO();
+        ServiceDomaine sd = new ServiceDomaine();
         cbSecteurActivite.setItems(FXCollections.observableArrayList(sd.getDomainesName()));
         cbTailleEntreprise.setItems(FXCollections.observableArrayList(t2));
 

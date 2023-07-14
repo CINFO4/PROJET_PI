@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceReclamation {
-    
+
     private final Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouter(Reclamation reclamation) throws SQLException {
@@ -57,7 +57,7 @@ public class ServiceReclamation {
             String etat = rs.getString("etat");
             int idOffre = rs.getInt("id_offre");
 
-            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat),idOffre);
+            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat), idOffre);
             list.add(rec);
         }
 
@@ -77,7 +77,7 @@ public class ServiceReclamation {
             String etat = rs.getString("etat");
             int idOffre = rs.getInt("id_offre");
 
-            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat),idOffre);
+            Reclamation rec = new Reclamation(idReclamation, reclamation, idUser, EtatReclamation.valueOf(etat), idOffre);
             list.add(rec);
         }
 

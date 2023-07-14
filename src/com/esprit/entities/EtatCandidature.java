@@ -5,12 +5,11 @@
 package com.esprit.entities;
 
 /**
- *
  * @author ASUS
  */
 public enum EtatCandidature {
     En_Cour,
     Accepter,
-    Refuser; 
+    Refuser;
 }
 

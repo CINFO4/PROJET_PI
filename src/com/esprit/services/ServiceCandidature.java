@@ -7,24 +7,17 @@ package com.esprit.services;
 import com.esprit.entities.Candidature;
 import com.esprit.entities.EtatCandidature;
 import com.esprit.utils.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
  * @author ASUS
  */
 public class ServiceCandidature implements IServices<Candidature> {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
     @Override
     public void ajouter(Candidature c) {

@@ -5,10 +5,8 @@
 package com.esprit.entities;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 /**
- *
  * @author ASUS
  */
 public class Candidature {
@@ -31,8 +29,7 @@ public class Candidature {
         this.date_condidature = date_condidature;
         this.etat = etat;
     }
-    
-    
+
 
     public int getId_user() {
         return id_user;
@@ -79,13 +76,5 @@ public class Candidature {
         return "Candidature{" + "id_user=" + id_user + ", id_offre=" + id_offre + ", id_candidature=" + id_candidature + ", date_condidature=" + date_condidature + ", etat=" + etat.toString() + '}';
     }
 
-   
 
-   
-
-  
-
-  
-    
-    
 }

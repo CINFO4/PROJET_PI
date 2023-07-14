@@ -4,29 +4,24 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.entities.*;
+import com.esprit.entities.Candidat;
+import com.esprit.entities.Diplome;
+import com.esprit.entities.Experience;
+import com.esprit.entities.MailException;
 import com.esprit.services.ServiceCompetence;
-import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javax.swing.JOptionPane;
-import com.esprit.controllers.Refresh;
-import java.util.List;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -38,7 +33,7 @@ public class ModifierCandidatController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private Integer id =0;
+    private Integer id = 0;
     @FXML
     private TextField tfnom;
     @FXML
@@ -60,23 +55,22 @@ public class ModifierCandidatController implements Initializable {
     @FXML
     private ComboBox<Diplome> cbdiplome;
     @FXML
-     private ListView<String> listcompetence; 
+    private ListView<String> listcompetence;
     @FXML
     private Button envoye;
-     private Stage primarystage;
+    private Stage primarystage;
 
     public void setPrimarystage(Stage primarystage) {
         this.primarystage = primarystage;
     }
-    
-    
-    
+
+
     private Refresh refreshEvent;
-   
+
     public void setRefreshEvent(Refresh refreshListener) {
-    this.refreshEvent = refreshListener;
-}
-        
+        this.refreshEvent = refreshListener;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -85,14 +79,16 @@ public class ModifierCandidatController implements Initializable {
         cbexperience.setItems(FXCollections.observableArrayList(Experience.values()));
         listcompetence.setItems(FXCollections.observableArrayList(sc.affichercompetencebynom()));
         listcompetence.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    }   
+    }
+
     public void triggerRefreshEvent() {
         if (refreshEvent != null) {
             refreshEvent.onRefresh();
         }
-     }
+    }
+
     public void initData(Candidat candidat) {
-         id = candidat.getId();
+        id = candidat.getId();
         tfnom.setText(candidat.getNom());
         tfprenom.setText(candidat.getPrenom());
         tfadresse.setText(candidat.getMail());
@@ -101,8 +97,9 @@ public class ModifierCandidatController implements Initializable {
         tadescription.setText(candidat.getDescription());
         cbdiplome.setValue(candidat.getEducation());
         cbexperience.setValue(candidat.getExperience());
-        
+
     }
+
     public boolean validateFields() {
         if (tfnom.getText().isEmpty() || tfprenom.getText().isEmpty() || tfadresse.getText().isEmpty() || tfmotdepasse.getText().isEmpty() || tfmotdepasse2.getText().isEmpty() || tftelephone.getText().isEmpty() || tfgithub.getText().isEmpty() || tadescription.getText().isEmpty() || cbexperience.getValue() == null || cbdiplome.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -114,9 +111,10 @@ public class ModifierCandidatController implements Initializable {
         }
         return true;
     }
-     @FXML
+
+    @FXML
     public void ModifierCandidat(ActionEvent event) throws IOException, MailException {
-        if(!validateFields()){
+        if (!validateFields()) {
             return;
         }
         Candidat c = new Candidat();
@@ -160,15 +158,14 @@ public class ModifierCandidatController implements Initializable {
             return;
 
         }
-        if(tfmotdepasse.getText().equals(tfmotdepasse2.getText())){
-        sp.modifier(new Candidat(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(),cbdiplome.getValue(),tfgithub.getText(),cbexperience.getValue()));
-        JOptionPane.showMessageDialog(null, "Candidat modifié !");
-        triggerRefreshEvent();
-        primarystage.close();
-        }
-        else {
+        if (tfmotdepasse.getText().equals(tfmotdepasse2.getText())) {
+            sp.modifier(new Candidat(id, tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmotdepasse.getText(), tadescription.getText(), cbdiplome.getValue(), tfgithub.getText(), cbexperience.getValue()));
+            JOptionPane.showMessageDialog(null, "Candidat modifié !");
+            triggerRefreshEvent();
+            primarystage.close();
+        } else {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
     }
-    
+
 }

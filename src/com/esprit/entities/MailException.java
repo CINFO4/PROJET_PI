@@ -5,19 +5,18 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
-public class MailException extends Exception{
+public class MailException extends Exception {
 
     public MailException() {
         super();
     }
-    
+
 
     public MailException(String string) {
         super(string);
-   
+
     }
 }
 

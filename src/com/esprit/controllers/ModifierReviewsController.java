@@ -1,14 +1,10 @@
-package com.esprit.review;
+package com.esprit.controllers;
 
+import com.esprit.entities.MailException;
 import com.esprit.entities.Review;
 import com.esprit.services.ServiceOffre;
 import com.esprit.services.ServiceReview;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +21,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ModifierReviewsController implements Initializable {
     @FXML
@@ -54,11 +56,11 @@ public class ModifierReviewsController implements Initializable {
 
     @FXML
     private TextArea tf_commentaire;
-    
+
     private ServiceReview sr;
-    
+
     private ServiceUser su;
-    
+
     private ServiceOffre so;
 
     private final Color filledColor = Color.YELLOW;
@@ -69,7 +71,7 @@ public class ModifierReviewsController implements Initializable {
         su = new ServiceUser();
         so = new ServiceOffre();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fillViewOptions();
@@ -80,7 +82,7 @@ public class ModifierReviewsController implements Initializable {
             List<Review> reviews = sr.afficher();
 
             for (Review rev : reviews) {
-                String output = su.getNomEntreprise(rev.getId_entreprise()) + "      " + rev.getNbr_etoile() + "/5";
+                String output = su.getUserByID(rev.getId_entreprise()).getNom() + "      " + rev.getNbr_etoile() + "/5";
 
                 rev.setOutput(output);
             }
@@ -89,7 +91,7 @@ public class ModifierReviewsController implements Initializable {
             data.addAll(reviews);
 
             lv1.setItems(data);
-        } catch (SQLException ex) {
+        } catch (SQLException | MailException ex) {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'affichage des reviews !");
         }
     }
@@ -144,50 +146,50 @@ public class ModifierReviewsController implements Initializable {
         tf_commentaire.setDisable(false);
     }
 
-@FXML
-private void modifier(ActionEvent event) throws SQLException {
-    Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
+    @FXML
+    private void modifier(ActionEvent event) throws SQLException {
+        Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
 
-    String commentaire = tf_commentaire.getText();
+        String commentaire = tf_commentaire.getText();
 
-    ServiceReview sr = new ServiceReview();
-    if (sr.containsBadWords(commentaire)) {
-        JOptionPane.showMessageDialog(null, "Le commentaire contient des mots interdits !");
-        return;
-    }
-
-    selectedOption.setCommentaire(commentaire);
-    selectedOption.setNbr_etoile(countStars());
-
-    try {
-        sr.modifier(selectedOption);
-        JOptionPane.showMessageDialog(null, "Review modifiée !");
-
-        lv1.getSelectionModel().setSelectionMode(null);
-        fillViewOptions();
-
-        b1.setDisable(true);
-        b2.setDisable(true);
-
-        tf_commentaire.setText(null);
-        tf_commentaire.setDisable(true);
-
-        SVGPath[] stars = new SVGPath[]{star1, star2, star3, star4, star5};
-
-        for (SVGPath star : stars) {
-            star.setFill(unfilledColor);
-            star.setDisable(true);
+        ServiceReview sr = new ServiceReview();
+        if (sr.containsBadWords(commentaire)) {
+            JOptionPane.showMessageDialog(null, "Le commentaire contient des mots interdits !");
+            return;
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Erreur lors de la modification de la review !");
+
+        selectedOption.setCommentaire(commentaire);
+        selectedOption.setNbr_etoile(countStars());
+
+        try {
+            sr.modifier(selectedOption);
+            JOptionPane.showMessageDialog(null, "Review modifiée !");
+
+            lv1.getSelectionModel().setSelectionMode(null);
+            fillViewOptions();
+
+            b1.setDisable(true);
+            b2.setDisable(true);
+
+            tf_commentaire.setText(null);
+            tf_commentaire.setDisable(true);
+
+            SVGPath[] stars = new SVGPath[]{star1, star2, star3, star4, star5};
+
+            for (SVGPath star : stars) {
+                star.setFill(unfilledColor);
+                star.setDisable(true);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de la modification de la review !");
+        }
     }
-}
 
 
     @FXML
     private void supprimer(ActionEvent event) {
         Review selectedOption = (Review) lv1.getSelectionModel().getSelectedItem();
-        
+
         try {
             sr.supprimer(selectedOption);
 
@@ -212,10 +214,10 @@ private void modifier(ActionEvent event) throws SQLException {
             JOptionPane.showMessageDialog(null, "Erreur lors de la suppression de la review !");
         }
     }
-    
+
     @FXML
     private void ajoutReviews(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../review/AjoutReview.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AjoutReview.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

@@ -7,11 +7,6 @@ package com.esprit.controllers;
 import com.esprit.entities.MailException;
 import com.esprit.services.ServiceUser;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import java.awt.Checkbox;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,17 +14,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -58,7 +51,8 @@ public class LoginController implements Initializable {
     private FontAwesomeIconView eyeIcon1;
 
     private boolean passwordVisible = false;
-     ServiceUser su = new ServiceUser();
+    ServiceUser su = new ServiceUser();
+
     /**
      * Initializes the controller class.
      */
@@ -113,53 +107,53 @@ public class LoginController implements Initializable {
         String loginText = login.getText();
         String passwordText = motdepasse.getText();
         if (su.login(loginText, passwordText)) {
-            if(su.idutilisateur(loginText).equals("Candidat")){
-                
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceOffreUser.fxml"));
-                
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                
-                Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
-                stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
-                InterfaceOffreUserController controller = loader.getController();
-                controller.setIduser(su.getIdBymail(loginText)); //
-                stage.show(); // Affiche la nouvelle scène
+            if (su.idutilisateur(loginText).equals("Candidat")) {
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            }else if(su.idutilisateur(loginText).equals("Entreprise")){
                 try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceOffreEntreprise.fxml"));
-                
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
-                stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
-                InterfaceOffreEntrepriseController controller = loader.getController();
-                controller.setIdEntreprise(su.getIdBymail(loginText));
-                stage.show(); // Affiche la nouvelle scène
-                
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceOffreUser.fxml"));
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } 
-            }else{
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+
+                    Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
+                    stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
+                    InterfaceOffreUserController controller = loader.getController();
+                    controller.setIduser(su.getIdBymail(loginText)); //
+                    stage.show(); // Affiche la nouvelle scène
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else if (su.idutilisateur(loginText).equals("Entreprise")) {
                 try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceUtilisateur.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
-                stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
-                stage.show(); // Affiche la nouvelle scène
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceOffreEntreprise.fxml"));
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } 
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
+                    stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
+                    InterfaceOffreEntrepriseController controller = loader.getController();
+                    controller.setIdEntreprise(su.getIdBymail(loginText));
+                    stage.show(); // Affiche la nouvelle scène
+
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InterfaceUtilisateur.fxml"));
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) login.getScene().getWindow(); // Récupère la fenêtre actuelle
+                    stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
+                    stage.show(); // Affiche la nouvelle scène
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-           
+
         } else {
             JOptionPane.showMessageDialog(null, "Login ou mot de passe erroné !", "Erreur", JOptionPane.ERROR_MESSAGE);
         }

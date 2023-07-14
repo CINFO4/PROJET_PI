@@ -5,24 +5,27 @@
 package com.esprit.services;
 
 import com.esprit.utils.DataSource;
+
 import java.sql.Connection;
+
 import com.esprit.entities.*;
 import com.mysql.cj.conf.PropertyKey;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
  * @author Anis
  */
 public class ServiceUser {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouter(User p) throws MailException {
         if (p instanceof Candidat) {
@@ -595,16 +598,17 @@ public class ServiceUser {
             pst.setString(2, login);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                 role = rs.getString("role");
-                
-        }} catch (Exception e) {
+                role = rs.getString("role");
+
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return role;
         }
         return role;
-        
+
     }
-    
+
     public User getUserByID(int id) throws MailException {
         User u = null;
         String req = "SELECT * FROM user Where id = ?";
@@ -613,23 +617,23 @@ public class ServiceUser {
             pst.setInt(1, id);
             ResultSet res = pst.executeQuery();
             while (res.next()) {
-                u=new User(res.getInt("id"), res.getString("nom"), res.getString("prenom"), res.getString("mail"), res.getInt("numero_telephone"),res.getString("motdepasse") , res.getString("description"));
+                u = new User(res.getInt("id"), res.getString("nom"), res.getString("prenom"), res.getString("mail"), res.getInt("numero_telephone"), res.getString("motdepasse"), res.getString("description"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return u;
     }
-    
+
     public int getIdBymail(String mail) throws MailException {
-        int id = 0 ;
+        int id = 0;
         String req = "SELECT id FROM user Where mail = ?";
         try {
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, mail);
             ResultSet res = pst.executeQuery();
             while (res.next()) {
-               id= res.getInt("id");
+                id = res.getInt("id");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

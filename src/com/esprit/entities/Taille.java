@@ -5,7 +5,6 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
 public enum Taille {

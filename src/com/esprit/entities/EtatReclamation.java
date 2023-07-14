@@ -6,7 +6,6 @@ package com.esprit.entities;
  */
 
 /**
- *
  * @author Mehdi
  */
 public enum EtatReclamation {

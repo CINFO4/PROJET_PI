@@ -5,19 +5,7 @@
 package com.esprit.controllers;
 
 import com.esprit.entities.Candidat;
-import com.esprit.entities.Diplome;
-import com.esprit.entities.Experience;
-import com.esprit.entities.MailException;
-import com.esprit.entities.Taille;
-import com.esprit.entities.User;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,17 +14,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -83,8 +69,8 @@ public class CandidatController implements Initializable, Refresh {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //interface fonctionnelle
-        
-        
+
+
         deleteColumn.setCellFactory(column -> {
             TableCell<Candidat, Void> cell = new TableCell<Candidat, Void>() {
                 //La cellule contient un bouton de suppression déclaré et initialisé en tant que Button avec le texte "Supprimer".
@@ -114,6 +100,7 @@ public class CandidatController implements Initializable, Refresh {
                         }
                     });
                 }
+
                 // Cette méthode updateItem est une méthode de la classe TableCell qui est appelée chaque fois que la cellule doit être mise à jour. Elle permet de mettre à jour l'apparence de la cellule en fonction de son contenu. Si la cellule est vide, le contenu graphique de la cellule est défini sur null, sinon le bouton de suppression est affiché.
                 @Override
                 protected void updateItem(Void item, boolean empty) {
@@ -240,7 +227,7 @@ public class CandidatController implements Initializable, Refresh {
         table.setItems(lu);
     }
 
-    
+
     public void Search() {
         ServiceUser su = new ServiceUser();
         nom.setCellValueFactory(new PropertyValueFactory<Candidat, String>("nom"));

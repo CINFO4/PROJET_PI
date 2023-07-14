@@ -5,25 +5,24 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
 public class Entreprise extends User {
-    
+
     private String NomEntreprise;
     private Taille TailleEntreprise;
     private String SiteWeb;
     private String Linkedin;
     private int id_domaine;
 
-    public Entreprise( int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) throws MailException {
+    public Entreprise(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description, String NomEntreprise, Taille TailleEntreprise, String SiteWeb, String Linkedin, int id_domaine) throws MailException {
         super(id, nom, prenom, mail, numero_telephone, motdepasse, description);
         this.NomEntreprise = NomEntreprise;
         this.TailleEntreprise = TailleEntreprise;
         this.SiteWeb = SiteWeb;
         this.Linkedin = Linkedin;
         this.id_domaine = id_domaine;
-         if (!emailvalidator(mail)) {
+        if (!emailvalidator(mail)) {
             throw new MailException("Mail invalide");
         }
 
@@ -42,7 +41,7 @@ public class Entreprise extends User {
         this.SiteWeb = SiteWeb;
         this.Linkedin = Linkedin;
         this.id_domaine = id_domaine;
-         if (!emailvalidator(mail)) {
+        if (!emailvalidator(mail)) {
             throw new MailException("Mail invalide");
         }
 
@@ -86,7 +85,6 @@ public class Entreprise extends User {
         this.id_domaine = id_domaine;
     }
 
-    
 
     public String getNomEntreprise() {
         return NomEntreprise;
@@ -100,16 +98,6 @@ public class Entreprise extends User {
     public String toString() {
         return "Entreprise{" + super.toString() + "NomEntreprise=" + NomEntreprise + ", TailleEntreprise=" + TailleEntreprise + ", SiteWeb=" + SiteWeb + ", Linkedin=" + Linkedin + ", id_domaine=" + id_domaine + '}';
     }
-    
-   
 
-    
 
-    
-
-    
-
-    
-    
-    
 }

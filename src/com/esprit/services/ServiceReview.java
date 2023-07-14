@@ -2,6 +2,7 @@ package com.esprit.services;
 
 import com.esprit.entities.*;
 import com.esprit.utils.DataSource;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,30 +58,31 @@ public class ServiceReview {
     }
 
     public boolean containsBadWords(String input) throws SQLException {
-    List<String> badWords = getBadWordsFromDatabase();
+        List<String> badWords = getBadWordsFromDatabase();
 
-    for (String word : badWords) {
-        if (input.toLowerCase().contains(word.toLowerCase())) {
-            return true; 
+        for (String word : badWords) {
+            if (input.toLowerCase().contains(word.toLowerCase())) {
+                return true;
+            }
         }
+
+        return false;
     }
 
-    return false; 
+    private List<String> getBadWordsFromDatabase() throws SQLException {
+        List<String> badWords = new ArrayList<>();
+
+        String query = "SELECT word FROM bad_words";
+        try (Statement statement = cnx.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                String word = resultSet.getString("word");
+                badWords.add(word);
+            }
+        }
+
+        return badWords;
+    }
 }
-
-private List<String> getBadWordsFromDatabase() throws SQLException {
-    List<String> badWords = new ArrayList<>();
-
-    String query = "SELECT word FROM bad_words";
-    try (Statement statement = cnx.createStatement();
-         ResultSet resultSet = statement.executeQuery(query)) {
-        while (resultSet.next()) {
-            String word = resultSet.getString("word");
-            badWords.add(word);
-        }
-    }
-
-    return badWords;
-}}
 
     

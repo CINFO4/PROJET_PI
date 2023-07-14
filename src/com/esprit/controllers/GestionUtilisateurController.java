@@ -4,9 +4,6 @@
  */
 package com.esprit.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
@@ -25,37 +25,38 @@ import javafx.stage.Stage;
  */
 public class GestionUtilisateurController implements Initializable {
 
-@FXML
-private Button candidat;
-@FXML
-private Button entreprise;
+    @FXML
+    private Button candidat;
+    @FXML
+    private Button entreprise;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-@FXML
-   public void espaceentreprise(ActionEvent a) throws IOException{
-       System.out.println("cc");
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) entreprise.getScene().getWindow(); // Récupère la fenêtre actuelle
-            stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
-            stage.show();
-   }
-   
-@FXML
-   public void espacecandidat(ActionEvent e) throws IOException{
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) candidat.getScene().getWindow(); // Récupère la fenêtre actuelle
-            stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
-            stage.show();
-   }
-    
+    }
+
+    @FXML
+    public void espaceentreprise(ActionEvent a) throws IOException {
+        System.out.println("cc");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) entreprise.getScene().getWindow(); // Récupère la fenêtre actuelle
+        stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
+        stage.show();
+    }
+
+    @FXML
+    public void espacecandidat(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) candidat.getScene().getWindow(); // Récupère la fenêtre actuelle
+        stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
+        stage.show();
+    }
+
 }

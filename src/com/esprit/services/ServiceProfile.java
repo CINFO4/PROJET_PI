@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServiceProfile {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouter(Profile profile) {
         try {

@@ -8,11 +8,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class StatisticsController implements Initializable {
 
@@ -47,15 +43,15 @@ public class StatisticsController implements Initializable {
     }
 
     private List<Document> getDocumentData() {
-    List<Document> documentData = new ArrayList<>();
-    documentData.add(new Document("Type 1"));
-    documentData.add(new Document("Type 2"));
-    documentData.add(new Document("Type 1"));
-    documentData.add(new Document("Type 3"));
-    documentData.add(new Document("Type 2"));
-    documentData.add(new Document("Type 3"));
-    return documentData;
-}
+        List<Document> documentData = new ArrayList<>();
+        documentData.add(new Document("Type 1"));
+        documentData.add(new Document("Type 2"));
+        documentData.add(new Document("Type 1"));
+        documentData.add(new Document("Type 3"));
+        documentData.add(new Document("Type 2"));
+        documentData.add(new Document("Type 3"));
+        return documentData;
+    }
 
     private Map<String, Integer> calculateTypeCounts(List<Document> documentData) {
         // Calculate the count of each type from the document data

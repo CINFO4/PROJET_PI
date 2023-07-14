@@ -6,25 +6,19 @@ package com.esprit.services;
 
 import com.esprit.entities.Offre;
 import com.esprit.utils.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author ASUS
  */
 public class ServiceOffre implements IServices<Offre> {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
     public class OffreView {
 

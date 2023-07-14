@@ -7,11 +7,10 @@ package com.esprit.entities;
 import java.util.Random;
 
 /**
- *
  * @author Anis
  */
 public class CodeGenerator {
-    
+
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZazertyuiopmlkjhgfdsqwxcvbn0123456789";
     private static final int CODE_LENGTH = 6;
 

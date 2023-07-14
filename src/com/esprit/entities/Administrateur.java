@@ -5,7 +5,6 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
 public class Administrateur extends User {
@@ -38,8 +37,5 @@ public class Administrateur extends User {
         }
     }
 
-    
-    
-    
-    
+
 }

@@ -6,7 +6,7 @@ public class Review {
     private int nbr_etoile;
     private String commentaire;
     private String output;
-    
+
     private int id_entreprise;
     private int id_user;
 
@@ -74,7 +74,7 @@ public class Review {
     public void setOutput(String output) {
         this.output = output;
     }
-    
+
     @Override
     public String toString() {
         return output;

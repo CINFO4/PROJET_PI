@@ -5,9 +5,6 @@
 package com.esprit.controllers;
 
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
  * @author Anis
  */
 public class ChangermotdepasseController implements Initializable {
-    
+
     @FXML
     private PasswordField motdepasse;
     @FXML
@@ -33,7 +34,7 @@ public class ChangermotdepasseController implements Initializable {
     @FXML
     private Button submit;
     private String id;
-    
+
     public void setId(String id) {
         this.id = id;
     }
@@ -44,12 +45,12 @@ public class ChangermotdepasseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     public void changermotdepasse(ActionEvent e) throws IOException {
         if (motdepasse.getText().equals(motdepasse2.getText())) {
             ServiceUser su = new ServiceUser();
-            su.modifiermotdepasse(motdepasse.getText(),id);
+            su.modifiermotdepasse(motdepasse.getText(), id);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login1.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);

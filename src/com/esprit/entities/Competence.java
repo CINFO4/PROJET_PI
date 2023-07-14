@@ -5,28 +5,24 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
 public class Competence {
     private int id_c;
     private String nom;
     private String description;
-    
-    
-    public Competence(String nom,String description ) {
-        this.nom=nom;
-        this.description=description;
-        
-   }
-    
-    public Competence(int id_c , String nom , String description) {
-        this.id_c=id_c;
-        this.nom=nom;
-        this.description=description;
-        
-   }
 
+    public Competence(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+
+    }
+
+    public Competence(int id_c, String nom, String description) {
+        this.id_c = id_c;
+        this.nom = nom;
+        this.description = description;
+    }
 
     public int getId_c() {
         return id_c;
@@ -52,12 +48,10 @@ public class Competence {
         this.description = description;
     }
 
-  
     @Override
     public String toString() {
-        return nom ;
+        return nom;
     }
-    
 }
     
     

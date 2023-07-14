@@ -4,26 +4,22 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.controllers.CrudOffreController;
 import com.esprit.entities.Offre;
-
-import com.esprit.services.ServiceDomaineO;
+import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceOffre;
-import com.sun.java.swing.plaf.windows.resources.windows;
-import java.net.URL;
-import java.sql.Date;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -42,14 +38,15 @@ public class UpdateOffreController implements Initializable {
     private DatePicker datePickerPub;
     @FXML
     private ComboBox<String> ChoiseBoxDomaine;
-   
+
     int idOffre;
     int IDEntreprise;
-    ServiceDomaineO sd = new ServiceDomaineO();
+    ServiceDomaine sd = new ServiceDomaine();
     private Stage stage;
     private CrudOffreController offreController;
     private InterfaceOffreEntrepriseController IEntController;
     private InterfaceOffreAdminController InterfaceOffreAdminController;
+
     /**
      * Initializes the controller class.
      */
@@ -64,25 +61,24 @@ public class UpdateOffreController implements Initializable {
 
     @FXML
     private void updateOffre(ActionEvent event) {
-        
-        if (txtTitre.getText().equals("") || txtDescription.getText().equals("") || datePickerPub.getValue()== null || datePickerExp.getValue()== null || ChoiseBoxDomaine.getValue() == null ) {
-            JOptionPane.showMessageDialog(null,"Champ Manquant !");
-            return ;
+
+        if (txtTitre.getText().equals("") || txtDescription.getText().equals("") || datePickerPub.getValue() == null || datePickerExp.getValue() == null || ChoiseBoxDomaine.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Champ Manquant !");
+            return;
         }
-            
-            
-            
-            int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter un domaine ?","Confirmation",JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION){
-                ServiceOffre sf = new ServiceOffre();
-                sf.modifier(new Offre(idOffre, txtTitre.getText(), txtDescription.getText(), sd.getIdDomaineByName(ChoiseBoxDomaine.getValue()),IDEntreprise, Date.valueOf(datePickerPub.getValue()), Date.valueOf(datePickerExp.getValue())));
-                JOptionPane.showMessageDialog(null, "offre modifier ! "); 
-                stage.close();
-            }else{
-                
-                return ;
-            }
-        
+
+
+        int result = JOptionPane.showConfirmDialog(null, "vouler vous ajouter un domaine ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            ServiceOffre sf = new ServiceOffre();
+            sf.modifier(new Offre(idOffre, txtTitre.getText(), txtDescription.getText(), sd.getIdDomaineByName(ChoiseBoxDomaine.getValue()), IDEntreprise, Date.valueOf(datePickerPub.getValue()), Date.valueOf(datePickerExp.getValue())));
+            JOptionPane.showMessageDialog(null, "offre modifier ! ");
+            stage.close();
+        } else {
+
+            return;
+        }
+
         if (!(offreController == null)) {
             offreController.table();
         }
@@ -103,14 +99,14 @@ public class UpdateOffreController implements Initializable {
         this.ChoiseBoxDomaine.getItems().addAll(sd.getDomainesName());
     }
 
-    
 
     public void setDatePickerExp(Date date) {
         this.datePickerExp.setValue(date.toLocalDate());
     }
 
     public void setTxtDescription(String txtDescription) {
-        this.txtDescription.setText(txtDescription);;
+        this.txtDescription.setText(txtDescription);
+        ;
     }
 
     public void setDatePickerPub(Date date) {
@@ -145,7 +141,7 @@ public class UpdateOffreController implements Initializable {
     public void setOffreController(CrudOffreController offreController) {
         this.offreController = offreController;
     }
-    
+
     public void setOffreEntrController(InterfaceOffreEntrepriseController IEntController) {
         this.IEntController = IEntController;
     }
@@ -153,7 +149,6 @@ public class UpdateOffreController implements Initializable {
     public void setInterfaceOffreAdminController(InterfaceOffreAdminController InterfaceOffreAdminController) {
         this.InterfaceOffreAdminController = InterfaceOffreAdminController;
     }
-    
-    
+
 
 }

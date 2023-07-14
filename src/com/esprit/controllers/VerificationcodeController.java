@@ -4,10 +4,6 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.controllers.ChangermotdepasseController;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -47,8 +47,7 @@ public class VerificationcodeController implements Initializable {
     public void setGeneratecode(String generatecode) {
         this.generatecode = generatecode;
     }
-    
-    
+
 
     /**
      * Initializes the controller class.
@@ -59,10 +58,11 @@ public class VerificationcodeController implements Initializable {
         txt2.setWrapText(true);
         txt3.setWrapText(true);
         // TODO
-    }  
-    public void verifcode(ActionEvent e) throws IOException{
+    }
+
+    public void verifcode(ActionEvent e) throws IOException {
         String cd = tfcode.getText();
-        if(cd.equals(generatecode)){
+        if (cd.equals(generatecode)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/changermotdepasse.fxml"));
             Parent root = loader.load();
             ChangermotdepasseController cm = loader.getController();
@@ -72,13 +72,10 @@ public class VerificationcodeController implements Initializable {
             stage.setScene(scene); // Définit la nouvelle scène sur la fenêtre
             stage.show(); // Affiche la nouvelle scène
             JOptionPane.showMessageDialog(null, "code correct !");
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "code erroné !","Erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "code erroné !", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
 
-    
-    
+
 }

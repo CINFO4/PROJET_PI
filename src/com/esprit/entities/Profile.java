@@ -6,10 +6,8 @@ public class Profile {
     private int id_competence;
     private Niveau niveau;
 
-    
-    
-     public Profile() {
-       
+    public Profile() {
+
     }
 
     public Profile(int id_profile, int id_user, int id_competence, Niveau niveau) {

@@ -7,14 +7,16 @@ package com.esprit.services;
 import java.util.List;
 
 /**
- *
  * @author ASUS
  */
 public interface IServices<T> {
-    
+
     public void ajouter(T p);
+
     public void modifier(T p);
+
     public void supprimer(T p);
+
     public List<T> afficher();
-    
+
 }

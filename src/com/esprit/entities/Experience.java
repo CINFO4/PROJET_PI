@@ -5,10 +5,9 @@
 package com.esprit.entities;
 
 /**
- *
  * @author Anis
  */
 public enum Experience {
     Junior, Confirme, Senior;
-    
+
 }

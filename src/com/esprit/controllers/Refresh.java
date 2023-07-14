@@ -5,7 +5,6 @@
 package com.esprit.controllers;
 
 /**
- *
  * @author Anis
  */
 public interface Refresh {

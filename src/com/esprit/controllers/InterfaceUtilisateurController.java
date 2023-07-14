@@ -4,10 +4,6 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.controllers.AjoutAdminController;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +12,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -43,7 +43,8 @@ public class InterfaceUtilisateurController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    } 
+    }
+
     @FXML
     public void GestionOffre(ActionEvent event) throws IOException {
 
@@ -54,9 +55,10 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-     @FXML
+
+    @FXML
     public void GestionCandidature(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/CrudCandidature.fxml"));
@@ -66,9 +68,10 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-     @FXML
+
+    @FXML
     public void GestionDomaine(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/CrudDomaine.fxml"));
@@ -78,9 +81,10 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-     @FXML
+
+    @FXML
     public void GestionDocument(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/GererDocument.fxml"));
@@ -90,9 +94,10 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-     @FXML
+
+    @FXML
     public void GestionCompetence(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Competence.fxml"));
@@ -102,9 +107,10 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-     @FXML
+
+    @FXML
     public void Gestionutilisateur(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/GestionUtilisateur.fxml"));
@@ -114,7 +120,7 @@ public class InterfaceUtilisateurController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        
+
     }
-    
+
 }

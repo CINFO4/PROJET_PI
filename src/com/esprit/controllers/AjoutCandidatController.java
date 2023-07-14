@@ -4,27 +4,24 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.entities.*;
+import com.esprit.entities.Candidat;
+import com.esprit.entities.Diplome;
+import com.esprit.entities.Experience;
+import com.esprit.entities.MailException;
 import com.esprit.services.ServiceCompetence;
-import com.esprit.services.ServiceDomaine;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -93,7 +90,7 @@ public class AjoutCandidatController implements Initializable {
         if (!validateFields()) {
             return;
         }
-        
+
         ServiceUser sp = new ServiceUser();
         if (!Candidat.emailvalidator(tfadresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);

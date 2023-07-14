@@ -4,13 +4,9 @@
  */
 package com.esprit.controllers;
 
-import com.esprit.entities.*;
+import com.esprit.entities.CodeGenerator;
 import com.esprit.services.ServiceMail;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import javax.mail.MessagingException;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -58,15 +58,15 @@ public class MotdepasseController implements Initializable {
                 String code = CodeGenerator.generateCode();
                 String subject = "Code de vérification";
                 String body = "Bonjour,\n" +
-                "\n" +
-                "Nous avons reçu une demande de réinitialisation du mot de passe de votre compte Findjob.\n" +
-                "\n" +
-                code + "\n" +
-                "Veuillez saisir ce code pour finaliser la réinitialisation.\n" +
-                "\n" +
-                "Merci de nous aider à maintenir la sécurité de votre compte.\n" +
-                "\n" +
-                "L'équipe Findjob\"";
+                        "\n" +
+                        "Nous avons reçu une demande de réinitialisation du mot de passe de votre compte Findjob.\n" +
+                        "\n" +
+                        code + "\n" +
+                        "Veuillez saisir ce code pour finaliser la réinitialisation.\n" +
+                        "\n" +
+                        "Merci de nous aider à maintenir la sécurité de votre compte.\n" +
+                        "\n" +
+                        "L'équipe Findjob\"";
                 sm.sendMail(loginText, subject, body);
                 JOptionPane.showMessageDialog(null, code);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));

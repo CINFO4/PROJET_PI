@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.esprit.services;
 
-import com.esprit.entities.*;
+import com.esprit.entities.Domaine;
 import com.esprit.utils.DataSource;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,14 +10,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Anis
- */
-public class ServiceDomaine {
+public class ServiceDomaine implements IServices<Domaine> {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
+    @Override
     public void ajouter(Domaine d) {
         try {
             String req = "INSERT INTO domaine (nom_domaine) VALUES(?)";
@@ -34,6 +28,7 @@ public class ServiceDomaine {
         }
     }
 
+    @Override
     public void modifier(Domaine d) {
         try {
             String req = "UPDATE domaine SET nom_domaine = ? WHERE id_domaine = ?";
@@ -47,6 +42,7 @@ public class ServiceDomaine {
         }
     }
 
+    @Override
     public void supprimer(Domaine p) {
         try {
             String req = "DELETE FROM domaine WHERE id_domaine = ?";
@@ -59,6 +55,7 @@ public class ServiceDomaine {
         }
     }
 
+    @Override
     public List<Domaine> afficher() {
         List<Domaine> list = new ArrayList<>();
         String req = "SELECT * FROM domaine ";
@@ -73,12 +70,7 @@ public class ServiceDomaine {
             System.out.println(ex.getMessage());
         }
         return list;
-
     }
-
-    /**
-     * *******************************************************
-     */
 
     public List<String> getDomainesName() {
         List<String> list = new ArrayList<>();
@@ -94,7 +86,6 @@ public class ServiceDomaine {
             System.out.println(ex.getMessage());
         }
         return list;
-
     }
 
     public int getIdDomaineByName(String name) {
@@ -113,8 +104,6 @@ public class ServiceDomaine {
         return id;
     }
 
-    ;
-    
     public String getNameDomaineById(int id) {
         String req = "SELECT nom_domaine FROM domaine WHERE  id_domaine= ? ";
         String name = null;
@@ -130,8 +119,7 @@ public class ServiceDomaine {
         }
         return name;
     }
-    
-    
+
     public boolean chercherNomDomaine(String nom) {
         String req = "SELECT * FROM domaine WHERE  lower(nom_domaine)= lower(?) ";
         Domaine d = null;
@@ -145,12 +133,6 @@ public class ServiceDomaine {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        if (d == null) {
-            return false;
-        } else {
-            return true;
-        }
-
+        return d != null;
     }
-;
 }

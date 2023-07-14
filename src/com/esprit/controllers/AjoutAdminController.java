@@ -5,13 +5,8 @@
 package com.esprit.controllers;
 
 import com.esprit.entities.Administrateur;
-import com.esprit.entities.Candidat;
 import com.esprit.entities.MailException;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -62,12 +62,14 @@ public class AjoutAdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }  
+    }
+
     public void triggerRefreshEvent() {
         if (refreshEvent != null) {
             refreshEvent.onRefresh();
         }
     }
+
     public boolean validateFields() {
         if (tfnom.getText().isEmpty() || tfprenom.getText().isEmpty() || tfadresse.getText().isEmpty() || tfmp.getText().isEmpty() || tfmp2.getText().isEmpty() || tftelephone.getText().isEmpty() || tadescription.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -79,13 +81,13 @@ public class AjoutAdminController implements Initializable {
         }
         return true;
     }
-    
+
     @FXML
     public void ajouteradmin(ActionEvent event) throws IOException, MailException {
         if (!validateFields()) {
             return;
         }
-        
+
         ServiceUser sp = new ServiceUser();
         if (!Administrateur.emailvalidator(tfadresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -136,5 +138,5 @@ public class AjoutAdminController implements Initializable {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
     }
-    
+
 }

@@ -6,16 +6,16 @@ package com.esprit.controllers;
 
 import com.esprit.entities.Candidature;
 import com.esprit.services.ServiceCandidature;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
-import static jdk.internal.dynalink.support.Guards.isNull;
+
+import javax.swing.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -36,29 +36,30 @@ public class OffreDetailsController implements Initializable {
     private TextArea LDesc;
     @FXML
     private Label LTitle;
-    
+
     private int idoffre;
     Stage stage;
     @FXML
     private Label dejaPostuler;
-    
+
     int idu;
-ServiceCandidature sc = new ServiceCandidature();
+    ServiceCandidature sc = new ServiceCandidature();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         showMsg();
-    }    
-    
-    public void showMsg(){
+    }
+
+    public void showMsg() {
         System.out.println(sc.checkCandidature(idu, idoffre));
         if (!sc.checkCandidature(idu, idoffre)) {
-                dejaPostuler.setText("deja Postuler");
-        }else{
-        dejaPostuler.setText("");
+            dejaPostuler.setText("deja Postuler");
+        } else {
+            dejaPostuler.setText("");
 
         }
     }
@@ -70,7 +71,7 @@ ServiceCandidature sc = new ServiceCandidature();
     public void setIdu(int idu) {
         this.idu = idu;
     }
-    
+
 
     public void setLNomEntreprise(String LNomEntreprise) {
         this.LNomEntreprise.setText(LNomEntreprise);
@@ -111,20 +112,19 @@ ServiceCandidature sc = new ServiceCandidature();
     @FXML
     private void postuler(ActionEvent event) {
         System.out.println(idoffre);
-        if (! sc.checkCandidature(idu, idoffre)) {
+        if (!sc.checkCandidature(idu, idoffre)) {
             JOptionPane.showMessageDialog(null, "Vous Aver Deja Postuler Dans Cet Offre!");
-            return ;
-        }
-        int result = JOptionPane.showConfirmDialog(null, "vouler vous postuler?","Confirmation",JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION){
-                sc.ajouter(new Candidature(idu, idoffre));
-                JOptionPane.showMessageDialog(null, "Postuler avec Succes !");
-                stage.close();
-            }else{
             return;
-            }
+        }
+        int result = JOptionPane.showConfirmDialog(null, "vouler vous postuler?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            sc.ajouter(new Candidature(idu, idoffre));
+            JOptionPane.showMessageDialog(null, "Postuler avec Succes !");
+            stage.close();
+        } else {
+            return;
+        }
     }
-    
-    
-    
+
+
 }

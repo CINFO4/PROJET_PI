@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author Anis
  */
 public class User {
@@ -22,7 +21,7 @@ public class User {
     private String motdepasse;
     private String description;
 
-    
+
     public static int Codepasse(String motdepasse) {
         int hash = 7;
         hash = 83 * hash + Objects.hashCode(motdepasse);
@@ -46,19 +45,14 @@ public class User {
 
     public User() {
     }
-    
-    
-    
-   public static boolean emailvalidator(String mail) {
-    String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
-    Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(mail);
-    return matcher.matches();
-}
-
-   
 
 
+    public static boolean emailvalidator(String mail) {
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
+        Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(mail);
+        return matcher.matches();
+    }
 
 
     public User(int id, String nom, String prenom, String mail, Integer numero_telephone, String motdepasse, String description) throws MailException {
@@ -80,7 +74,7 @@ public class User {
         this.motdepasse = String.valueOf(Codepasse(motdepasse));
         this.description = description;
         this.numero_telephone = numero_telephone;
- 
+
     }
 
     public int getId() {

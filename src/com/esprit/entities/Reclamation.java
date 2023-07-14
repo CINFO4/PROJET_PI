@@ -6,7 +6,7 @@ public class Reclamation {
     private String reclamation;
     private EtatReclamation etat;
     private String output;
-    
+
     private int id_offre;
     private int id_user;
 
@@ -17,7 +17,7 @@ public class Reclamation {
         this.etat = etat;
         this.id_offre = id_offre;
     }
-    
+
     public int getId_reclamation() {
         return id_reclamation;
     }

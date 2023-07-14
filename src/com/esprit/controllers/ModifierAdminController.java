@@ -5,13 +5,8 @@
 package com.esprit.controllers;
 
 import com.esprit.entities.Administrateur;
-import com.esprit.entities.Candidat;
 import com.esprit.entities.MailException;
 import com.esprit.services.ServiceUser;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -46,8 +46,8 @@ public class ModifierAdminController implements Initializable {
     @FXML
     private Button submit;
     private Refresh refreshEvent;
-     private Integer id =0;
-     private Stage primarystage;
+    private Integer id = 0;
+    private Stage primarystage;
 
     public void setPrimarystage(Stage primarystage) {
         this.primarystage = primarystage;
@@ -63,12 +63,14 @@ public class ModifierAdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }  
+    }
+
     public void triggerRefreshEvent() {
         if (refreshEvent != null) {
             refreshEvent.onRefresh();
         }
     }
+
     public boolean validateFields() {
         if (tfnom.getText().isEmpty() || tfprenom.getText().isEmpty() || tfadresse.getText().isEmpty() || tfmp.getText().isEmpty() || tfmp2.getText().isEmpty() || tftelephone.getText().isEmpty() || tadescription.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -80,6 +82,7 @@ public class ModifierAdminController implements Initializable {
         }
         return true;
     }
+
     public void initData(Administrateur admin) {
         id = admin.getId();
         tfnom.setText(admin.getNom());
@@ -87,16 +90,16 @@ public class ModifierAdminController implements Initializable {
         tfadresse.setText(admin.getMail());
         tftelephone.setText(String.valueOf(admin.getNumero_telephone()));
         tadescription.setText(admin.getDescription());
-        
-        
+
+
     }
-    
+
     @FXML
     public void Modifieradmin(ActionEvent event) throws IOException, MailException {
         if (!validateFields()) {
             return;
         }
-        
+
         ServiceUser sp = new ServiceUser();
         if (!Administrateur.emailvalidator(tfadresse.getText())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -138,7 +141,7 @@ public class ModifierAdminController implements Initializable {
 
         }
         if (tfmp.getText().equals(tfmp2.getText())) {
-            sp.modifier(new Administrateur(id,tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmp.getText(), tadescription.getText()));
+            sp.modifier(new Administrateur(id, tfnom.getText(), tfprenom.getText(), tfadresse.getText(), Integer.parseInt(tftelephone.getText()), tfmp.getText(), tadescription.getText()));
             JOptionPane.showMessageDialog(null, "Admin modifié !");
             triggerRefreshEvent();
             primarystage.close();
@@ -147,5 +150,5 @@ public class ModifierAdminController implements Initializable {
             JOptionPane.showMessageDialog(null, "Mot de passe erronée");
         }
     }
-    
+
 }

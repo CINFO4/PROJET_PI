@@ -4,8 +4,10 @@
  */
 package com.esprit.services;
 
-import com.esprit.entities.*;
+import com.esprit.entities.Competence;
+import com.esprit.entities.Profile;
 import com.esprit.utils.DataSource;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,12 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Anis
  */
 public class ServiceCompetence {
 
-    private Connection cnx = DataSource.GetInstance().getCnx();
+    private Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouter(Competence competence) {
         try {

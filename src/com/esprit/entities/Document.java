@@ -5,7 +5,6 @@
 package com.esprit.entities;
 
 /**
- *
  * author 2023
  */
 public class Document {
@@ -15,7 +14,7 @@ public class Document {
     private String type;//domaine
     private String lien;
     private int id_user;
-  
+
 
     public Document() {
     }
@@ -28,22 +27,22 @@ public class Document {
         this.lien = lien;
         this.id_user = id_user;
     }
+
     public Document(String titre, String type, String lien) {
         this.titre_document = titre;
         this.type = type;
         this.lien = lien;
     }
-    
-      public Document( String titre_document, String description_document, String type, String lien, int id_user) {
-        
+
+    public Document(String titre_document, String description_document, String type, String lien, int id_user) {
+
         this.titre_document = titre_document;
         this.description_document = description_document;
         this.type = type;
         this.lien = lien;
         this.id_user = id_user;
     }
-      
-      
+
 
     public Document(String title, String description, String type, String link, String userId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -113,5 +112,5 @@ public class Document {
                 '}';
     }
 
-    
+
 }
