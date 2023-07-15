@@ -72,6 +72,10 @@ public class InterfaceOffreEntrepriseController implements Initializable {
     private TableColumn<ServiceOffre.OffreView, String> NomDomaineCol;
     @FXML
     private TableColumn<ServiceOffre.OffreView, String> NomEntCol;
+    @FXML
+    private Button info;
+    @FXML
+    private Button forum;
 
     ServiceOffre sf = new ServiceOffre();
     @FXML
@@ -127,6 +131,31 @@ public class InterfaceOffreEntrepriseController implements Initializable {
         } else {
             return;
         }
+    }
+    @FXML
+    private void infoentreprise(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InfoEntreprise.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        InfoEntrepriseController controller = loader.getController();
+        controller.setId(idEntreprise);
+        controller.dataload();
+        stage.show();
+
+    }
+    
+    @FXML
+    private void forum(ActionEvent event) throws IOException{
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Forum.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        ForumController controller = loader.getController();
+        controller.setIduser(idEntreprise);
+        stage.show(); 
     }
 
     public void table() {

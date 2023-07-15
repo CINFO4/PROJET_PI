@@ -47,6 +47,10 @@ public class InfoEntrepriseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        
+    }  
+    public void dataload(){
         ServiceUser su = new ServiceUser();
          try {
              ed = su.afficherunentreprise(45);
@@ -58,7 +62,6 @@ public class InfoEntrepriseController implements Initializable {
         mail.setText(ed.getMail());
         taille.setText(String.valueOf(ed.getTailleEntreprise()));
         domaine.setText(String.valueOf(ed.getNom_domaine()));
-        
-    }    
+    }
     
 }

@@ -33,7 +33,7 @@ public class MainprogGUI extends Application {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/User.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Candidat.fxml"));
        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Entreprise.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InfoEntreprise.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Login1.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/GestionUtilisateur.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/motdepasse.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/verificationcode.fxml"));

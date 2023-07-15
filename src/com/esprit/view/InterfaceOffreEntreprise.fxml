@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1395.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.InterfaceOffreEntrepriseController">
+<AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1395.0" stylesheets="@../controllers/Stylee1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.InterfaceOffreEntrepriseController">
     <children>
       <Pane layoutX="23.0" layoutY="145.0" prefHeight="432.0" prefWidth="440.0" style="-fx-background-color: #c5c5c5;">
          <children>
@@ -49,7 +49,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="30" />
                </graphic>
             </Button>
-            <ComboBox fx:id="ChoiseBoxDomaine" layoutX="193.0" layoutY="259.0" prefWidth="150.0" promptText="Domaine" />
+            <ComboBox fx:id="ChoiseBoxDomaine" layoutX="193.0" layoutY="259.0" prefWidth="150.0" promptText="Domaine" style="-fx-background-color: #ffffff;" />
          </children>
       </Pane>
       <TableView fx:id="tableOffre" editable="true" layoutX="476.0" layoutY="143.0" prefHeight="432.0" prefWidth="899.0">
@@ -63,7 +63,7 @@
             <TableColumn fx:id="btnCol" prefWidth="100.0" />
         </columns>
       </TableView>
-      <ComboBox fx:id="ComboChercher" layoutX="1034.0" layoutY="42.0" onAction="#changeRecherche" prefHeight="31.0" prefWidth="220.0" promptText="Filtrer Par Domaine" />
+      <ComboBox fx:id="ComboChercher" layoutX="1034.0" layoutY="42.0" onAction="#changeRecherche" prefHeight="31.0" prefWidth="220.0" promptText="Filtrer Par Domaine" style="-fx-background-color: #ffffff;" />
       <Label layoutX="81.0" layoutY="28.0" prefHeight="55.0" prefWidth="513.0" text="Gerers les offres" textFill="#3939cc">
          <font>
             <Font name="Elephant" size="46.0" />
@@ -71,5 +71,7 @@
       </Label>
       <Separator layoutX="74.0" layoutY="88.0" prefHeight="6.0" prefWidth="1209.0" style="-fx-background-color: #3939cc;" />
       <FontAwesomeIconView fill="#e02866" glyphName="SEARCH" layoutX="987.0" layoutY="68.0" size="30" />
+      <Button fx:id="info" layoutX="489.0" layoutY="43.0" mnemonicParsing="false" onAction="#infoentreprise" styleClass="button4" text="Info Entreprise" />
+      <Button fx:id="forum" layoutX="623.0" layoutY="43.0" mnemonicParsing="false" onAction="#forum" styleClass="button4" text="Forum" />
    </children>
 </AnchorPane>

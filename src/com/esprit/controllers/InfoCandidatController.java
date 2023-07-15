@@ -37,9 +37,16 @@ public class InfoCandidatController implements Initializable {
     private Candidat c;
     private int id;
 
+    public int getId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
+    
+
+    
     
 
     /**
@@ -48,6 +55,11 @@ public class InfoCandidatController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
+        
+    } 
+    
+    public void loaddata(){
         ServiceUser su = new ServiceUser();
         try {
             c=su.afficherunCandidat(id);
@@ -60,8 +72,7 @@ public class InfoCandidatController implements Initializable {
         mail.setText(c.getMail());
         diplome.setText(String.valueOf(c.getEducation()));
         experience.setText(String.valueOf(c.getExperience()));
-        
-    } 
+    }
     
     
 }

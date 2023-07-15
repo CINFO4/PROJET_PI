@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="615.0" prefWidth="1239.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.esprit.controllers.InterfaceOffreUserController">
+<AnchorPane id="AnchorPane" prefHeight="615.0" prefWidth="1239.0" stylesheets="@../controllers/Stylee1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.InterfaceOffreUserController">
     <children>
       <TableView fx:id="tableOffre" editable="true" layoutX="53.0" layoutY="120.0" prefHeight="459.0" prefWidth="1133.0">
         <columns>
@@ -30,10 +31,12 @@
                   <Font name="Felix Titling" size="46.0" />
                </font>
             </Label>
+            <Button fx:id="info" layoutX="413.0" layoutY="22.0" mnemonicParsing="false" onAction="#infocandidat" styleClass="button4" text="Info Candidat" />
          </children>
       </Pane>
       <Separator layoutX="78.0" layoutY="82.0" prefHeight="38.0" prefWidth="1052.0" />
       <FontAwesomeIconView fill="#3939cc" glyphName="SEARCH" layoutX="835.0" layoutY="64.0" size="30" />
-      <ComboBox fx:id="ComboChercher" layoutX="872.0" layoutY="38.0" onAction="#changeRecherche" prefHeight="31.0" prefWidth="220.0" promptText="Filtrer Par Domaine" />
+      <ComboBox fx:id="ComboChercher" layoutX="872.0" layoutY="38.0" onAction="#changeRecherche" prefHeight="31.0" prefWidth="220.0" promptText="Filtrer Par Domaine" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="forum" layoutX="611.0" layoutY="35.0" mnemonicParsing="false" onAction="#forum" styleClass="button4" text="Forum" />
    </children>
 </AnchorPane>

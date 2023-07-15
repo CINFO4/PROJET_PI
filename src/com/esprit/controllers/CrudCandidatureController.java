@@ -218,11 +218,7 @@ private void accpeter(CandidatureDetails cand) throws MailException {
             String recepient =u.getMail();
             String object=nomEntreprise;
             String message="Félicitations ! Nous avons le plaisir de vous informer que votre candidature pour le poste de "+titre+"a été acceptée.";
-            try {
-                ServiceMail.sendMail(recepient, object, message);
-            } catch (MessagingException ex) {
-                System.out.println(ex.getMessage());
-            }
+            ServiceMail.sendMail(recepient, object, message);
         }else{
             return ;
         }
@@ -250,11 +246,7 @@ private void refuser(CandidatureDetails cand) throws MailException {
             String recepient =u.getMail();
             String object=nomEntreprise;
             String message="Nous regrettons de vous informer que votre candidature pour le poste de"+titre+" a été rejetée.";
-            try {
-                ServiceMail.sendMail(recepient, object, message);
-            } catch (MessagingException ex) {
-                System.out.println(ex.getMessage());
-            }
+            ServiceMail.sendMail(recepient, object, message);
         }else{
             return ;
         }

@@ -76,6 +76,10 @@ public class InterfaceOffreUserController implements Initializable {
     ObservableList<ServiceOffre.OffreView> listOffres;
     @FXML
     private TableColumn btnCol;
+    @FXML
+    private Button info;
+    @FXML
+    private Button forum;
     private int iduser;
 
     public void setIduser(int iduser) {
@@ -88,19 +92,51 @@ public class InterfaceOffreUserController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+    }  
+    
+    public void dataload(){
         System.out.println( " id user offre ==== "+iduser);
         ServiceDomaineO sd = new ServiceDomaineO();
         ComboChercher.getItems().add("All");
         ComboChercher.getItems().addAll(sd.getDomainesName());
 
         table();
-    }    
+    }
 
      @FXML
     private void changeRecherche(ActionEvent event) {
         domaineRechercher = ComboChercher.getSelectionModel().getSelectedItem();
         System.out.println(domaineRechercher);
         table();
+    }
+    
+    @FXML
+    private void infocandidat(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InfoCandidat.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        InfoCandidatController controller = loader.getController();
+        controller.setId(iduser);
+        controller.loaddata();
+        stage.show();
+        
+
+        
+    }
+    
+     @FXML
+    private void forum(ActionEvent event) throws IOException{
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Forum.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        ForumController controller = loader.getController();
+        controller.setIduser(iduser);
+        stage.show(); 
     }
 
 
